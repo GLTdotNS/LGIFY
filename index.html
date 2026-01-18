@@ -6,136 +6,151 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
+/* ========== GLOBAL ========== */
+* { box-sizing: border-box; }
+
 body {
   margin: 0;
+  background: #0b0f1a;
+  color: #e6e6e6;
+  font-family: Tahoma, Arial, sans-serif;
+}
+
+/* ========== START PAGE (OLD GAMING SITE) ========== */
+.start {
+  max-width: 420px;
+  margin: 60px auto;
   padding: 20px;
-  background: #c0c0c0;
-  font-family: Arial, sans-serif;
+  background: linear-gradient(#11182b, #05070d);
+  border: 2px solid #2aff00;
+  box-shadow: 0 0 20px #2aff00;
 }
 
-/* ===== WINDOW ===== */
-.window {
-  max-width: 900px;
-  margin: auto;
-  background: #fff;
-  border: 3px solid #000;
-  box-shadow: 8px 8px 0 #000;
-}
-
-.titlebar {
-  background: navy;
-  color: white;
-  padding: 6px;
-  font-weight: bold;
+.start h1 {
+  text-align: center;
+  color: #2aff00;
   font-family: "Courier New", monospace;
-}
-
-.content {
-  padding: 20px;
-}
-
-/* ===== GENERATOR ===== */
-.gen input {
-  width: 100%;
-  padding: 10px;
-  border: 2px inset #000;
   margin-bottom: 10px;
 }
 
-.gen button {
+.start p {
+  font-size: 13px;
+  color: #9cff9c;
+  text-align: center;
+}
+
+.start input {
   width: 100%;
-  padding: 8px;
-  margin-bottom: 6px;
-  border: 2px outset #000;
-  background: #e0e0e0;
-  cursor: pointer;
+  padding: 10px;
+  margin: 15px 0;
+  background: #000;
+  color: #2aff00;
+  border: 1px solid #2aff00;
   font-family: "Courier New", monospace;
 }
 
-.gen button.clicked {
-  border: 2px inset #000;
-  background: #c0c0c0;
-  color: darkred;
+.start button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 6px;
+  background: #111;
+  border: 1px solid #2aff00;
+  color: #2aff00;
+  font-family: "Courier New", monospace;
+  cursor: pointer;
+}
+
+.start button.clicked {
+  background: #2aff00;
+  color: #000;
   font-weight: bold;
 }
 
-/* ===== FAKE SEARCH ===== */
-.search-ui {
+/* ========== SEARCH UI (RESPONSIVE) ========== */
+.search-wrap {
   max-width: 700px;
-  margin: auto;
+  margin: 40px auto;
+  padding: 0 16px;
+}
+
+.search-box {
+  position: relative;
 }
 
 .search-input {
   width: 100%;
-  padding: 12px;
+  padding: 14px;
   font-size: 16px;
-  margin-bottom: 10px;
 }
 
 .search-btn {
-  padding: 10px 16px;
-  font-size: 14px;
+  margin-top: 10px;
+  padding: 12px;
+  width: 100%;
+  font-size: 15px;
   cursor: pointer;
 }
 
-/* ===== ENGINE STYLES ===== */
-.google .search-input { border-radius: 24px; border:1px solid #dfe1e5 }
-.google .search-btn { border-radius: 4px }
+/* ENGINE STYLES */
+.google .search-input { border-radius: 24px; border: 1px solid #dfe1e5; }
+.google .search-btn { border-radius: 4px; }
 
-.bing .search-input { border-radius: 6px; border:1px solid #ccc }
-.bing .search-btn { background:#008373; color:white; border:none }
+.bing .search-input { border-radius: 6px; }
+.bing .search-btn { background: #008373; color: #fff; border: none; }
 
-.ddg .search-input { border-radius: 6px }
-.ddg .search-btn { background:#de5833; color:white; border:none }
+.ddg .search-input { border-radius: 6px; }
+.ddg .search-btn { background: #de5833; color: #fff; border: none; }
 
-.brave .search-input { border-radius: 6px }
-.brave .search-btn { background:#fb542b; color:white; border:none }
+.brave .search-input { border-radius: 6px; }
+.brave .search-btn { background: #fb542b; color: #fff; border: none; }
 
+/* RESULTS */
 .result {
   margin-top: 20px;
 }
-
 .result a {
-  font-size: 18px;
   color: #1a0dab;
+  font-size: 18px;
   text-decoration: none;
 }
-
 .result p {
   color: #4d5156;
   font-size: 14px;
 }
 
-/* ===== FAKE MOUSE ===== */
+/* ========== FAKE MOUSE ========== */
 .mouse {
   position: fixed;
-  width: 22px;
-  height: 22px;
-  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='22' height='22'><polygon points='0,0 0,22 6,16 10,24 14,22 10,14 18,14' fill='black'/></svg>");
+  width: 20px;
+  height: 20px;
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20'><polygon points='0,0 0,20 6,14 10,22 14,20 10,12 18,12' fill='black'/></svg>");
   pointer-events: none;
   z-index: 9999;
-  transition: transform 0.6s linear;
+  transition: transform 0.5s ease;
 }
 </style>
 </head>
 
 <body>
 
-<div class="window" id="app">
-  <div class="titlebar">Let Me Search That For You</div>
-  <div class="content gen">
-    <p>Type your question. Yes. All of it.</p>
-    <input id="q" placeholder="How does Google work?" />
+<div id="app">
+  <div class="start">
+    <h1>LMSTFY.exe</h1>
+    <p>Oldschool search assistance tool.<br>Because thinking is hard.</p>
+
+    <input id="query" placeholder="how to google something" />
+
     <button onclick="gen(this,'google')">Google</button>
     <button onclick="gen(this,'bing')">Bing</button>
     <button onclick="gen(this,'duckduckgo')">DuckDuckGo</button>
     <button onclick="gen(this,'brave')">Brave</button>
+
     <p id="status"></p>
   </div>
 </div>
 
 <script>
-const real = {
+const engines = {
   google: q => `https://www.google.com/search?q=${encodeURIComponent(q)}`,
   bing: q => `https://www.bing.com/search?q=${encodeURIComponent(q)}`,
   duckduckgo: q => `https://duckduckgo.com/?q=${encodeURIComponent(q)}`,
@@ -143,35 +158,34 @@ const real = {
 };
 
 function gen(btn, engine) {
-  const q = document.getElementById("q").value.trim();
+  const q = document.getElementById("query").value.trim();
   if (!q) return;
 
-  document.querySelectorAll("button").forEach(b=>b.classList.remove("clicked"));
+  document.querySelectorAll(".start button").forEach(b => b.classList.remove("clicked"));
   btn.classList.add("clicked");
 
   const url = location.origin + `?engine=${engine}&q=${encodeURIComponent(q)}`;
   navigator.clipboard.writeText(url);
 
   document.getElementById("status").textContent =
-    "Link copied. Someone else will now learn how to search.";
+    "Link copied. Prepare the victim.";
 }
 
-/* ===== PRANK MODE ===== */
+/* ========== PRANK MODE ========== */
 const p = new URLSearchParams(location.search);
 const engine = p.get("engine");
 const q = p.get("q");
 
-if (engine && q && real[engine]) start();
+if (engine && q && engines[engine]) prank();
 
-function start() {
+function prank() {
   document.getElementById("app").innerHTML = `
-    <div class="titlebar">Searching...</div>
-    <div class="content ${engine}">
-      <div class="search-ui">
+    <div class="search-wrap ${engine}">
+      <div class="search-box">
         <input class="search-input" id="input">
         <button class="search-btn" id="btn">Search</button>
-        <div id="results"></div>
       </div>
+      <div id="results"></div>
     </div>
   `;
 
@@ -186,9 +200,9 @@ function start() {
   type(input, () => {
     move(mouse, btn);
     setTimeout(() => {
-      btn.style.opacity = "0.7";
-      showResults(mouse);
-    }, 800);
+      btn.style.opacity = "0.6";
+      showResults();
+    }, 600);
   });
 }
 
@@ -200,7 +214,7 @@ function move(mouse, el) {
 
 function type(input, done) {
   let i = 0;
-  const t = setInterval(()=>{
+  const t = setInterval(() => {
     input.value += q[i++];
     if (i >= q.length) {
       clearInterval(t);
@@ -209,23 +223,16 @@ function type(input, done) {
   }, 120);
 }
 
-function showResults(mouse) {
-  const res = document.getElementById("results");
-  res.innerHTML = `
-    <div class="result"><a href="#">How to search the internet</a><p>This guide explains typing.</p></div>
-    <div class="result"><a href="#">What is a search engine?</a><p>You are using one.</p></div>
-    <div class="result"><a href="#">Search engines explained</a><p>This might help.</p></div>
+function showResults() {
+  const r = document.getElementById("results");
+  r.innerHTML = `
+    <div class="result"><a href="#">How to search the internet</a><p>Step-by-step guide.</p></div>
+    <div class="result"><a href="#">What is a search engine?</a><p>This might help.</p></div>
   `;
 
-  let y = 0;
-  const s = setInterval(()=>{
-    y += 10;
-    window.scrollTo(0,y);
-    if (y > 200) {
-      clearInterval(s);
-      setTimeout(()=>location.href = real[engine](q), 3000);
-    }
-  }, 100);
+  setTimeout(() => {
+    location.href = engines[engine](q);
+  }, 3000);
 }
 </script>
 
