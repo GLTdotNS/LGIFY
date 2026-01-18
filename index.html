@@ -2,22 +2,22 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Let Me Google That For You (Seriously)</title>
+  <title>Let Me Search That For You</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <style>
     body {
       background: #c0c0c0;
       font-family: "Courier New", monospace;
-      margin: 0;
       padding: 20px;
+      margin: 0;
     }
 
     .window {
+      max-width: 520px;
+      margin: auto;
       background: #fff;
       border: 3px solid #000;
-      max-width: 500px;
-      margin: 0 auto;
       box-shadow: 8px 8px 0 #000;
     }
 
@@ -39,7 +39,7 @@
       font-family: inherit;
       font-size: 14px;
       border: 2px inset #000;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
 
     button {
@@ -53,17 +53,26 @@
       cursor: pointer;
     }
 
-    button:active {
+    button:active,
+    button.clicked {
       border: 2px inset #000;
+      background: #c0c0c0;
     }
 
-    .engines button {
-      width: 100%;
+    button.clicked {
+      color: darkred;
+      font-weight: bold;
     }
 
     .sarcasm {
       font-size: 12px;
       margin-bottom: 10px;
+    }
+
+    .status {
+      font-size: 12px;
+      margin-top: 10px;
+      color: #333;
     }
   </style>
 </head>
@@ -73,19 +82,18 @@
   <div class="titlebar">Let Me Search That For You</div>
   <div class="content">
     <p class="sarcasm">
-      Enter your question below.<br>
-      Because apparently typing it into a search engine is hard.
+      Type your question below.<br>
+      Yes. The entire question.
     </p>
 
-    <input id="query" placeholder="What is Google?" />
+    <input id="query" placeholder="How does the internet work?" />
 
-    <div class="engines">
-      <button onclick="generate('google')">Google</button>
-      <button onclick="generate('bing')">Bing</button>
-      <button onclick="generate('duckduckgo')">DuckDuckGo</button>
-      <button onclick="generate('yahoo')">Yahoo</button>
-      <button onclick="generate('brave')">Brave Search</button>
-    </div>
+    <button onclick="generate(this, 'google')">Google</button>
+    <button onclick="generate(this, 'bing')">Bing</button>
+    <button onclick="generate(this, 'duckduckgo')">DuckDuckGo</button>
+    <button onclick="generate(this, 'brave')">Brave Search</button>
+
+    <div class="status" id="status"></div>
   </div>
 </div>
 
@@ -94,13 +102,19 @@
     google: "https://www.google.com/search?q=",
     bing: "https://www.bing.com/search?q=",
     duckduckgo: "https://duckduckgo.com/?q=",
-    yahoo: "https://search.yahoo.com/search?p=",
     brave: "https://search.brave.com/search?q="
   };
 
-  function generate(engine) {
+  function generate(button, engine) {
     const q = document.getElementById("query").value.trim();
     if (!q) return;
+
+    // visual feedback
+    document.querySelectorAll("button").forEach(b => b.classList.remove("clicked"));
+    button.classList.add("clicked");
+
+    const status = document.getElementById("status");
+    status.textContent = "Wow. You actually clicked a button. Impressive.";
 
     const url =
       location.origin +
@@ -110,22 +124,27 @@
       engine;
 
     navigator.clipboard.writeText(url);
-    alert("Link copied.\nNow send it to someone who needs help.");
+
+    status.textContent =
+      "Link copied. Now wait. We are doing the hard part for you...";
   }
 
-  const params = new URLSearchParams(window.location.search);
-  const query = params.get("q");
+  const params = new URLSearchParams(location.search);
+  const q = params.get("q");
   const engine = params.get("engine");
 
-  if (query && engine && engines[engine]) {
+  if (q && engine && engines[engine]) {
     document.getElementById("app").innerHTML = `
-      <div class="titlebar">Searching the internet for you...</div>
+      <div class="titlebar">Searching the web...</div>
       <div class="content">
         <p class="sarcasm">
-          Wow. Look at that.<br>
-          We are literally typing it for you.
+          Incredible.<br>
+          Someone else is typing this for you.
         </p>
         <input id="fake" />
+        <p class="status">
+          Please wait. This is very complicated.
+        </p>
       </div>
     `;
 
@@ -133,17 +152,17 @@
     let i = 0;
 
     const interval = setInterval(() => {
-      fake.value += query[i];
+      fake.value += q[i];
       i++;
 
-      if (i >= query.length) {
+      if (i >= q.length) {
         clearInterval(interval);
         setTimeout(() => {
           window.location.href =
-            engines[engine] + encodeURIComponent(query);
-        }, 1000);
+            engines[engine] + encodeURIComponent(q);
+        }, 2500); // BIGGER DELAY 😈
       }
-    }, 120);
+    }, 150);
   }
 </script>
 
