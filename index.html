@@ -141,13 +141,13 @@ function prank(){
   input.scrollIntoView({block:"center"});
 
   setTimeout(()=>{
-    type(input,()=>{
-      // Fake click effect
+    type(input, ()=>{
+      // Fake click **след като завърши typing**
       btn.classList.add("clicked");
       setTimeout(()=>{
         btn.classList.remove("clicked");
         showResults();
-      },400);
+      },400); // ефект на клик
     });
   },400);
 }
