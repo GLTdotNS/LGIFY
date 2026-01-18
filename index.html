@@ -200,11 +200,11 @@ function prank(){
       // Не показваме loader докато typing
       // Click ефект
       btn.addEventListener('click',()=>{});
-      btn.classList.add("clicked");
+      
       // loader се показва **само след като се кликне Search**
       loader.style.display="flex";
       setTimeout(()=>{
-        btn.classList.remove("clicked");
+        btn.classList.add("clicked");
         showResults();
       },1000);
     });
