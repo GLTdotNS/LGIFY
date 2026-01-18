@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8" />
+  <title>Let Me Google That</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f8f9fa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .box {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    a {
+      word-break: break-all;
+      display: block;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="box" id="app">
+  <h2>Let me google that</h2>
+  <input id="input" placeholder="Напиши въпроса…" />
+  <button onclick="generate()">Генерирай линк</button>
+  <a id="link"></a>
+</div>
+
+<script>
+  function generate() {
+    const q = document.getElementById("input").value.trim();
+    if (!q) return;
+
+    const url = location.origin + "?q=" + encodeURIComponent(q);
+    const link = document.getElementById("link");
+    link.href = url;
+    link.textContent = url;
+  }
+
+  const params = new URLSearchParams(window.location.search);
+  const query = params.get("q");
+
+  if (query) {
+    const app = document.getElementById("app");
+    app.innerHTML = `
+      <h3>Търсене...</h3>
+      <input id="fake" />
+    `;
+
+    const fake = document.getElementById("fake");
+    let i = 0;
+
+    const interval = setInterval(() => {
+      fake.value += query[i];
+      i++;
+
+      if (i >= query.length) {
+        clearInterval(interval);
+        setTimeout(() => {
+          window.location.href =
+            "https://www.google.com/search?q=" +
+            encodeURIComponent(query);
+        }, 800);
+      }
+    }, 100);
+  }
+</script>
+
+</body>
+</html>
