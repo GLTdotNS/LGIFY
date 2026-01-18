@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>How It Works - LMSTFY Prank Documentation</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body { margin:0; font-family:Arial, sans-serif; background:#f9f9f9; color:#111; }
+nav { background:#222; display:flex; justify-content:space-between; align-items:center; padding:10px; font-size:14px; border-bottom:2px solid #2aff00; }
+nav a { text-decoration:none; color:#2aff00; font-weight:bold; }
+.hamburger { display:none; flex-direction:column; cursor:pointer; gap:4px; }
+.hamburger div { width:25px; height:3px; background:#2aff00; }
+@media(max-width:800px){
+  .sidebar { display:none; position:absolute; top:50px; left:0; background:#222; width:200px; padding:10px; height:calc(100% - 50px); overflow-y:auto; }
+  .sidebar.show { display:block; }
+  .hamburger { display:flex; }
+}
+
+/* Layout */
+.container { display:flex; min-height:calc(100vh - 50px); }
+.sidebar { width:220px; background:#222; padding:20px; box-sizing:border-box; color:#2aff00; }
+.sidebar a { display:block; color:#2aff00; text-decoration:none; margin-bottom:8px; }
+.sidebar a:hover { text-decoration:underline; }
+.content { flex:1; padding:40px; box-sizing:border-box; background:#f9f9f9; }
+.content h1, .content h2 { color:#2aff00; margin-bottom:15px; }
+.content pre { background:#e6ffe6; padding:15px; border-radius:6px; overflow-x:auto; }
+.content code { font-family:Courier, monospace; }
+
+/* Responsive adjustments */
+@media(max-width:800px){ .content { padding:20px; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <div>LMSTFY Documentation</div>
+  <div class="nav-links">
+    <a href="index.html">Generator</a>
+    <a href="about.html">About</a>
+    <a href="how.html">How it works</a>
+    <a href="hall.html">Hall of Shame</a>
+  </div>
+  <div class="hamburger" onclick="document.querySelector('.sidebar').classList.toggle('show')">
+    <div></div><div></div><div></div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="sidebar">
+    <a href="#overview">Overview</a>
+    <a href="#steps">Steps</a>
+    <a href="#examples">Examples</a>
+    <a href="#faq">FAQ</a>
+  </div>
+  <div class="content">
+    <h1 id="overview">Overview</h1>
+    <p>LMSTFY Prank is a humorous web tool inspired by "Let Me Google That For You". It automatically simulates typing a search query, clicks the search button, and redirects to the chosen search engine. The main purpose is entertainment and to gently tease people who ask obvious questions online.</p>
+    
+    <h2 id="steps">Steps</h2>
+    <ol>
+      <li>User enters a query on the main page.</li>
+      <li>They select a search engine (Google, Bing, DuckDuckGo, Brave).</li>
+      <li>The site simulates typing the query automatically.</li>
+      <li>Once typing completes, the search button is automatically “clicked”.</li>
+      <li>The user is redirected to the selected search engine with the query.</li>
+    </ol>
+
+    <h2 id="examples">Examples</h2>
+    <p>Here is a snippet showing the automatic typing and click logic:</p>
+    <pre><code>
+function typeAndClick(query, button, callback){
+  let i = 0;
+  const interval = setInterval(()=>{
+    input.value += query[i++];
+    if(i >= query.length){
+      clearInterval(interval);
+      button.classList.add("clicked");
+      setTimeout(()=>{ callback(); }, 800);
+    }
+  }, 120);
+}
+    </code></pre>
+    <p>And redirecting to the search engine:</p>
+    <pre><code>
+const url = "https://www.google.com/search?q=" + encodeURIComponent(query);
+setTimeout(()=>{ location.href = url; }, 1200);
+    </code></pre>
+
+    <h2 id="faq">FAQ</h2>
+    <p><strong>Q:</strong> Can I customize the search engines?<br>
+       <strong>A:</strong> Yes, you can modify the <code>engines</code> object in the JavaScript.</p>
+    <p><strong>Q:</strong> Is this safe to use?<br>
+       <strong>A:</strong> Absolutely, it only redirects to normal search engines and is purely for fun.</p>
+  </div>
+</div>
+
+</body>
+</html>
