@@ -54,7 +54,7 @@ nav a {
   box-shadow:0 0 20px #2aff00; border-radius:6px;
   text-align:center;
 }
-.start h1 { font-family:"Courier New", monospace; margin-bottom:10px; color:#000; } /* Черни букви */
+.start h1 { font-family:"Courier New", monospace; margin-bottom:10px; color:#000; } 
 .start p { font-size:13px; color:#444; margin-bottom:15px; }
 .start input {
   width:100%; padding:10px; margin-bottom:12px;
@@ -197,9 +197,12 @@ function prank(){
 
   setTimeout(()=>{
     type(input, ()=>{
-      // Fake click + loader **само тук**
+      // Не показваме loader докато typing
+      // Click ефект
+      btn.addEventListener('click',()=>{});
       btn.classList.add("clicked");
-      loader.style.display="flex"; // loader се показва само в тази страница
+      // loader се показва **само след като се кликне Search**
+      loader.style.display="flex";
       setTimeout(()=>{
         btn.classList.remove("clicked");
         showResults();
@@ -216,6 +219,7 @@ function type(input,done){
   },120);
 }
 
+// Функция за показване на резултати и redirect
 function showResults(){
   const r=document.getElementById("results");
   r.innerHTML=`
