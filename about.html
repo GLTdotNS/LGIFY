@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>About - LMSTFY Gamer Style</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body { margin:0; font-family:Tahoma, Arial, sans-serif; background:#dfffdc; color:#1b1b1b; }
+nav { background:#111822; border-bottom:2px solid #2aff00; display:flex; justify-content:space-between; align-items:center; padding:10px; font-size:14px; }
+nav .nav-links { display:flex; gap:12px; }
+nav a { text-decoration:none; color:#2aff00; font-weight:bold; }
+.hamburger { display:none; flex-direction:column; cursor:pointer; gap:4px; }
+.hamburger div { width:25px; height:3px; background:#2aff00; }
+@media(max-width:600px){
+  nav .nav-links { display:none; flex-direction:column; background:#111822; position:absolute; top:50px; right:10px; padding:10px; border:1px solid #2aff00; border-radius:6px;}
+  nav .nav-links.show { display:flex; }
+  .hamburger { display:flex; }
+}
+
+/* About content */
+.about-container { max-width:800px; margin:40px auto; padding:20px; background:#e6ffe6; border:3px solid #2aff00; box-shadow:0 0 20px #2aff00; border-radius:6px; text-align:center; }
+.about-container h1 { font-family:"Courier New", monospace; margin-bottom:15px; color:#000; }
+.about-container p { font-size:15px; margin-bottom:12px; color:#333; }
+
+/* Three.js canvas */
+#three-container { width:100%; height:400px; margin-top:30px; border:2px solid #2aff00; border-radius:8px; background:#001100; display:flex; justify-content:center; align-items:center; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div>LMSTFY</div>
+  <div class="nav-links">
+    <a href="index.html">Generator</a>
+    <a href="about.html">About</a>
+    <a href="how.html">How it works</a>
+    <a href="hall.html">Hall of Shame</a>
+  </div>
+  <div class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('show')">
+    <div></div><div></div><div></div>
+  </div>
+</nav>
+
+<div class="about-container">
+  <h1>About LMSTFY</h1>
+  <p>This is a prank/gamer-style search prank site.</p>
+  <p>We automatically generate fake search results for fun.</p>
+  <p>Built with old-school vibes and modern web tech.</p>
+  <div id="three-container"></div>
+</div>
+
+<!-- Three.js -->
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+<script>
+// Basic Three.js scene
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x001100);
+
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth/400, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer({antialias:true});
+renderer.setSize(window.innerWidth, 400);
+document.getElementById('three-container').appendChild(renderer.domElement);
+
+// Cube
+const geometry = new THREE.BoxGeometry();
+const material = new THREE.MeshStandardMaterial({ color: 0x2aff00 });
+const cube = new THREE.Mesh(geometry, material);
+scene.add(cube);
+
+// Light
+const light = new THREE.PointLight(0x2aff00, 1);
+light.position.set(5,5,5);
+scene.add(light);
+const ambient = new THREE.AmbientLight(0x2aff00, 0.3);
+scene.add(ambient);
+
+camera.position.z = 5;
+
+function animate(){
+  requestAnimationFrame(animate);
+  cube.rotation.x += 0.01;
+  cube.rotation.y += 0.01;
+  renderer.render(scene, camera);
+}
+animate();
+
+// Responsive
+window.addEventListener('resize', ()=>{
+  camera.aspect = window.innerWidth/400;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth,400);
+});
+</script>
+</body>
+</html>
