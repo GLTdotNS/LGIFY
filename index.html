@@ -179,6 +179,8 @@ if(engine && q) prank();
 function prank(){
   document.body.style.overflow="hidden";
 
+  let clicked = false; // Булев флаг
+
   document.getElementById("app").innerHTML=`
 <div class="search-wrap ${engine}">
   <div class="search-box">
@@ -195,20 +197,21 @@ function prank(){
 
   input.scrollIntoView({block:"center"});
 
-  setTimeout(()=>{
-    type(input, ()=>{
-      // Не показваме loader докато typing
-      // Click ефект
-      btn.addEventListener('click',()=>{});
-      
-      // loader се показва **само след като се кликне Search**
-      loader.style.display="flex";
-      setTimeout(()=>{
+  // Типинг ефект
+  type(input, ()=>{ 
+    // След като завърши typing, бутонът може да се клика
+    btn.addEventListener('click',()=>{
+      if(!clicked){
+        clicked = true; // маркираме, че е кликнат
         btn.classList.add("clicked");
-        showResults();
-      },1000);
+        loader.style.display="flex"; // показваме loader
+        setTimeout(()=>{
+          btn.classList.remove("clicked");
+          showResults();
+        },500);
+      }
     });
-  },400);
+  });
 }
 
 function type(input,done){
@@ -219,7 +222,6 @@ function type(input,done){
   },120);
 }
 
-// Функция за показване на резултати и redirect
 function showResults(){
   const r=document.getElementById("results");
   r.innerHTML=`
