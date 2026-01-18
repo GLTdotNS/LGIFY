@@ -6,7 +6,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
-/* ====== GLOBAL OLD SCHOOL ====== */
 body {
   margin: 0;
   padding: 20px;
@@ -15,7 +14,7 @@ body {
 }
 
 .window {
-  max-width: 700px;
+  max-width: 720px;
   margin: auto;
   background: #fff;
   border: 3px solid #000;
@@ -27,7 +26,6 @@ body {
   color: white;
   padding: 6px;
   font-weight: bold;
-  font-size: 14px;
 }
 
 .content {
@@ -36,21 +34,18 @@ body {
 
 input {
   width: 100%;
-  padding: 8px;
-  font-family: inherit;
-  font-size: 14px;
+  padding: 10px;
   border: 2px inset #000;
-  margin-bottom: 12px;
+  font-family: inherit;
 }
 
 button {
   width: 100%;
   padding: 8px;
-  margin-bottom: 6px;
-  font-family: inherit;
-  font-size: 14px;
-  background: #e0e0e0;
+  margin-top: 6px;
   border: 2px outset #000;
+  background: #e0e0e0;
+  font-family: inherit;
   cursor: pointer;
 }
 
@@ -63,42 +58,7 @@ button.clicked {
 
 .sarcasm {
   font-size: 12px;
-  margin-bottom: 10px;
-}
-
-.status {
-  font-size: 12px;
-  margin-top: 10px;
-}
-
-/* ====== GOOGLE FAKE UI ====== */
-.google {
-  font-family: Arial, sans-serif;
-}
-
-.google-logo {
-  text-align: center;
-  font-size: 48px;
-  font-weight: bold;
-  margin: 30px 0;
-}
-
-.google-logo span:nth-child(1){color:#4285f4}
-.google-logo span:nth-child(2){color:#ea4335}
-.google-logo span:nth-child(3){color:#fbbc05}
-.google-logo span:nth-child(4){color:#4285f4}
-.google-logo span:nth-child(5){color:#34a853}
-.google-logo span:nth-child(6){color:#ea4335}
-
-.google-input {
-  width: 90%;
-  max-width: 600px;
-  margin: auto;
-  display: block;
-  padding: 12px;
-  font-size: 16px;
-  border-radius: 24px;
-  border: 1px solid #dfe1e5;
+  margin: 10px 0;
 }
 
 .result {
@@ -117,19 +77,15 @@ button.clicked {
   color: #4d5156;
 }
 
-/* ====== BING ====== */
-.bing-logo {
-  font-size: 36px;
-  color: #008373;
-  font-family: Arial, sans-serif;
-  margin: 20px;
-}
-
-/* ====== DDG ====== */
-.ddg-logo {
-  font-size: 32px;
-  font-family: Arial, sans-serif;
-  margin: 20px;
+.fake-mouse {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 24px;
+  height: 24px;
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24'><polygon points='0,0 0,24 6,18 10,26 14,24 10,16 18,16' fill='black'/></svg>");
+  pointer-events: none;
+  z-index: 9999;
 }
 </style>
 </head>
@@ -141,34 +97,26 @@ button.clicked {
   <div class="content">
     <p class="sarcasm">
       Type your question.<br>
-      Yes. Like an adult.
+      Yes. All of it.
     </p>
 
-    <input id="query" placeholder="How does Google work?" />
+    <input id="query" placeholder="How does the internet work?" />
 
     <button onclick="generate(this,'google')">Google</button>
     <button onclick="generate(this,'bing')">Bing</button>
     <button onclick="generate(this,'duckduckgo')">DuckDuckGo</button>
     <button onclick="generate(this,'brave')">Brave Search</button>
 
-    <div class="status" id="status"></div>
+    <p class="sarcasm" id="status"></p>
   </div>
 </div>
 
 <script>
 const engines = {
-  google: {
-    real: q => "https://www.google.com/search?q=" + encodeURIComponent(q)
-  },
-  bing: {
-    real: q => "https://www.bing.com/search?q=" + encodeURIComponent(q)
-  },
-  duckduckgo: {
-    real: q => "https://duckduckgo.com/?q=" + encodeURIComponent(q)
-  },
-  brave: {
-    real: q => "https://search.brave.com/search?q=" + encodeURIComponent(q)
-  }
+  google: q => "https://www.google.com/search?q=" + encodeURIComponent(q),
+  bing: q => "https://www.bing.com/search?q=" + encodeURIComponent(q),
+  duckduckgo: q => "https://duckduckgo.com/?q=" + encodeURIComponent(q),
+  brave: q => "https://search.brave.com/search?q=" + encodeURIComponent(q)
 };
 
 function generate(btn, engine) {
@@ -182,99 +130,69 @@ function generate(btn, engine) {
   navigator.clipboard.writeText(url);
 
   document.getElementById("status").textContent =
-    "Link copied. Someone else will now enjoy this experience.";
+    "Link copied. Someone else will now learn how search engines work.";
 }
 
-/* ====== RENDER FAKE SEARCH ====== */
+/* ====== PRANK MODE ====== */
 const params = new URLSearchParams(location.search);
 const q = params.get("q");
 const engine = params.get("engine");
 
-if (q && engine && engines[engine]) {
-  renderFake(engine, q);
-}
+if (q && engine && engines[engine]) startPrank();
 
-function renderFake(engine, q) {
-  let html = "";
-
-  if (engine === "google") {
-    html = `
-    <div class="google">
-      <div class="google-logo">
-        <span>G</span><span>o</span><span>o</span><span>g</span><span>l</span><span>e</span>
-      </div>
-      <input class="google-input" id="fakeInput">
-      <div class="result">
-        <a href="#">How to use Google Search</a>
-        <p>Learn how to type questions into Google.</p>
-      </div>
-      <div class="result">
-        <a href="#">Google Search Basics</a>
-        <p>This tutorial explains the basics of searching.</p>
-      </div>
-    </div>`;
-  }
-
-  if (engine === "bing") {
-    html = `
-    <div>
-      <div class="bing-logo">Bing</div>
-      <input class="google-input" id="fakeInput">
-      <div class="result">
-        <a href="#">What is Bing search?</a>
-        <p>Bing helps you find things on the internet.</p>
-      </div>
-    </div>`;
-  }
-
-  if (engine === "duckduckgo") {
-    html = `
-    <div>
-      <div class="ddg-logo">🦆 DuckDuckGo</div>
-      <input class="google-input" id="fakeInput">
-      <div class="result">
-        <a href="#">DuckDuckGo Search</a>
-        <p>Privacy-respecting search engine.</p>
-      </div>
-    </div>`;
-  }
-
-  if (engine === "brave") {
-    html = `
-    <div>
-      <div class="bing-logo">Brave Search</div>
-      <input class="google-input" id="fakeInput">
-      <div class="result">
-        <a href="#">Brave Search Engine</a>
-        <p>Independent search for the web.</p>
-      </div>
-    </div>`;
-  }
-
+function startPrank() {
   document.getElementById("app").innerHTML = `
-    <div class="titlebar">Searching...</div>
+    <div class="titlebar">Searching the web...</div>
     <div class="content">
-      <p class="sarcasm">
-        Wow.<br>
-        Someone is literally typing this for you.
-      </p>
-      ${html}
-      <p class="status">Please wait. This takes effort.</p>
+      <p class="sarcasm">Please wait. This is extremely difficult.</p>
+      <input id="fakeInput">
+      <div id="results"></div>
     </div>
   `;
+
+  const mouse = document.createElement("div");
+  mouse.className = "fake-mouse";
+  document.body.appendChild(mouse);
+
+  moveMouse(mouse, 100, 120);
 
   const input = document.getElementById("fakeInput");
   let i = 0;
 
-  const interval = setInterval(() => {
+  const typing = setInterval(() => {
     input.value += q[i++];
     if (i >= q.length) {
-      clearInterval(interval);
+      clearInterval(typing);
+      showResults(mouse);
+    }
+  }, 150);
+}
+
+function moveMouse(mouse, x, y) {
+  mouse.style.transform = `translate(${x}px, ${y}px)`;
+}
+
+function showResults(mouse) {
+  const results = document.getElementById("results");
+  results.innerHTML = `
+    <div class="result"><a href="#">How to search the internet</a><p>Learn how typing works.</p></div>
+    <div class="result"><a href="#">What is Google?</a><p>A search engine.</p></div>
+    <div class="result"><a href="#">Search engines explained</a><p>This might help.</p></div>
+  `;
+
+  let scroll = 0;
+  const scrollInterval = setInterval(() => {
+    scroll += 10;
+    window.scrollTo(0, scroll);
+    moveMouse(mouse, 200, 200 + scroll / 3);
+
+    if (scroll > 200) {
+      clearInterval(scrollInterval);
       setTimeout(() => {
-        window.location.href = engines[engine].real(q);
+        window.location.href = engines[engine](q);
       }, 3000);
     }
-  }, 140);
+  }, 120);
 }
 </script>
 
