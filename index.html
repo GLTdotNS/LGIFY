@@ -95,7 +95,7 @@ nav a {
 .result p { font-size:14px; color:#444; }
 
 /* ===== LOADING SCREEN ===== */
-#loader {
+.loader {
   display:none;
   position:fixed;
   top:0; left:0; width:100%; height:100%;
@@ -108,7 +108,7 @@ nav a {
   justify-content:center;
   z-index:999;
 }
-#loader span {
+.loader span {
   animation:blink 1s infinite;
 }
 @keyframes blink{
@@ -133,7 +133,6 @@ nav a {
 </nav>
 
 <div id="app"></div>
-<div id="loader"><span>Loading...</span></div>
 
 <script>
 const engines = {
@@ -187,18 +186,20 @@ function prank(){
     <button class="search-btn" id="btn">Search</button>
   </div>
   <div id="results"></div>
+  <div class="loader" id="loader"><span>Loading...</span></div>
 </div>`;
 
   const input=document.getElementById("input");
   const btn=document.getElementById("btn");
+  const loader=document.getElementById("loader");
 
   input.scrollIntoView({block:"center"});
 
   setTimeout(()=>{
     type(input, ()=>{
-      // Fake click **след като завърши typing**
+      // Fake click + loader **само тук**
       btn.classList.add("clicked");
-      document.getElementById("loader").style.display="flex"; // Loader само след click
+      loader.style.display="flex"; // loader се показва само в тази страница
       setTimeout(()=>{
         btn.classList.remove("clicked");
         showResults();
