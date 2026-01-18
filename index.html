@@ -9,7 +9,7 @@
 
 body {
   font-family: Tahoma, Arial, sans-serif;
-  background:#dfffdc; /* светъл зелен фон */
+  background:#dfffdc; 
   color:#1b1b1b;
 }
 
@@ -17,10 +17,34 @@ body {
 nav {
   background:#111822;
   border-bottom:2px solid #2aff00;
-  display:flex; gap:12px; padding:10px; font-size:14px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:10px;
+  font-size:14px;
+}
+nav .nav-links {
+  display:flex;
+  gap:12px;
 }
 nav a {
   text-decoration:none; color:#2aff00; font-weight:bold;
+}
+
+/* Hamburger */
+.hamburger {
+  display:none;
+  flex-direction:column;
+  cursor:pointer;
+  gap:4px;
+}
+.hamburger div {
+  width:25px; height:3px; background:#2aff00;
+}
+@media(max-width:600px){
+  nav .nav-links { display:none; flex-direction:column; background:#111822; position:absolute; top:50px; right:10px; padding:10px; border:1px solid #2aff00; border-radius:6px;}
+  nav .nav-links.show { display:flex; }
+  .hamburger { display:flex; }
 }
 
 /* ===== START PAGE ===== */
@@ -30,8 +54,8 @@ nav a {
   box-shadow:0 0 20px #2aff00; border-radius:6px;
   text-align:center;
 }
-.start h1 { font-family:"Courier New", monospace; margin-bottom:10px; color:#2aff00; }
-.start p { font-size:13px; color:#9cff9c; margin-bottom:15px; }
+.start h1 { font-family:"Courier New", monospace; margin-bottom:10px; color:#000; } /* Черни букви */
+.start p { font-size:13px; color:#444; margin-bottom:15px; }
 .start input {
   width:100%; padding:10px; margin-bottom:12px;
   background:#001100; color:#2aff00; border:1px solid #2aff00;
@@ -52,10 +76,10 @@ nav a {
 
 /* Click effect */
 .search-btn.clicked {
-  transform: scale(0.85); /* по-голям ефект */
+  transform: scale(0.85);
   background-color:#2aff00;
   color:#001100;
-  box-shadow:0 0 20px #a6ff5a, 0 0 40px #2aff00; /* светлинен ефект */
+  box-shadow:0 0 20px #a6ff5a,0 0 40px #2aff00;
 }
 
 /* Engine specific styles */
@@ -69,18 +93,47 @@ nav a {
 .result { margin-top:20px; }
 .result a { font-size:18px; color:#1a0dab; text-decoration:none; }
 .result p { font-size:14px; color:#444; }
+
+/* ===== LOADING SCREEN ===== */
+#loader {
+  display:none;
+  position:fixed;
+  top:0; left:0; width:100%; height:100%;
+  background:rgba(0,0,0,0.8);
+  color:#2aff00;
+  font-family:"Courier New", monospace;
+  font-size:24px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:999;
+}
+#loader span {
+  animation:blink 1s infinite;
+}
+@keyframes blink{
+  0%,50%,100%{opacity:1;}
+  25%,75%{opacity:0;}
+}
 </style>
 </head>
 <body>
 
 <nav>
-  <a href="/">Generator</a>
-  <a href="#">About</a>
-  <a href="#">How it works</a>
-  <a href="#">Hall of Shame</a>
+  <div>LMSTFY</div>
+  <div class="nav-links">
+    <a href="/">Generator</a>
+    <a href="#">About</a>
+    <a href="#">How it works</a>
+    <a href="#">Hall of Shame</a>
+  </div>
+  <div class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('show')">
+    <div></div><div></div><div></div>
+  </div>
 </nav>
 
 <div id="app"></div>
+<div id="loader"><span>Loading...</span></div>
 
 <script>
 const engines = {
@@ -98,8 +151,8 @@ const q = params.get("q");
 if(!engine){
 document.getElementById("app").innerHTML = `
 <div class="start">
-<h1>LMSTFY.exe</h1>
-<p>Oldschool gamer-style search assistant.<br>Because thinking is hard.</p>
+<h1>Welcome to LMSTFY</h1>
+<p>Type your question below:</p>
 <input id="query" placeholder="Type your question">
 <button onclick="gen(this,'google')">Google</button>
 <button onclick="gen(this,'bing')">Bing</button>
@@ -143,12 +196,13 @@ function prank(){
 
   setTimeout(()=>{
     type(input, ()=>{
-      // Fake click **след като завърши typing**
+      // Click effect + loader
       btn.classList.add("clicked");
+      document.getElementById("loader").style.display="flex";
       setTimeout(()=>{
         btn.classList.remove("clicked");
         showResults();
-      },500); // по-дълъг click ефект с glow
+      },500);
     });
   },400);
 }
@@ -166,7 +220,7 @@ function showResults(){
   r.innerHTML=`
 <div class="result"><a href="#">How to use a search engine</a><p>Seriously.</p></div>
 <div class="result"><a href="#">Beginner internet guide</a><p>This might help.</p></div>`;
-  setTimeout(()=>location.href=engines[engine](q),3000);
+  setTimeout(()=>location.href=engines[engine](q),1500);
 }
 </script>
 </body>
