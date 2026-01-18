@@ -2,34 +2,32 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>About - LMSTFY Gamer Style</title>
+<title>About - LMSTFY Prank</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-body { margin:0; font-family:Tahoma, Arial, sans-serif; background:#dfffdc; color:#1b1b1b; }
-nav { background:#111822; border-bottom:2px solid #2aff00; display:flex; justify-content:space-between; align-items:center; padding:10px; font-size:14px; }
+body { margin:0; font-family:Tahoma, Arial, sans-serif; background:#f9f9f9; color:#111; }
+nav { background:#222; display:flex; justify-content:space-between; align-items:center; padding:10px; font-size:14px; }
 nav .nav-links { display:flex; gap:12px; }
-nav a { text-decoration:none; color:#2aff00; font-weight:bold; }
+nav a { text-decoration:none; color:#2a9df4; font-weight:bold; }
 .hamburger { display:none; flex-direction:column; cursor:pointer; gap:4px; }
-.hamburger div { width:25px; height:3px; background:#2aff00; }
+.hamburger div { width:25px; height:3px; background:#2a9df4; }
 @media(max-width:600px){
-  nav .nav-links { display:none; flex-direction:column; background:#111822; position:absolute; top:50px; right:10px; padding:10px; border:1px solid #2aff00; border-radius:6px;}
+  nav .nav-links { display:none; flex-direction:column; background:#222; position:absolute; top:50px; right:10px; padding:10px; border-radius:6px;}
   nav .nav-links.show { display:flex; }
   .hamburger { display:flex; }
 }
 
-/* About content */
-.about-container { max-width:800px; margin:40px auto; padding:20px; background:#e6ffe6; border:3px solid #2aff00; box-shadow:0 0 20px #2aff00; border-radius:6px; text-align:center; }
-.about-container h1 { font-family:"Courier New", monospace; margin-bottom:15px; color:#000; }
+.about-container { max-width:800px; margin:40px auto; padding:20px; text-align:center; }
+.about-container h1 { font-family:"Courier New", monospace; margin-bottom:15px; color:#111; }
 .about-container p { font-size:15px; margin-bottom:12px; color:#333; }
-
-/* Three.js canvas */
-#three-container { width:100%; height:400px; margin-top:30px; border:2px solid #2aff00; border-radius:8px; background:#001100; display:flex; justify-content:center; align-items:center; }
+.about-container a { color:#2a9df4; text-decoration:underline; }
+#three-container { width:100%; height:300px; margin-top:30px; background:#e0e0e0; display:flex; justify-content:center; align-items:center; }
 </style>
 </head>
 <body>
 
 <nav>
-  <div>LMSTFY</div>
+  <div>LMSTFY Prank</div>
   <div class="nav-links">
     <a href="index.html">Generator</a>
     <a href="about.html">About</a>
@@ -42,39 +40,37 @@ nav a { text-decoration:none; color:#2aff00; font-weight:bold; }
 </nav>
 
 <div class="about-container">
-  <h1>About LMSTFY</h1>
-  <p>This is a prank/gamer-style search prank site.</p>
-  <p>We automatically generate fake search results for fun.</p>
-  <p>Built with old-school vibes and modern web tech.</p>
+  <h1>About LMSTFY Prank</h1>
+  <p>This site is a simple prank inspired by <a href="https://www.lmgtfy.com" target="_blank">Let Me Google That For You</a>.</p>
+  <p>It automatically types your query and redirects to the search engine for fun.</p>
+  <p>Check out the source code on <a href="https://github.com/GLTdotNS" target="_blank">GitHub</a>.</p>
   <div id="three-container"></div>
 </div>
 
-<!-- Three.js -->
+<!-- Three.js minimal scene -->
 <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
 <script>
-// Basic Three.js scene
+// Minimal Three.js spinning cube
 const scene = new THREE.Scene();
-scene.background = new THREE.Color(0x001100);
+scene.background = new THREE.Color(0xf0f0f0);
 
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth/400, 0.1, 1000);
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth/300, 0.1, 1000);
 const renderer = new THREE.WebGLRenderer({antialias:true});
-renderer.setSize(window.innerWidth, 400);
+renderer.setSize(window.innerWidth, 300);
 document.getElementById('three-container').appendChild(renderer.domElement);
 
-// Cube
 const geometry = new THREE.BoxGeometry();
-const material = new THREE.MeshStandardMaterial({ color: 0x2aff00 });
+const material = new THREE.MeshStandardMaterial({ color: 0x2a9df4 });
 const cube = new THREE.Mesh(geometry, material);
 scene.add(cube);
 
-// Light
-const light = new THREE.PointLight(0x2aff00, 1);
+const light = new THREE.PointLight(0xffffff, 1);
 light.position.set(5,5,5);
 scene.add(light);
-const ambient = new THREE.AmbientLight(0x2aff00, 0.3);
+const ambient = new THREE.AmbientLight(0xffffff, 0.5);
 scene.add(ambient);
 
-camera.position.z = 5;
+camera.position.z = 3;
 
 function animate(){
   requestAnimationFrame(animate);
@@ -84,11 +80,10 @@ function animate(){
 }
 animate();
 
-// Responsive
 window.addEventListener('resize', ()=>{
-  camera.aspect = window.innerWidth/400;
+  camera.aspect = window.innerWidth/300;
   camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth,400);
+  renderer.setSize(window.innerWidth,300);
 });
 </script>
 </body>
