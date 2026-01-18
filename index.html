@@ -132,16 +132,13 @@ function prank(){
 
   // fake typing
   type(input, ()=>{ 
-    // активираме бутон след тайпинг
-    btn.disabled = false;
-    btn.addEventListener('click', ()=>{
-      btn.classList.add("clicked");
-      loader.style.display="inline-block"; // показваме loader
-      setTimeout(()=>{
-        btn.classList.remove("clicked");
-        showResults();
-      },800); // къс delay преди redirect
-    }, {once:true});
+    // Автоматично „натискаме“ бутона
+    btn.classList.add("clicked");
+    loader.style.display="inline-block"; // показваме loader
+    setTimeout(()=>{
+      btn.classList.remove("clicked");
+      showResults();
+    },800); // къс delay преди redirect
   });
 }
 
