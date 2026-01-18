@@ -2,240 +2,174 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>LMSTFY</title>
+<title>LMSTFY - Gamer Style</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
 <style>
-* { box-sizing: border-box; }
+* { box-sizing: border-box; margin:0; padding:0; }
+body { font-family: Tahoma, Arial, sans-serif; background:#0b0f1a; color:#e6e6e6; }
 
-body {
-  margin: 0;
-  font-family: Tahoma, Arial, sans-serif;
-  background: #e6f2e6;
-  color: #1b1b1b;
-}
-
-/* ===== NAV ===== */
+/* ===== NAVIGATION ===== */
 nav {
-  background: #cfe8cf;
-  border-bottom: 2px solid #9bbb9b;
-  padding: 10px;
-  display: flex;
-  gap: 14px;
-  font-size: 14px;
+  background:#111822;
+  border-bottom:2px solid #2aff00;
+  display:flex; gap:12px; padding:10px; font-size:14px;
 }
 nav a {
-  color: #003300;
-  text-decoration: none;
-  font-weight: bold;
+  text-decoration:none; color:#2aff00; font-weight:bold;
 }
 
 /* ===== START PAGE ===== */
 .start {
-  max-width: 420px;
-  margin: 40px auto;
-  padding: 20px;
-  background: #f4fff4;
-  border: 2px solid #9bbb9b;
+  max-width:440px; margin:40px auto; padding:20px;
+  background:#0c1a0c; border:3px solid #2aff00;
+  box-shadow:0 0 20px #2aff00;
+  border-radius:6px;
+  text-align:center;
 }
-
-.start h1 {
-  text-align: center;
-  font-family: "Courier New", monospace;
-}
-
-.start p {
-  text-align: center;
-  font-size: 13px;
-}
-
+.start h1 { font-family:"Courier New", monospace; margin-bottom:10px; color:#2aff00; }
+.start p { font-size:13px; color:#9cff9c; margin-bottom:15px; }
 .start input {
-  width: 100%;
-  padding: 10px;
-  margin: 15px 0;
-  border: 1px solid #999;
+  width:100%; padding:10px; margin-bottom:12px;
+  background:#001100; color:#2aff00; border:1px solid #2aff00;
+  font-family:"Courier New", monospace;
 }
-
 .start button {
-  width: 100%;
-  padding: 10px;
-  margin-top: 6px;
-  background: #ddd;
-  border: 1px solid #666;
-  cursor: pointer;
+  width:100%; padding:10px; margin-bottom:6px;
+  background:#111; border:1px solid #2aff00; color:#2aff00; cursor:pointer;
+  font-family:"Courier New", monospace;
 }
-
-.start button.clicked {
-  background: #999;
-  color: #fff;
-}
+.start button.clicked { background:#2aff00; color:#001100; font-weight:bold; }
 
 /* ===== SEARCH UI ===== */
-.search-wrap {
-  max-width: 700px;
-  margin: 40px auto;
-  padding: 0 16px;
-}
+.search-wrap { max-width:700px; margin:40px auto; padding:0 16px; }
+.search-box { display:flex; gap:8px; flex-wrap:wrap; }
+.search-input { flex:1; padding:14px; font-size:16px; }
+.search-btn { padding:12px 16px; font-size:15px; cursor:pointer; }
 
-.search-box {
-  display: flex;
-  gap: 8px;
-}
+/* Engine specific styles */
+.google .search-input { border-radius:24px; border:1px solid #dfe1e5; }
+.google .search-btn { border-radius:4px; background:#f2f2f2; color:#000; }
+.bing .search-btn { background:#008373; color:#fff; border:none; }
+.ddg .search-btn { background:#de5833; color:#fff; border:none; }
+.brave .search-btn { background:#fb542b; color:#fff; border:none; }
 
-.search-input {
-  flex: 1;
-  padding: 12px;
-  font-size: 16px;
-}
-
-.search-btn {
-  padding: 12px 16px;
-  font-size: 15px;
-  cursor: pointer;
-}
-
-/* engine styles */
-.google .search-input { border-radius: 24px; border: 1px solid #ccc; }
-.google .search-btn { border-radius: 4px; }
-
-.bing .search-btn { background: #008373; color: #fff; border: none; }
-.ddg .search-btn { background: #de5833; color: #fff; border: none; }
-.brave .search-btn { background: #fb542b; color: #fff; border: none; }
-
-/* results */
-.result { margin-top: 20px; }
-.result a { font-size: 18px; color: #1a0dab; text-decoration: none; }
-.result p { font-size: 14px; color: #444; }
+/* RESULTS */
+.result { margin-top:20px; }
+.result a { font-size:18px; color:#1a0dab; text-decoration:none; }
+.result p { font-size:14px; color:#ccc; }
 
 /* ===== FAKE MOUSE ===== */
 .mouse {
-  position: fixed;
-  width: 20px;
-  height: 20px;
-  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20'><polygon points='0,0 0,20 6,14 10,22 14,20 10,12 18,12' fill='black'/></svg>");
-  pointer-events: none;
-  z-index: 9999;
-  transition: transform 0.6s ease;
+  position:fixed; width:20px; height:20px;
+  background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20'><polygon points='0,0 0,20 6,14 10,22 14,20 10,12 18,12' fill='black'/></svg>");
+  pointer-events:none; z-index:9999; transition:transform 0.5s ease;
 }
 </style>
 </head>
 
 <body>
-
 <nav>
   <a href="/">Generator</a>
-  <a href="?page=about">About</a>
-  <a href="?page=how">How it works</a>
-  <a href="?page=hall">Hall of Shame</a>
+  <a href="#">About</a>
+  <a href="#">How it works</a>
+  <a href="#">Hall of Shame</a>
 </nav>
 
 <div id="app"></div>
 
 <script>
 const engines = {
-  google: q => `https://www.google.com/search?q=${encodeURIComponent(q)}`,
-  bing: q => `https://www.bing.com/search?q=${encodeURIComponent(q)}`,
-  duckduckgo: q => `https://duckduckgo.com/?q=${encodeURIComponent(q)}`,
-  brave: q => `https://search.brave.com/search?q=${encodeURIComponent(q)}`
+  google: q=>`https://www.google.com/search?q=${encodeURIComponent(q)}`,
+  bing: q=>`https://www.bing.com/search?q=${encodeURIComponent(q)}`,
+  duckduckgo: q=>`https://duckduckgo.com/?q=${encodeURIComponent(q)}`,
+  brave: q=>`https://search.brave.com/search?q=${encodeURIComponent(q)}`
 };
 
 const params = new URLSearchParams(location.search);
 const engine = params.get("engine");
 const q = params.get("q");
-const page = params.get("page");
 
-/* ===== STATIC PAGES ===== */
-if (page && !engine) {
-  document.getElementById("app").innerHTML = `
-    <div class="start">
-      <h1>${page}</h1>
-      <p>This page exists purely for future trolling purposes.</p>
-    </div>`;
-}
+/* ===== START PAGE ===== */
+if(!engine){
+document.getElementById("app").innerHTML = `
+<div class="start">
+<h1>LMSTFY.exe</h1>
+<p>Oldschool gamer-style search assistant.<br>Because thinking is hard.</p>
+<input id="query" placeholder="Type your question">
+<button onclick="gen(this,'google')">Google</button>
+<button onclick="gen(this,'bing')">Bing</button>
+<button onclick="gen(this,'duckduckgo')">DuckDuckGo</button>
+<button onclick="gen(this,'brave')">Brave</button>
+<p id="status"></p>
+</div>`;}
 
-/* ===== START ===== */
-if (!engine && !page) {
-  document.getElementById("app").innerHTML = `
-    <div class="start">
-      <h1>LMSTFY</h1>
-      <p>Because searching is apparently difficult.</p>
-      <input id="query" placeholder="type your dumb question">
-      <button onclick="gen(this,'google')">Google</button>
-      <button onclick="gen(this,'bing')">Bing</button>
-      <button onclick="gen(this,'duckduckgo')">DuckDuckGo</button>
-      <button onclick="gen(this,'brave')">Brave</button>
-      <p id="status"></p>
-    </div>`;
-}
-
-function gen(btn, engine) {
-  const q = document.getElementById("query").value.trim();
-  if (!q) return;
-  document.querySelectorAll("button").forEach(b => b.classList.remove("clicked"));
+function gen(btn, engine){
+  const q=document.getElementById("query").value.trim();
+  if(!q) return;
+  document.querySelectorAll(".start button").forEach(b=>b.classList.remove("clicked"));
   btn.classList.add("clicked");
-  const url = location.origin + `?engine=${engine}&q=${encodeURIComponent(q)}`;
+
+  const url = location.origin+`?engine=${engine}&q=${encodeURIComponent(q)}`;
   navigator.clipboard.writeText(url);
-  document.getElementById("status").textContent = "Link copied.";
+
+  document.getElementById("status").textContent="Link copied + redirecting...";
+  setTimeout(()=>{ location.href=url; },600);
 }
 
-/* ===== PRANK ===== */
-if (engine && q) prank();
+/* ===== PRANK MODE ===== */
+if(engine && q) prank();
 
-function prank() {
-  document.body.style.overflow = "hidden";
+function prank(){
+  document.body.style.overflow="hidden";
 
-  document.getElementById("app").innerHTML = `
-    <div class="search-wrap ${engine}">
-      <div class="search-box">
-        <input class="search-input" id="input">
-        <button class="search-btn" id="btn">Search</button>
-      </div>
-      <div id="results"></div>
-    </div>`;
+  document.getElementById("app").innerHTML=`
+<div class="search-wrap ${engine}">
+  <div class="search-box">
+    <input class="search-input" id="input">
+    <button class="search-btn" id="btn">Search</button>
+  </div>
+  <div id="results"></div>
+</div>`;
 
-  const mouse = document.createElement("div");
-  mouse.className = "mouse";
+  const mouse=document.createElement("div");
+  mouse.className="mouse";
   document.body.appendChild(mouse);
 
-  const input = document.getElementById("input");
-  const btn = document.getElementById("btn");
+  const input=document.getElementById("input");
+  const btn=document.getElementById("btn");
 
-  input.scrollIntoView({ block: "center" });
-
-  setTimeout(() => {
-    move(mouse, input);
-    type(input, () => {
-      btn.scrollIntoView({ block: "center" });
-      setTimeout(() => {
-        move(mouse, btn);
-        setTimeout(showResults, 700);
-      }, 500);
+  // Fix: scroll container & delay to stabilize layout
+  input.scrollIntoView({block:"center"});
+  setTimeout(()=>{
+    move(mouse,input);
+    type(input,()=>{
+      // Move mouse to button exactly
+      btn.scrollIntoView({block:"center"});
+      setTimeout(()=>move(mouse,btn),300);
+      setTimeout(showResults,900);
     });
-  }, 400);
+  },400);
 }
 
-function move(mouse, el) {
-  const r = el.getBoundingClientRect();
-  mouse.style.transform =
-    `translate(${r.left + r.width / 2}px, ${r.top + r.height / 2}px)`;
+function move(mouse,el){
+  const r=el.getBoundingClientRect();
+  mouse.style.transform=`translate(${r.left+r.width/2}px,${r.top+r.height/2}px)`;
 }
 
-function type(input, done) {
-  let i = 0;
-  const t = setInterval(() => {
-    input.value += q[i++];
-    if (i >= q.length) {
-      clearInterval(t);
-      done();
-    }
-  }, 120);
+function type(input,done){
+  let i=0;
+  const t=setInterval(()=>{
+    input.value+=q[i++];
+    if(i>=q.length){ clearInterval(t); done(); }
+  },120);
 }
 
-function showResults() {
-  document.getElementById("results").innerHTML = `
-    <div class="result"><a href="#">How to use a search engine</a><p>Seriously.</p></div>
-    <div class="result"><a href="#">Beginner internet guide</a><p>This might help.</p></div>`;
-  setTimeout(() => location.href = engines[engine](q), 3000);
+function showResults(){
+  const r=document.getElementById("results");
+  r.innerHTML=`
+<div class="result"><a href="#">How to use a search engine</a><p>Seriously.</p></div>
+<div class="result"><a href="#">Beginner internet guide</a><p>This might help.</p></div>`;
+  setTimeout(()=>location.href=engines[engine](q),3000);
 }
 </script>
 </body>
