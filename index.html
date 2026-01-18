@@ -1,169 +1,281 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Let Me Search That For You</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta charset="UTF-8">
+<title>Let Me Search That For You</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <style>
-    body {
-      background: #c0c0c0;
-      font-family: "Courier New", monospace;
-      padding: 20px;
-      margin: 0;
-    }
+<style>
+/* ====== GLOBAL OLD SCHOOL ====== */
+body {
+  margin: 0;
+  padding: 20px;
+  background: #c0c0c0;
+  font-family: "Courier New", monospace;
+}
 
-    .window {
-      max-width: 520px;
-      margin: auto;
-      background: #fff;
-      border: 3px solid #000;
-      box-shadow: 8px 8px 0 #000;
-    }
+.window {
+  max-width: 700px;
+  margin: auto;
+  background: #fff;
+  border: 3px solid #000;
+  box-shadow: 8px 8px 0 #000;
+}
 
-    .titlebar {
-      background: navy;
-      color: white;
-      padding: 6px;
-      font-weight: bold;
-      font-size: 14px;
-    }
+.titlebar {
+  background: navy;
+  color: white;
+  padding: 6px;
+  font-weight: bold;
+  font-size: 14px;
+}
 
-    .content {
-      padding: 15px;
-    }
+.content {
+  padding: 15px;
+}
 
-    input {
-      width: 100%;
-      padding: 8px;
-      font-family: inherit;
-      font-size: 14px;
-      border: 2px inset #000;
-      margin-bottom: 12px;
-    }
+input {
+  width: 100%;
+  padding: 8px;
+  font-family: inherit;
+  font-size: 14px;
+  border: 2px inset #000;
+  margin-bottom: 12px;
+}
 
-    button {
-      width: 100%;
-      padding: 8px;
-      margin-bottom: 6px;
-      font-family: inherit;
-      font-size: 14px;
-      background: #e0e0e0;
-      border: 2px outset #000;
-      cursor: pointer;
-    }
+button {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 6px;
+  font-family: inherit;
+  font-size: 14px;
+  background: #e0e0e0;
+  border: 2px outset #000;
+  cursor: pointer;
+}
 
-    button:active,
-    button.clicked {
-      border: 2px inset #000;
-      background: #c0c0c0;
-    }
+button.clicked {
+  border: 2px inset #000;
+  background: #c0c0c0;
+  color: darkred;
+  font-weight: bold;
+}
 
-    button.clicked {
-      color: darkred;
-      font-weight: bold;
-    }
+.sarcasm {
+  font-size: 12px;
+  margin-bottom: 10px;
+}
 
-    .sarcasm {
-      font-size: 12px;
-      margin-bottom: 10px;
-    }
+.status {
+  font-size: 12px;
+  margin-top: 10px;
+}
 
-    .status {
-      font-size: 12px;
-      margin-top: 10px;
-      color: #333;
-    }
-  </style>
+/* ====== GOOGLE FAKE UI ====== */
+.google {
+  font-family: Arial, sans-serif;
+}
+
+.google-logo {
+  text-align: center;
+  font-size: 48px;
+  font-weight: bold;
+  margin: 30px 0;
+}
+
+.google-logo span:nth-child(1){color:#4285f4}
+.google-logo span:nth-child(2){color:#ea4335}
+.google-logo span:nth-child(3){color:#fbbc05}
+.google-logo span:nth-child(4){color:#4285f4}
+.google-logo span:nth-child(5){color:#34a853}
+.google-logo span:nth-child(6){color:#ea4335}
+
+.google-input {
+  width: 90%;
+  max-width: 600px;
+  margin: auto;
+  display: block;
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 24px;
+  border: 1px solid #dfe1e5;
+}
+
+.result {
+  max-width: 600px;
+  margin: 20px auto;
+}
+
+.result a {
+  color: #1a0dab;
+  font-size: 18px;
+  text-decoration: none;
+}
+
+.result p {
+  font-size: 14px;
+  color: #4d5156;
+}
+
+/* ====== BING ====== */
+.bing-logo {
+  font-size: 36px;
+  color: #008373;
+  font-family: Arial, sans-serif;
+  margin: 20px;
+}
+
+/* ====== DDG ====== */
+.ddg-logo {
+  font-size: 32px;
+  font-family: Arial, sans-serif;
+  margin: 20px;
+}
+</style>
 </head>
+
 <body>
 
 <div class="window" id="app">
   <div class="titlebar">Let Me Search That For You</div>
   <div class="content">
     <p class="sarcasm">
-      Type your question below.<br>
-      Yes. The entire question.
+      Type your question.<br>
+      Yes. Like an adult.
     </p>
 
-    <input id="query" placeholder="How does the internet work?" />
+    <input id="query" placeholder="How does Google work?" />
 
-    <button onclick="generate(this, 'google')">Google</button>
-    <button onclick="generate(this, 'bing')">Bing</button>
-    <button onclick="generate(this, 'duckduckgo')">DuckDuckGo</button>
-    <button onclick="generate(this, 'brave')">Brave Search</button>
+    <button onclick="generate(this,'google')">Google</button>
+    <button onclick="generate(this,'bing')">Bing</button>
+    <button onclick="generate(this,'duckduckgo')">DuckDuckGo</button>
+    <button onclick="generate(this,'brave')">Brave Search</button>
 
     <div class="status" id="status"></div>
   </div>
 </div>
 
 <script>
-  const engines = {
-    google: "https://www.google.com/search?q=",
-    bing: "https://www.bing.com/search?q=",
-    duckduckgo: "https://duckduckgo.com/?q=",
-    brave: "https://search.brave.com/search?q="
-  };
-
-  function generate(button, engine) {
-    const q = document.getElementById("query").value.trim();
-    if (!q) return;
-
-    // visual feedback
-    document.querySelectorAll("button").forEach(b => b.classList.remove("clicked"));
-    button.classList.add("clicked");
-
-    const status = document.getElementById("status");
-    status.textContent = "Wow. You actually clicked a button. Impressive.";
-
-    const url =
-      location.origin +
-      "?q=" +
-      encodeURIComponent(q) +
-      "&engine=" +
-      engine;
-
-    navigator.clipboard.writeText(url);
-
-    status.textContent =
-      "Link copied. Now wait. We are doing the hard part for you...";
+const engines = {
+  google: {
+    real: q => "https://www.google.com/search?q=" + encodeURIComponent(q)
+  },
+  bing: {
+    real: q => "https://www.bing.com/search?q=" + encodeURIComponent(q)
+  },
+  duckduckgo: {
+    real: q => "https://duckduckgo.com/?q=" + encodeURIComponent(q)
+  },
+  brave: {
+    real: q => "https://search.brave.com/search?q=" + encodeURIComponent(q)
   }
+};
 
-  const params = new URLSearchParams(location.search);
-  const q = params.get("q");
-  const engine = params.get("engine");
+function generate(btn, engine) {
+  const q = document.getElementById("query").value.trim();
+  if (!q) return;
 
-  if (q && engine && engines[engine]) {
-    document.getElementById("app").innerHTML = `
-      <div class="titlebar">Searching the web...</div>
-      <div class="content">
-        <p class="sarcasm">
-          Incredible.<br>
-          Someone else is typing this for you.
-        </p>
-        <input id="fake" />
-        <p class="status">
-          Please wait. This is very complicated.
-        </p>
+  document.querySelectorAll("button").forEach(b => b.classList.remove("clicked"));
+  btn.classList.add("clicked");
+
+  const url = location.origin + "?q=" + encodeURIComponent(q) + "&engine=" + engine;
+  navigator.clipboard.writeText(url);
+
+  document.getElementById("status").textContent =
+    "Link copied. Someone else will now enjoy this experience.";
+}
+
+/* ====== RENDER FAKE SEARCH ====== */
+const params = new URLSearchParams(location.search);
+const q = params.get("q");
+const engine = params.get("engine");
+
+if (q && engine && engines[engine]) {
+  renderFake(engine, q);
+}
+
+function renderFake(engine, q) {
+  let html = "";
+
+  if (engine === "google") {
+    html = `
+    <div class="google">
+      <div class="google-logo">
+        <span>G</span><span>o</span><span>o</span><span>g</span><span>l</span><span>e</span>
       </div>
-    `;
-
-    const fake = document.getElementById("fake");
-    let i = 0;
-
-    const interval = setInterval(() => {
-      fake.value += q[i];
-      i++;
-
-      if (i >= q.length) {
-        clearInterval(interval);
-        setTimeout(() => {
-          window.location.href =
-            engines[engine] + encodeURIComponent(q);
-        }, 2500); // BIGGER DELAY 😈
-      }
-    }, 150);
+      <input class="google-input" id="fakeInput">
+      <div class="result">
+        <a href="#">How to use Google Search</a>
+        <p>Learn how to type questions into Google.</p>
+      </div>
+      <div class="result">
+        <a href="#">Google Search Basics</a>
+        <p>This tutorial explains the basics of searching.</p>
+      </div>
+    </div>`;
   }
+
+  if (engine === "bing") {
+    html = `
+    <div>
+      <div class="bing-logo">Bing</div>
+      <input class="google-input" id="fakeInput">
+      <div class="result">
+        <a href="#">What is Bing search?</a>
+        <p>Bing helps you find things on the internet.</p>
+      </div>
+    </div>`;
+  }
+
+  if (engine === "duckduckgo") {
+    html = `
+    <div>
+      <div class="ddg-logo">🦆 DuckDuckGo</div>
+      <input class="google-input" id="fakeInput">
+      <div class="result">
+        <a href="#">DuckDuckGo Search</a>
+        <p>Privacy-respecting search engine.</p>
+      </div>
+    </div>`;
+  }
+
+  if (engine === "brave") {
+    html = `
+    <div>
+      <div class="bing-logo">Brave Search</div>
+      <input class="google-input" id="fakeInput">
+      <div class="result">
+        <a href="#">Brave Search Engine</a>
+        <p>Independent search for the web.</p>
+      </div>
+    </div>`;
+  }
+
+  document.getElementById("app").innerHTML = `
+    <div class="titlebar">Searching...</div>
+    <div class="content">
+      <p class="sarcasm">
+        Wow.<br>
+        Someone is literally typing this for you.
+      </p>
+      ${html}
+      <p class="status">Please wait. This takes effort.</p>
+    </div>
+  `;
+
+  const input = document.getElementById("fakeInput");
+  let i = 0;
+
+  const interval = setInterval(() => {
+    input.value += q[i++];
+    if (i >= q.length) {
+      clearInterval(interval);
+      setTimeout(() => {
+        window.location.href = engines[engine].real(q);
+      }, 3000);
+    }
+  }, 140);
+}
 </script>
 
 </body>
