@@ -2,366 +2,222 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>FreeReporter — News & Analysis</title>
 
-  <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <meta name="description" content="FreeReporter — clean, fast, mobile-first news landing with a mega menu built with Tailwind CSS." />
   <style>
-    /* small helper for smooth accordion (transitioning max-height) */
+    .menu-panel {
+      transition: transform .3s ease, opacity .2s ease;
+    }
     .max-h-0 { max-height: 0; }
-    .max-h-96 { max-height: 24rem; } /* enough for nested lists */
-    .menu-panel { transition: transform .32s cubic-bezier(.2,.9,.2,1), opacity .24s; }
-    .fade { transition: opacity .24s; }
-    /* desktop mega-panel animation */
-    .mega-enter { transform: translateY(.5rem); opacity: 0; }
-    .mega-enter-active { transform: translateY(0); opacity: 1; transition: transform .22s ease, opacity .2s ease; }
+    .max-h-96 { max-height: 24rem; }
   </style>
 </head>
-<body class="antialiased text-slate-800 bg-slate-50">
 
-  <!-- Header -->
-  <header class="bg-white border-b sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-16">
-        <!-- Brand -->
-        <div class="flex items-center gap-4">
-          <a href="#" class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-md bg-red-600 text-white flex items-center justify-center font-bold">FR</div>
-            <div class="hidden sm:block">
-              <h1 class="text-lg font-semibold">FreeReporter</h1>
-              <p class="text-xs text-slate-500 -mt-1">News & Analysis</p>
-            </div>
-          </a>
+<body class="bg-slate-50 text-slate-800">
+
+<!-- ================= HEADER ================= -->
+<header class="bg-white border-b sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="h-16 flex items-center justify-between">
+
+      <!-- Logo -->
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 bg-red-600 text-white font-bold flex items-center justify-center rounded">
+          FR
         </div>
-
-        <!-- Search (desktop) -->
-        <div class="hidden md:flex md:items-center md:space-x-4">
-          <div class="relative">
-            <input type="search" placeholder="Search news..." class="w-64 pl-3 pr-10 py-2 rounded-md border bg-slate-50 text-sm focus:outline-none focus:ring-2 focus:ring-red-400" />
-            <button class="absolute right-1 top-1/2 -translate-y-1/2 text-slate-500 px-2">🔎</button>
-          </div>
-        </div>
-
-        <!-- Actions -->
-        <div class="flex items-center gap-3">
-          <!-- Desktop nav trigger for mega menu -->
-          <nav class="hidden md:block">
-            <ul class="flex items-center gap-2">
-              <li class="group relative">
-                <button class="px-3 py-2 rounded-md text-sm font-medium hover:bg-slate-100 focus:outline-none" aria-expanded="false" aria-controls="mega-1">
-                  Sections
-                </button>
-
-                <!-- MEGA PANEL (desktop) -->
-                <div id="mega-1" class="absolute left-0 mt-2 w-screen max-w-4xl bg-white border rounded-md shadow-lg opacity-0 pointer-events-none group-hover:opacity-100 group-focus-within:opacity-100 group-hover:pointer-events-auto group-focus-within:pointer-events-auto transform -translate-y-1 group-hover:translate-y-0 menu-panel"
-                     role="menu" aria-hidden="true">
-                  <div class="p-6 grid grid-cols-2 gap-6 md:grid-cols-4">
-                    <div>
-                      <h3 class="font-semibold mb-2">World</h3>
-                      <ul class="space-y-1 text-sm text-slate-600">
-                        <li><a href="#" class="block hover:text-red-600">Europe</a></li>
-                        <li><a href="#" class="block hover:text-red-600">Asia</a></li>
-                        <li><a href="#" class="block hover:text-red-600">Americas</a></li>
-                        <li><a href="#" class="block hover:text-red-600">Africa</a></li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h3 class="font-semibold mb-2">Technology</h3>
-                      <ul class="space-y-1 text-sm text-slate-600">
-                        <li><a href="#" class="block hover:text-red-600">AI & ML</a></li>
-                        <li><a href="#" class="block hover:text-red-600">Gadgets</a></li>
-                        <li><a href="#" class="block hover:text-red-600">Startups</a></li>
-                        <li><a href="#" class="block hover:text-red-600">Security</a></li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h3 class="font-semibold mb-2">Lifestyle</h3>
-                      <ul class="space-y-1 text-sm text-slate-600">
-                        <li><a href="#" class="block hover:text-red-600">Travel</a></li>
-                        <li><a href="#" class="block hover:text-red-600">Food</a></li>
-                        <li><a href="#" class="block hover:text-red-600">Health</a></li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h3 class="font-semibold mb-2">Sports</h3>
-                      <ul class="space-y-1 text-sm text-slate-600">
-                        <li><a href="#" class="block hover:text-red-600">Football</a></li>
-                        <li><a href="#" class="block hover:text-red-600">Basketball</a></li>
-                        <li><a href="#" class="block hover:text-red-600">Tennis</a></li>
-                        <li><a href="#" class="block hover:text-red-600">More</a></li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div class="border-t px-6 py-4 text-sm text-slate-500">Trending: <a href="#" class="text-red-600 hover:underline">Elections</a> · <a href="#" class="text-red-600 hover:underline">AI breakthroughs</a></div>
-                </div>
-              </li>
-            </ul>
-          </nav>
-
-          <!-- Mobile menu button -->
-          <button id="mobileMenuBtn" aria-label="Open menu" class="p-2 rounded-md hover:bg-slate-100 md:hidden focus:outline-none">
-            <svg id="burgerIcon" class="w-6 h-6 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
-            <svg id="closeIcon" class="w-6 h-6 text-slate-700 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-          </button>
+        <div class="hidden sm:block">
+          <div class="font-semibold">FreeReporter</div>
+          <div class="text-xs text-slate-500 -mt-1">News & Analysis</div>
         </div>
       </div>
-    </div>
 
-    <!-- Mobile Mega Menu Panel (slide-in) -->
-    <div id="mobileMenuPanel" class="fixed inset-0 z-40 pointer-events-none">
-      <!-- overlay -->
-      <div id="mobileOverlay" class="absolute inset-0 bg-black/40 opacity-0 transition-opacity duration-250"></div>
-
-      <!-- panel -->
-      <aside class="absolute inset-y-0 left-0 w-full max-w-xs sm:max-w-md bg-white shadow-xl transform -translate-x-full menu-panel" aria-hidden="true" role="dialog" aria-modal="true">
-        <div class="px-4 pt-6 pb-4">
-          <div class="flex items-center justify-between">
-            <div class="flex items-center gap-3">
-              <div class="w-9 h-9 rounded-md bg-red-600 text-white flex items-center justify-center font-bold">FR</div>
-              <div>
-                <h2 class="text-lg font-semibold">FreeReporter</h2>
-                <p class="text-xs text-slate-500">All the latest</p>
-              </div>
-            </div>
-            <button id="mobileClose" class="p-2 rounded-md hover:bg-slate-100 focus:outline-none">
-              <svg class="w-6 h-6 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      <!-- Desktop nav -->
+      <nav class="hidden md:block">
+        <ul class="flex gap-4 items-center">
+          <li class="group relative">
+            <button class="px-3 py-2 rounded hover:bg-slate-100 font-medium">
+              Sections
             </button>
-          </div>
 
-          <!-- Search -->
-          <div class="mt-4">
-            <input id="mobileSearch" type="search" placeholder="Search news..." class="w-full pl-3 pr-3 py-2 rounded-md border bg-slate-50 text-sm focus:outline-none focus:ring-2 focus:ring-red-400" />
-          </div>
-        </div>
+            <!-- ================= DESKTOP MEGA MENU ================= -->
+            <div class="absolute left-1/2 -translate-x-1/2 top-full mt-3 w-screen max-w-6xl bg-white border rounded-xl shadow-xl opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto menu-panel">
 
-        <!-- Accordion menu (mobile-first nested links) -->
-        <nav class="px-4 pb-6 overflow-auto">
-          <ul class="space-y-2">
-            <!-- Category item with nested -->
-            <li class="border-b">
-              <button class="w-full flex items-center justify-between py-3 text-left" data-accordion>
-                <span class="font-medium">World</span>
-                <svg class="w-5 h-5 text-slate-500 transform transition-transform" data-acc-icon viewBox="0 0 20 20" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 8l4 4 4-4"/></svg>
-              </button>
-              <div class="max-h-0 overflow-hidden transition-all duration-300" data-acc-panel>
-                <ul class="pl-3 pb-3 space-y-1 text-sm text-slate-600">
-                  <li><a href="#" class="block py-1 hover:text-red-600">Europe</a></li>
-                  <li><a href="#" class="block py-1 hover:text-red-600">Asia</a></li>
-                  <li><a href="#" class="block py-1 hover:text-red-600">Americas</a></li>
-                  <li><a href="#" class="block py-1 hover:text-red-600">Africa</a></li>
-                </ul>
+              <div class="grid grid-cols-5 gap-6 p-6">
+
+                <!-- World -->
+                <div>
+                  <h4 class="text-sm font-semibold uppercase text-slate-500 mb-3">World</h4>
+                  <ul class="space-y-2 text-sm">
+                    <li><a href="#" class="hover:text-red-600">Europe</a></li>
+                    <li><a href="#" class="hover:text-red-600">Asia</a></li>
+                    <li><a href="#" class="hover:text-red-600">Americas</a></li>
+                    <li><a href="#" class="hover:text-red-600">Middle East</a></li>
+                    <li><a href="#" class="hover:text-red-600">Africa</a></li>
+                  </ul>
+                </div>
+
+                <!-- Politics -->
+                <div>
+                  <h4 class="text-sm font-semibold uppercase text-slate-500 mb-3">Politics</h4>
+                  <ul class="space-y-2 text-sm">
+                    <li><a href="#" class="hover:text-red-600">Elections</a></li>
+                    <li><a href="#" class="hover:text-red-600">Policy</a></li>
+                    <li><a href="#" class="hover:text-red-600">White House</a></li>
+                    <li><a href="#" class="hover:text-red-600">Geopolitics</a></li>
+                  </ul>
+                </div>
+
+                <!-- Technology -->
+                <div>
+                  <h4 class="text-sm font-semibold uppercase text-slate-500 mb-3">Technology</h4>
+                  <ul class="space-y-2 text-sm">
+                    <li><a href="#" class="hover:text-red-600">AI & ML</a></li>
+                    <li><a href="#" class="hover:text-red-600">Cybersecurity</a></li>
+                    <li><a href="#" class="hover:text-red-600">Startups</a></li>
+                    <li><a href="#" class="hover:text-red-600">Gadgets</a></li>
+                  </ul>
+                </div>
+
+                <!-- Business -->
+                <div>
+                  <h4 class="text-sm font-semibold uppercase text-slate-500 mb-3">Business</h4>
+                  <ul class="space-y-2 text-sm">
+                    <li><a href="#" class="hover:text-red-600">Markets</a></li>
+                    <li><a href="#" class="hover:text-red-600">Economy</a></li>
+                    <li><a href="#" class="hover:text-red-600">Companies</a></li>
+                    <li><a href="#" class="hover:text-red-600">Finance</a></li>
+                  </ul>
+                </div>
+
+                <!-- Featured -->
+                <div class="bg-slate-50 rounded-lg overflow-hidden">
+                  <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&q=60" class="h-28 w-full object-cover">
+                  <div class="p-3">
+                    <div class="text-xs text-slate-500 mb-1">Featured</div>
+                    <h5 class="text-sm font-semibold leading-tight">
+                      Global leaders agree on new climate roadmap
+                    </h5>
+                    <a href="#" class="text-xs text-red-600 mt-2 inline-block">
+                      Read analysis →
+                    </a>
+                  </div>
+                </div>
+
               </div>
-            </li>
 
-            <li class="border-b">
-              <button class="w-full flex items-center justify-between py-3 text-left" data-accordion>
-                <span class="font-medium">Technology</span>
-                <svg class="w-5 h-5 text-slate-500 transform transition-transform" data-acc-icon viewBox="0 0 20 20" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 8l4 4 4-4"/></svg>
-              </button>
-              <div class="max-h-0 overflow-hidden transition-all duration-300" data-acc-panel>
-                <ul class="pl-3 pb-3 space-y-1 text-sm text-slate-600">
-                  <li><a href="#" class="block py-1 hover:text-red-600">AI & ML</a></li>
-                  <li><a href="#" class="block py-1 hover:text-red-600">Gadgets</a></li>
-                  <li><a href="#" class="block py-1 hover:text-red-600">Startups</a></li>
-                  <li>
-                    <!-- Nested accordion inside -->
-                    <button class="w-full flex items-center justify-between py-1 text-left text-sm" data-accordion>
-                      <span>Security</span>
-                      <svg class="w-4 h-4 text-slate-400 transform transition-transform" data-acc-icon viewBox="0 0 20 20" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 8l4 4 4-4"/></svg>
-                    </button>
-                    <div class="max-h-0 overflow-hidden transition-all duration-300" data-acc-panel>
-                      <ul class="pl-3 pb-2 space-y-1 text-sm text-slate-600">
-                        <li><a href="#" class="block py-1 hover:text-red-600">Vulnerabilities</a></li>
-                        <li><a href="#" class="block py-1 hover:text-red-600">Privacy</a></li>
-                      </ul>
-                    </div>
-                  </li>
-                </ul>
+              <!-- Trending -->
+              <div class="border-t px-6 py-3 text-sm text-slate-500">
+                Trending:
+                <a href="#" class="text-red-600 hover:underline ml-1">Elections</a>,
+                <a href="#" class="text-red-600 hover:underline ml-1">AI Regulation</a>,
+                <a href="#" class="text-red-600 hover:underline ml-1">War in Ukraine</a>
               </div>
-            </li>
 
-            <li class="border-b">
-              <button class="w-full flex items-center justify-between py-3 text-left" data-accordion>
-                <span class="font-medium">Lifestyle</span>
-                <svg class="w-5 h-5 text-slate-500 transform transition-transform" data-acc-icon viewBox="0 0 20 20" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 8l4 4 4-4"/></svg>
-              </button>
-              <div class="max-h-0 overflow-hidden transition-all duration-300" data-acc-panel>
-                <ul class="pl-3 pb-3 space-y-1 text-sm text-slate-600">
-                  <li><a href="#" class="block py-1 hover:text-red-600">Travel</a></li>
-                  <li><a href="#" class="block py-1 hover:text-red-600">Food</a></li>
-                  <li><a href="#" class="block py-1 hover:text-red-600">Health</a></li>
-                </ul>
-              </div>
-            </li>
+            </div>
+          </li>
+        </ul>
+      </nav>
 
-            <li class="border-b">
-              <button class="w-full flex items-center justify-between py-3 text-left" data-accordion>
-                <span class="font-medium">Sports</span>
-                <svg class="w-5 h-5 text-slate-500 transform transition-transform" data-acc-icon viewBox="0 0 20 20" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 8l4 4 4-4"/></svg>
-              </button>
-              <div class="max-h-0 overflow-hidden transition-all duration-300" data-acc-panel>
-                <ul class="pl-3 pb-3 space-y-1 text-sm text-slate-600">
-                  <li><a href="#" class="block py-1 hover:text-red-600">Football</a></li>
-                  <li><a href="#" class="block py-1 hover:text-red-600">Basketball</a></li>
-                </ul>
-              </div>
-            </li>
+      <!-- Mobile button -->
+      <button id="mobileBtn" class="md:hidden p-2">
+        ☰
+      </button>
 
-            <li class="pt-3">
-              <a href="#" class="block py-2 px-2 rounded-md text-sm bg-red-600 text-white text-center">Subscribe</a>
-            </li>
-          </ul>
-        </nav>
-      </aside>
     </div>
-  </header>
+  </div>
+</header>
 
-  <!-- Main content -->
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-    <!-- Hero -->
-    <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <article class="md:col-span-2 bg-white rounded-md shadow-sm overflow-hidden">
-        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1600&q=60&auto=format&fit=crop" alt="Headline" class="w-full h-64 object-cover">
-        <div class="p-6">
-          <div class="text-sm text-slate-500">World · 2h ago</div>
-          <h2 class="mt-2 text-2xl font-bold">Global Summit Sets New Agenda for Climate Action</h2>
-          <p class="mt-3 text-slate-700">Leaders from around the world agreed to accelerate clean energy investments and phase out subsidies for fossil fuels...</p>
-          <div class="mt-4 flex items-center gap-3">
-            <a href="#" class="text-red-600 font-medium hover:underline">Read more →</a>
-            <span class="text-sm text-slate-500">• 6 min read</span>
-          </div>
-        </div>
-      </article>
+<!-- ================= MOBILE MULTILEVEL MENU ================= -->
+<div id="mobileMenu" class="fixed inset-0 bg-black/40 hidden z-50">
+  <aside class="absolute left-0 top-0 h-full w-80 bg-white p-4 overflow-y-auto">
 
-      <aside class="space-y-4">
-        <div class="bg-white p-4 rounded-md shadow-sm">
-          <h3 class="font-semibold mb-2">Top stories</h3>
-          <ul class="space-y-3 text-sm text-slate-700">
-            <li><a href="#" class="hover:text-red-600">Breakthrough in battery tech promises longer range</a></li>
-            <li><a href="#" class="hover:text-red-600">Local elections turnout hits record high</a></li>
-            <li><a href="#" class="hover:text-red-600">New streaming service announces global launch</a></li>
-          </ul>
-        </div>
-
-        <div class="bg-white p-4 rounded-md shadow-sm">
-          <h3 class="font-semibold mb-2">Most read</h3>
-          <ol class="list-decimal list-inside text-sm text-slate-700 space-y-1">
-            <li><a href="#" class="hover:text-red-600">AI shaping the job market — what to expect</a></li>
-            <li><a href="#" class="hover:text-red-600">Top 10 travel spots this year</a></li>
-            <li><a href="#" class="hover:text-red-600">Health: simple habits that make a difference</a></li>
-          </ol>
-        </div>
-      </aside>
-    </section>
-
-    <!-- Grid of sections -->
-    <section class="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
-      <div class="bg-white p-4 rounded-md shadow-sm">
-        <h4 class="font-semibold mb-3">Technology</h4>
-        <article class="space-y-2">
-          <a href="#" class="block text-sm font-medium hover:text-red-600">How small startups are driving big AI progress</a>
-          <p class="text-sm text-slate-600">Investors pour money into emerging teams focused on specialized models...</p>
-        </article>
-      </div>
-
-      <div class="bg-white p-4 rounded-md shadow-sm">
-        <h4 class="font-semibold mb-3">Culture</h4>
-        <article class="space-y-2">
-          <a href="#" class="block text-sm font-medium hover:text-red-600">The rise of immersive theater</a>
-          <p class="text-sm text-slate-600">Audiences are choosing experiences that blur the line between stage and reality...</p>
-        </article>
-      </div>
-
-      <div class="bg-white p-4 rounded-md shadow-sm">
-        <h4 class="font-semibold mb-3">Business</h4>
-        <article class="space-y-2">
-          <a href="#" class="block text-sm font-medium hover:text-red-600">Markets react to central bank signals</a>
-          <p class="text-sm text-slate-600">Stocks fluctuated after the latest guidance on interest rates...</p>
-        </article>
-      </div>
-    </section>
-  </main>
-
-  <!-- Footer -->
-  <footer class="bg-white border-t">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 text-sm text-slate-600">
-      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-        <div>© <span id="year"></span> FreeReporter — Free news for everyone.</div>
-        <div class="flex items-center gap-4">
-          <a href="#" class="hover:text-red-600">Privacy</a>
-          <a href="#" class="hover:text-red-600">Terms</a>
-          <a href="#" class="hover:text-red-600">Contact</a>
-        </div>
-      </div>
+    <div class="flex justify-between items-center mb-4">
+      <div class="font-semibold text-lg">Sections</div>
+      <button onclick="toggleMobile()">✕</button>
     </div>
-  </footer>
 
-  <!-- Minimal JS for menu and accordion -->
-  <script>
-    // set year
-    document.getElementById('year').textContent = new Date().getFullYear();
+    <ul class="space-y-3 text-sm">
 
-    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-    const mobileMenuPanel = document.getElementById('mobileMenuPanel');
-    const mobileOverlay = document.getElementById('mobileOverlay');
-    const mobileClose = document.getElementById('mobileClose');
-    const burgerIcon = document.getElementById('burgerIcon');
-    const closeIcon = document.getElementById('closeIcon');
-    const panelAside = mobileMenuPanel.querySelector('aside');
+      <!-- WORLD -->
+      <li>
+        <button class="w-full flex justify-between font-medium" onclick="toggleAcc(this)">
+          World <span>▾</span>
+        </button>
+        <ul class="ml-4 mt-2 space-y-1 hidden">
+          <li><a href="#">Europe</a></li>
+          <li><a href="#">Asia</a></li>
+          <li><a href="#">Americas</a></li>
+          <li><a href="#">Africa</a></li>
+        </ul>
+      </li>
 
-    function openMobileMenu() {
-      mobileMenuPanel.classList.remove('pointer-events-none');
-      mobileOverlay.classList.remove('opacity-0');
-      panelAside.classList.remove('-translate-x-full');
-      panelAside.classList.add('translate-x-0');
-      burgerIcon.classList.add('hidden');
-      closeIcon.classList.remove('hidden');
-      document.body.style.overflow = 'hidden';
-      panelAside.setAttribute('aria-hidden', 'false');
-    }
+      <!-- TECHNOLOGY (NESTED LEVEL 2) -->
+      <li>
+        <button class="w-full flex justify-between font-medium" onclick="toggleAcc(this)">
+          Technology <span>▾</span>
+        </button>
+        <ul class="ml-4 mt-2 space-y-2 hidden">
 
-    function closeMobileMenu() {
-      mobileOverlay.classList.add('opacity-0');
-      panelAside.classList.add('-translate-x-full');
-      panelAside.classList.remove('translate-x-0');
-      burgerIcon.classList.remove('hidden');
-      closeIcon.classList.add('hidden');
-      document.body.style.overflow = '';
-      setTimeout(() => {
-        mobileMenuPanel.classList.add('pointer-events-none');
-      }, 260);
-      panelAside.setAttribute('aria-hidden', 'true');
-    }
+          <li><a href="#">AI & ML</a></li>
 
-    mobileMenuBtn.addEventListener('click', () => {
-      const hidden = mobileMenuPanel.classList.contains('pointer-events-none');
-      if (hidden) openMobileMenu(); else closeMobileMenu();
-    });
+          <li>
+            <button class="w-full flex justify-between text-left" onclick="toggleAcc(this)">
+              Cybersecurity <span>▾</span>
+            </button>
+            <ul class="ml-4 mt-1 space-y-1 hidden">
+              <li><a href="#">Privacy</a></li>
+              <li><a href="#">Threats</a></li>
+              <li><a href="#">Data leaks</a></li>
+            </ul>
+          </li>
 
-    mobileClose.addEventListener('click', closeMobileMenu);
-    mobileOverlay.addEventListener('click', closeMobileMenu);
+          <li><a href="#">Startups</a></li>
+          <li><a href="#">Gadgets</a></li>
 
-    // close with Escape
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') closeMobileMenu();
-    });
+        </ul>
+      </li>
 
-    // Accordion controls (mobile)
-    document.querySelectorAll('[data-accordion]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const icon = btn.querySelector('[data-acc-icon]');
-        const panel = btn.nextElementSibling && btn.nextElementSibling.matches('[data-acc-panel]') ? btn.nextElementSibling : null;
-        if (!panel) return;
+      <!-- BUSINESS -->
+      <li>
+        <button class="w-full flex justify-between font-medium" onclick="toggleAcc(this)">
+          Business <span>▾</span>
+        </button>
+        <ul class="ml-4 mt-2 space-y-1 hidden">
+          <li><a href="#">Markets</a></li>
+          <li><a href="#">Economy</a></li>
+          <li><a href="#">Companies</a></li>
+        </ul>
+      </li>
 
-        const isOpen = panel.classList.contains('max-h-96');
-        if (isOpen) {
-          panel.classList.remove('max-h-96');
-          panel.classList.add('max-h-0');
-          if (icon) icon.style.transform = '';
-        } else {
-          // close sibling panels at this level (optional single-open behavior)
-          const parent = btn.parentElement.parentElement;
-          parent.querySelectorAll('[data-acc-panel]').f
+      <li class="pt-4">
+        <a href="#" class="block bg-red-600 text-white text-center py-2 rounded">
+          Subscribe
+        </a>
+      </li>
+
+    </ul>
+  </aside>
+</div>
+
+<!-- ================= JS ================= -->
+<script>
+  const mobileMenu = document.getElementById('mobileMenu');
+  document.getElementById('mobileBtn').onclick = toggleMobile;
+
+  function toggleMobile() {
+    mobileMenu.classList.toggle('hidden');
+    document.body.classList.toggle('overflow-hidden');
+  }
+
+  function toggleAcc(btn) {
+    const next = btn.nextElementSibling;
+    if (!next) return;
+    next.classList.toggle('hidden');
+  }
+</script>
+
+</body>
+</html>
