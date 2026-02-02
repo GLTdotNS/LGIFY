@@ -1,221 +1,133 @@
 <!doctype html>
-<html lang="en">
+<html lang="bg">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>FreeReporter — News & Analysis</title>
-
+  <title>Drilldown News Menu</title>
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
-    .menu-panel {
-      transition: transform .3s ease, opacity .2s ease;
+    .panel {
+      transition: transform .3s ease;
     }
-    .max-h-0 { max-height: 0; }
-    .max-h-96 { max-height: 24rem; }
   </style>
 </head>
 
-<body class="bg-slate-50 text-slate-800">
+<body class="bg-slate-100">
 
-<!-- ================= HEADER ================= -->
-<header class="bg-white border-b sticky top-0 z-50">
-  <div class="max-w-7xl mx-auto px-4">
-    <div class="h-16 flex items-center justify-between">
-
-      <!-- Logo -->
-      <div class="flex items-center gap-3">
-        <div class="w-9 h-9 bg-red-600 text-white font-bold flex items-center justify-center rounded">
-          FR
-        </div>
-        <div class="hidden sm:block">
-          <div class="font-semibold">FreeReporter</div>
-          <div class="text-xs text-slate-500 -mt-1">News & Analysis</div>
-        </div>
-      </div>
-
-      <!-- Desktop nav -->
-      <nav class="hidden md:block">
-        <ul class="flex gap-4 items-center">
-          <li class="group relative">
-            <button class="px-3 py-2 rounded hover:bg-slate-100 font-medium">
-              Sections
-            </button>
-
-            <!-- ================= DESKTOP MEGA MENU ================= -->
-            <div class="absolute left-1/2 -translate-x-1/2 top-full mt-3 w-screen max-w-6xl bg-white border rounded-xl shadow-xl opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto menu-panel">
-
-              <div class="grid grid-cols-5 gap-6 p-6">
-
-                <!-- World -->
-                <div>
-                  <h4 class="text-sm font-semibold uppercase text-slate-500 mb-3">World</h4>
-                  <ul class="space-y-2 text-sm">
-                    <li><a href="#" class="hover:text-red-600">Europe</a></li>
-                    <li><a href="#" class="hover:text-red-600">Asia</a></li>
-                    <li><a href="#" class="hover:text-red-600">Americas</a></li>
-                    <li><a href="#" class="hover:text-red-600">Middle East</a></li>
-                    <li><a href="#" class="hover:text-red-600">Africa</a></li>
-                  </ul>
-                </div>
-
-                <!-- Politics -->
-                <div>
-                  <h4 class="text-sm font-semibold uppercase text-slate-500 mb-3">Politics</h4>
-                  <ul class="space-y-2 text-sm">
-                    <li><a href="#" class="hover:text-red-600">Elections</a></li>
-                    <li><a href="#" class="hover:text-red-600">Policy</a></li>
-                    <li><a href="#" class="hover:text-red-600">White House</a></li>
-                    <li><a href="#" class="hover:text-red-600">Geopolitics</a></li>
-                  </ul>
-                </div>
-
-                <!-- Technology -->
-                <div>
-                  <h4 class="text-sm font-semibold uppercase text-slate-500 mb-3">Technology</h4>
-                  <ul class="space-y-2 text-sm">
-                    <li><a href="#" class="hover:text-red-600">AI & ML</a></li>
-                    <li><a href="#" class="hover:text-red-600">Cybersecurity</a></li>
-                    <li><a href="#" class="hover:text-red-600">Startups</a></li>
-                    <li><a href="#" class="hover:text-red-600">Gadgets</a></li>
-                  </ul>
-                </div>
-
-                <!-- Business -->
-                <div>
-                  <h4 class="text-sm font-semibold uppercase text-slate-500 mb-3">Business</h4>
-                  <ul class="space-y-2 text-sm">
-                    <li><a href="#" class="hover:text-red-600">Markets</a></li>
-                    <li><a href="#" class="hover:text-red-600">Economy</a></li>
-                    <li><a href="#" class="hover:text-red-600">Companies</a></li>
-                    <li><a href="#" class="hover:text-red-600">Finance</a></li>
-                  </ul>
-                </div>
-
-                <!-- Featured -->
-                <div class="bg-slate-50 rounded-lg overflow-hidden">
-                  <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&q=60" class="h-28 w-full object-cover">
-                  <div class="p-3">
-                    <div class="text-xs text-slate-500 mb-1">Featured</div>
-                    <h5 class="text-sm font-semibold leading-tight">
-                      Global leaders agree on new climate roadmap
-                    </h5>
-                    <a href="#" class="text-xs text-red-600 mt-2 inline-block">
-                      Read analysis →
-                    </a>
-                  </div>
-                </div>
-
-              </div>
-
-              <!-- Trending -->
-              <div class="border-t px-6 py-3 text-sm text-slate-500">
-                Trending:
-                <a href="#" class="text-red-600 hover:underline ml-1">Elections</a>,
-                <a href="#" class="text-red-600 hover:underline ml-1">AI Regulation</a>,
-                <a href="#" class="text-red-600 hover:underline ml-1">War in Ukraine</a>
-              </div>
-
-            </div>
-          </li>
-        </ul>
-      </nav>
-
-      <!-- Mobile button -->
-      <button id="mobileBtn" class="md:hidden p-2">
-        ☰
-      </button>
-
-    </div>
+<!-- HEADER -->
+<header class="bg-white border-b fixed top-0 inset-x-0 z-50">
+  <div class="h-16 flex items-center px-4 justify-between">
+    <div class="font-semibold">FreeReporter</div>
+    <button id="openMenu" class="text-2xl">☰</button>
   </div>
 </header>
 
-<!-- ================= MOBILE MULTILEVEL MENU ================= -->
-<div id="mobileMenu" class="fixed inset-0 bg-black/40 hidden z-50">
-  <aside class="absolute left-0 top-0 h-full w-80 bg-white p-4 overflow-y-auto">
+<!-- OVERLAY -->
+<div id="overlay" class="fixed inset-0 bg-black/40 hidden z-40"></div>
 
-    <div class="flex justify-between items-center mb-4">
-      <div class="font-semibold text-lg">Sections</div>
-      <button onclick="toggleMobile()">✕</button>
-    </div>
+<!-- OFFCANVAS -->
+<div id="menu" class="fixed inset-y-0 left-0 w-full max-w-sm bg-white z-50 overflow-hidden">
 
-    <ul class="space-y-3 text-sm">
+  <!-- LEVELS WRAPPER -->
+  <div id="levels" class="flex h-full panel">
 
-      <!-- WORLD -->
-      <li>
-        <button class="w-full flex justify-between font-medium" onclick="toggleAcc(this)">
-          World <span>▾</span>
-        </button>
-        <ul class="ml-4 mt-2 space-y-1 hidden">
-          <li><a href="#">Europe</a></li>
-          <li><a href="#">Asia</a></li>
-          <li><a href="#">Americas</a></li>
-          <li><a href="#">Africa</a></li>
-        </ul>
-      </li>
+    <!-- ROOT -->
+    <nav class="w-full shrink-0 p-4">
+      <h2 class="text-lg font-semibold mb-4">Sections</h2>
+      <ul class="space-y-3">
 
-      <!-- TECHNOLOGY (NESTED LEVEL 2) -->
-      <li>
-        <button class="w-full flex justify-between font-medium" onclick="toggleAcc(this)">
-          Technology <span>▾</span>
-        </button>
-        <ul class="ml-4 mt-2 space-y-2 hidden">
+        <li>
+          <button onclick="go(1)" class="w-full flex justify-between">
+            World <span>›</span>
+          </button>
+        </li>
 
-          <li><a href="#">AI & ML</a></li>
+        <li>
+          <button onclick="go(2)" class="w-full flex justify-between">
+            Technology <span>›</span>
+          </button>
+        </li>
 
-          <li>
-            <button class="w-full flex justify-between text-left" onclick="toggleAcc(this)">
-              Cybersecurity <span>▾</span>
-            </button>
-            <ul class="ml-4 mt-1 space-y-1 hidden">
-              <li><a href="#">Privacy</a></li>
-              <li><a href="#">Threats</a></li>
-              <li><a href="#">Data leaks</a></li>
-            </ul>
-          </li>
+        <li><a href="#">Business</a></li>
+        <li><a href="#">Sports</a></li>
 
-          <li><a href="#">Startups</a></li>
-          <li><a href="#">Gadgets</a></li>
+      </ul>
+    </nav>
 
-        </ul>
-      </li>
+    <!-- WORLD -->
+    <nav class="w-full shrink-0 p-4">
+      <button onclick="back()" class="text-sm mb-4 text-slate-500">← Back</button>
+      <h2 class="text-lg font-semibold mb-4">World</h2>
+      <ul class="space-y-3">
+        <li><a href="#">Europe</a></li>
+        <li><a href="#">Asia</a></li>
+        <li><a href="#">Americas</a></li>
+        <li><a href="#">Middle East</a></li>
+      </ul>
+    </nav>
 
-      <!-- BUSINESS -->
-      <li>
-        <button class="w-full flex justify-between font-medium" onclick="toggleAcc(this)">
-          Business <span>▾</span>
-        </button>
-        <ul class="ml-4 mt-2 space-y-1 hidden">
-          <li><a href="#">Markets</a></li>
-          <li><a href="#">Economy</a></li>
-          <li><a href="#">Companies</a></li>
-        </ul>
-      </li>
+    <!-- TECHNOLOGY -->
+    <nav class="w-full shrink-0 p-4">
+      <button onclick="back()" class="text-sm mb-4 text-slate-500">← Back</button>
+      <h2 class="text-lg font-semibold mb-4">Technology</h2>
+      <ul class="space-y-3">
 
-      <li class="pt-4">
-        <a href="#" class="block bg-red-600 text-white text-center py-2 rounded">
-          Subscribe
-        </a>
-      </li>
+        <li><a href="#">AI & ML</a></li>
 
-    </ul>
-  </aside>
+        <li>
+          <button onclick="go(3)" class="w-full flex justify-between">
+            Security <span>›</span>
+          </button>
+        </li>
+
+        <li><a href="#">Startups</a></li>
+        <li><a href="#">Gadgets</a></li>
+      </ul>
+    </nav>
+
+    <!-- SECURITY -->
+    <nav class="w-full shrink-0 p-4">
+      <button onclick="back()" class="text-sm mb-4 text-slate-500">← Back</button>
+      <h2 class="text-lg font-semibold mb-4">Security</h2>
+      <ul class="space-y-3">
+        <li><a href="#">Privacy</a></li>
+        <li><a href="#">Cyber Threats</a></li>
+        <li><a href="#">Data Leaks</a></li>
+      </ul>
+    </nav>
+
+  </div>
 </div>
 
-<!-- ================= JS ================= -->
 <script>
-  const mobileMenu = document.getElementById('mobileMenu');
-  document.getElementById('mobileBtn').onclick = toggleMobile;
+  const menu = document.getElementById('menu');
+  const overlay = document.getElementById('overlay');
+  const levels = document.getElementById('levels');
+  let current = 0;
 
-  function toggleMobile() {
-    mobileMenu.classList.toggle('hidden');
-    document.body.classList.toggle('overflow-hidden');
+  document.getElementById('openMenu').onclick = () => {
+    menu.style.transform = 'translateX(0)';
+    overlay.classList.remove('hidden');
+  };
+
+  overlay.onclick = closeMenu;
+
+  function closeMenu() {
+    menu.style.transform = 'translateX(-100%)';
+    overlay.classList.add('hidden');
+    current = 0;
+    levels.style.transform = 'translateX(0)';
   }
 
-  function toggleAcc(btn) {
-    const next = btn.nextElementSibling;
-    if (!next) return;
-    next.classList.toggle('hidden');
+  function go(level) {
+    current = level;
+    levels.style.transform = `translateX(-${level * 100}%)`;
+  }
+
+  function back() {
+    current--;
+    levels.style.transform = `translateX(-${current * 100}%)`;
   }
 </script>
 
