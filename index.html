@@ -3,185 +3,365 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>My Tailwind Site</title>
+  <title>FreeReporter — News & Analysis</title>
 
-  <!-- Tailwind CDN (good for prototypes). For production, build Tailwind locally. -->
+  <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Optional: small Tailwind config (custom colors, fonts, etc.) -->
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            primary: '#0ea5a4', /* teal-500-like */
-            accent: '#2563eb'   /* blue-600-like */
-          }
-        }
-      }
-    }
-  </script>
-
+  <meta name="description" content="FreeReporter — clean, fast, mobile-first news landing with a mega menu built with Tailwind CSS." />
   <style>
-    /* Small fallback / utility for focus outlines if needed */
-    :focus { outline: none; }
-    .focus-ring:focus { box-shadow: 0 0 0 4px rgba(14,165,164,0.12); }
+    /* small helper for smooth accordion (transitioning max-height) */
+    .max-h-0 { max-height: 0; }
+    .max-h-96 { max-height: 24rem; } /* enough for nested lists */
+    .menu-panel { transition: transform .32s cubic-bezier(.2,.9,.2,1), opacity .24s; }
+    .fade { transition: opacity .24s; }
+    /* desktop mega-panel animation */
+    .mega-enter { transform: translateY(.5rem); opacity: 0; }
+    .mega-enter-active { transform: translateY(0); opacity: 1; transition: transform .22s ease, opacity .2s ease; }
   </style>
 </head>
 <body class="antialiased text-slate-800 bg-slate-50">
 
-  <!-- NAV -->
-  <header class="bg-white/60 backdrop-blur sticky top-0 z-30 border-b">
+  <!-- Header -->
+  <header class="bg-white border-b sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
-        <div class="flex items-center space-x-3">
-          <a href="#" class="inline-flex items-center gap-2">
-            <svg class="w-8 h-8 text-primary" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect width="24" height="24" rx="6" fill="currentColor" />
-            </svg>
-            <span class="font-semibold text-lg">Brand</span>
+        <!-- Brand -->
+        <div class="flex items-center gap-4">
+          <a href="#" class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-md bg-red-600 text-white flex items-center justify-center font-bold">FR</div>
+            <div class="hidden sm:block">
+              <h1 class="text-lg font-semibold">FreeReporter</h1>
+              <p class="text-xs text-slate-500 -mt-1">News & Analysis</p>
+            </div>
           </a>
         </div>
 
-        <nav class="hidden md:flex items-center gap-6 text-sm">
-          <a class="text-slate-600 hover:text-slate-900" href="#">Home</a>
-          <a class="text-slate-600 hover:text-slate-900" href="#">Features</a>
-          <a class="text-slate-600 hover:text-slate-900" href="#">Pricing</a>
-          <a class="text-slate-600 hover:text-slate-900" href="#">Contact</a>
-        </nav>
+        <!-- Search (desktop) -->
+        <div class="hidden md:flex md:items-center md:space-x-4">
+          <div class="relative">
+            <input type="search" placeholder="Search news..." class="w-64 pl-3 pr-10 py-2 rounded-md border bg-slate-50 text-sm focus:outline-none focus:ring-2 focus:ring-red-400" />
+            <button class="absolute right-1 top-1/2 -translate-y-1/2 text-slate-500 px-2">🔎</button>
+          </div>
+        </div>
 
+        <!-- Actions -->
         <div class="flex items-center gap-3">
-          <a class="hidden md:inline-block px-4 py-2 text-sm font-medium text-primary border border-primary/10 rounded hover:bg-primary/5" href="#">Log in</a>
-          <a class="inline-flex items-center px-4 py-2 bg-primary text-white text-sm font-medium rounded shadow hover:bg-primary/70" href="#">Get started</a>
+          <!-- Desktop nav trigger for mega menu -->
+          <nav class="hidden md:block">
+            <ul class="flex items-center gap-2">
+              <li class="group relative">
+                <button class="px-3 py-2 rounded-md text-sm font-medium hover:bg-slate-100 focus:outline-none" aria-expanded="false" aria-controls="mega-1">
+                  Sections
+                </button>
+
+                <!-- MEGA PANEL (desktop) -->
+                <div id="mega-1" class="absolute left-0 mt-2 w-screen max-w-4xl bg-white border rounded-md shadow-lg opacity-0 pointer-events-none group-hover:opacity-100 group-focus-within:opacity-100 group-hover:pointer-events-auto group-focus-within:pointer-events-auto transform -translate-y-1 group-hover:translate-y-0 menu-panel"
+                     role="menu" aria-hidden="true">
+                  <div class="p-6 grid grid-cols-2 gap-6 md:grid-cols-4">
+                    <div>
+                      <h3 class="font-semibold mb-2">World</h3>
+                      <ul class="space-y-1 text-sm text-slate-600">
+                        <li><a href="#" class="block hover:text-red-600">Europe</a></li>
+                        <li><a href="#" class="block hover:text-red-600">Asia</a></li>
+                        <li><a href="#" class="block hover:text-red-600">Americas</a></li>
+                        <li><a href="#" class="block hover:text-red-600">Africa</a></li>
+                      </ul>
+                    </div>
+                    <div>
+                      <h3 class="font-semibold mb-2">Technology</h3>
+                      <ul class="space-y-1 text-sm text-slate-600">
+                        <li><a href="#" class="block hover:text-red-600">AI & ML</a></li>
+                        <li><a href="#" class="block hover:text-red-600">Gadgets</a></li>
+                        <li><a href="#" class="block hover:text-red-600">Startups</a></li>
+                        <li><a href="#" class="block hover:text-red-600">Security</a></li>
+                      </ul>
+                    </div>
+                    <div>
+                      <h3 class="font-semibold mb-2">Lifestyle</h3>
+                      <ul class="space-y-1 text-sm text-slate-600">
+                        <li><a href="#" class="block hover:text-red-600">Travel</a></li>
+                        <li><a href="#" class="block hover:text-red-600">Food</a></li>
+                        <li><a href="#" class="block hover:text-red-600">Health</a></li>
+                      </ul>
+                    </div>
+                    <div>
+                      <h3 class="font-semibold mb-2">Sports</h3>
+                      <ul class="space-y-1 text-sm text-slate-600">
+                        <li><a href="#" class="block hover:text-red-600">Football</a></li>
+                        <li><a href="#" class="block hover:text-red-600">Basketball</a></li>
+                        <li><a href="#" class="block hover:text-red-600">Tennis</a></li>
+                        <li><a href="#" class="block hover:text-red-600">More</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="border-t px-6 py-4 text-sm text-slate-500">Trending: <a href="#" class="text-red-600 hover:underline">Elections</a> · <a href="#" class="text-red-600 hover:underline">AI breakthroughs</a></div>
+                </div>
+              </li>
+            </ul>
+          </nav>
 
           <!-- Mobile menu button -->
-          <button id="menuBtn" class="md:hidden p-2 rounded focus-ring" aria-label="Toggle menu">
-            <svg class="w-6 h-6 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-            </svg>
+          <button id="mobileMenuBtn" aria-label="Open menu" class="p-2 rounded-md hover:bg-slate-100 md:hidden focus:outline-none">
+            <svg id="burgerIcon" class="w-6 h-6 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+            <svg id="closeIcon" class="w-6 h-6 text-slate-700 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
           </button>
         </div>
       </div>
     </div>
 
-    <!-- Mobile nav (hidden by default) -->
-    <div id="mobileNav" class="md:hidden hidden border-t">
-      <div class="px-4 py-3 space-y-2">
-        <a href="#" class="block text-slate-700">Home</a>
-        <a href="#" class="block text-slate-700">Features</a>
-        <a href="#" class="block text-slate-700">Pricing</a>
-        <a href="#" class="block text-slate-700">Contact</a>
-      </div>
+    <!-- Mobile Mega Menu Panel (slide-in) -->
+    <div id="mobileMenuPanel" class="fixed inset-0 z-40 pointer-events-none">
+      <!-- overlay -->
+      <div id="mobileOverlay" class="absolute inset-0 bg-black/40 opacity-0 transition-opacity duration-250"></div>
+
+      <!-- panel -->
+      <aside class="absolute inset-y-0 left-0 w-full max-w-xs sm:max-w-md bg-white shadow-xl transform -translate-x-full menu-panel" aria-hidden="true" role="dialog" aria-modal="true">
+        <div class="px-4 pt-6 pb-4">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-md bg-red-600 text-white flex items-center justify-center font-bold">FR</div>
+              <div>
+                <h2 class="text-lg font-semibold">FreeReporter</h2>
+                <p class="text-xs text-slate-500">All the latest</p>
+              </div>
+            </div>
+            <button id="mobileClose" class="p-2 rounded-md hover:bg-slate-100 focus:outline-none">
+              <svg class="w-6 h-6 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+          </div>
+
+          <!-- Search -->
+          <div class="mt-4">
+            <input id="mobileSearch" type="search" placeholder="Search news..." class="w-full pl-3 pr-3 py-2 rounded-md border bg-slate-50 text-sm focus:outline-none focus:ring-2 focus:ring-red-400" />
+          </div>
+        </div>
+
+        <!-- Accordion menu (mobile-first nested links) -->
+        <nav class="px-4 pb-6 overflow-auto">
+          <ul class="space-y-2">
+            <!-- Category item with nested -->
+            <li class="border-b">
+              <button class="w-full flex items-center justify-between py-3 text-left" data-accordion>
+                <span class="font-medium">World</span>
+                <svg class="w-5 h-5 text-slate-500 transform transition-transform" data-acc-icon viewBox="0 0 20 20" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 8l4 4 4-4"/></svg>
+              </button>
+              <div class="max-h-0 overflow-hidden transition-all duration-300" data-acc-panel>
+                <ul class="pl-3 pb-3 space-y-1 text-sm text-slate-600">
+                  <li><a href="#" class="block py-1 hover:text-red-600">Europe</a></li>
+                  <li><a href="#" class="block py-1 hover:text-red-600">Asia</a></li>
+                  <li><a href="#" class="block py-1 hover:text-red-600">Americas</a></li>
+                  <li><a href="#" class="block py-1 hover:text-red-600">Africa</a></li>
+                </ul>
+              </div>
+            </li>
+
+            <li class="border-b">
+              <button class="w-full flex items-center justify-between py-3 text-left" data-accordion>
+                <span class="font-medium">Technology</span>
+                <svg class="w-5 h-5 text-slate-500 transform transition-transform" data-acc-icon viewBox="0 0 20 20" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 8l4 4 4-4"/></svg>
+              </button>
+              <div class="max-h-0 overflow-hidden transition-all duration-300" data-acc-panel>
+                <ul class="pl-3 pb-3 space-y-1 text-sm text-slate-600">
+                  <li><a href="#" class="block py-1 hover:text-red-600">AI & ML</a></li>
+                  <li><a href="#" class="block py-1 hover:text-red-600">Gadgets</a></li>
+                  <li><a href="#" class="block py-1 hover:text-red-600">Startups</a></li>
+                  <li>
+                    <!-- Nested accordion inside -->
+                    <button class="w-full flex items-center justify-between py-1 text-left text-sm" data-accordion>
+                      <span>Security</span>
+                      <svg class="w-4 h-4 text-slate-400 transform transition-transform" data-acc-icon viewBox="0 0 20 20" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 8l4 4 4-4"/></svg>
+                    </button>
+                    <div class="max-h-0 overflow-hidden transition-all duration-300" data-acc-panel>
+                      <ul class="pl-3 pb-2 space-y-1 text-sm text-slate-600">
+                        <li><a href="#" class="block py-1 hover:text-red-600">Vulnerabilities</a></li>
+                        <li><a href="#" class="block py-1 hover:text-red-600">Privacy</a></li>
+                      </ul>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </li>
+
+            <li class="border-b">
+              <button class="w-full flex items-center justify-between py-3 text-left" data-accordion>
+                <span class="font-medium">Lifestyle</span>
+                <svg class="w-5 h-5 text-slate-500 transform transition-transform" data-acc-icon viewBox="0 0 20 20" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 8l4 4 4-4"/></svg>
+              </button>
+              <div class="max-h-0 overflow-hidden transition-all duration-300" data-acc-panel>
+                <ul class="pl-3 pb-3 space-y-1 text-sm text-slate-600">
+                  <li><a href="#" class="block py-1 hover:text-red-600">Travel</a></li>
+                  <li><a href="#" class="block py-1 hover:text-red-600">Food</a></li>
+                  <li><a href="#" class="block py-1 hover:text-red-600">Health</a></li>
+                </ul>
+              </div>
+            </li>
+
+            <li class="border-b">
+              <button class="w-full flex items-center justify-between py-3 text-left" data-accordion>
+                <span class="font-medium">Sports</span>
+                <svg class="w-5 h-5 text-slate-500 transform transition-transform" data-acc-icon viewBox="0 0 20 20" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 8l4 4 4-4"/></svg>
+              </button>
+              <div class="max-h-0 overflow-hidden transition-all duration-300" data-acc-panel>
+                <ul class="pl-3 pb-3 space-y-1 text-sm text-slate-600">
+                  <li><a href="#" class="block py-1 hover:text-red-600">Football</a></li>
+                  <li><a href="#" class="block py-1 hover:text-red-600">Basketball</a></li>
+                </ul>
+              </div>
+            </li>
+
+            <li class="pt-3">
+              <a href="#" class="block py-2 px-2 rounded-md text-sm bg-red-600 text-white text-center">Subscribe</a>
+            </li>
+          </ul>
+        </nav>
+      </aside>
     </div>
   </header>
 
-  <!-- HERO -->
-  <main>
-    <section class="bg-gradient-to-br from-white to-slate-50">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-20">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div>
-            <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900">
-              Build modern UIs quickly with Tailwind
-            </h1>
-            <p class="mt-4 text-lg text-slate-600 max-w-xl">
-              A minimal starter template that uses Tailwind CSS via CDN. Great for prototypes and small landing pages. Replace any section to match your product.
-            </p>
-
-            <div class="mt-8 flex flex-wrap gap-3">
-              <a class="inline-flex items-center px-5 py-3 bg-accent text-white rounded-md shadow hover:bg-blue-700" href="#">
-                Get started
-              </a>
-              <a class="inline-flex items-center px-5 py-3 border rounded-md text-slate-700 hover:bg-slate-100" href="#">
-                Learn more
-              </a>
-            </div>
-
-            <div class="mt-8 flex items-center gap-6 text-sm text-slate-500">
-              <div class="flex items-center gap-2">
-                <svg class="w-5 h-5 text-primary" viewBox="0 0 20 20" fill="currentColor"><path d="M10 2a8 8 0 100 16 8 8 0 000-16z"/></svg>
-                <span>Free 14-day trial</span>
-              </div>
-              <div class="flex items-center gap-2">
-                <svg class="w-5 h-5 text-green-500" viewBox="0 0 20 20" fill="currentColor"><path d="M16.707 5.293a1 1 0 00-1.414 0L8 12.586 4.707 9.293a1 1 0 00-1.414 1.414l4 4a1 1 0 001.414 0l8-8a1 1 0 000-1.414z"/></svg>
-                <span>No credit card required</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="w-full">
-            <div class="bg-white rounded-2xl shadow-lg border p-6">
-              <img alt="Screenshot" class="rounded-md w-full h-64 object-cover" src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder" />
-              <div class="mt-4">
-                <h3 class="text-lg font-semibold text-slate-800">Quick mockup</h3>
-                <p class="mt-2 text-sm text-slate-600">Replace this image and text with a screenshot or feature highlight for your product.</p>
-              </div>
-            </div>
+  <!-- Main content -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <!-- Hero -->
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <article class="md:col-span-2 bg-white rounded-md shadow-sm overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1600&q=60&auto=format&fit=crop" alt="Headline" class="w-full h-64 object-cover">
+        <div class="p-6">
+          <div class="text-sm text-slate-500">World · 2h ago</div>
+          <h2 class="mt-2 text-2xl font-bold">Global Summit Sets New Agenda for Climate Action</h2>
+          <p class="mt-3 text-slate-700">Leaders from around the world agreed to accelerate clean energy investments and phase out subsidies for fossil fuels...</p>
+          <div class="mt-4 flex items-center gap-3">
+            <a href="#" class="text-red-600 font-medium hover:underline">Read more →</a>
+            <span class="text-sm text-slate-500">• 6 min read</span>
           </div>
         </div>
-      </div>
+      </article>
+
+      <aside class="space-y-4">
+        <div class="bg-white p-4 rounded-md shadow-sm">
+          <h3 class="font-semibold mb-2">Top stories</h3>
+          <ul class="space-y-3 text-sm text-slate-700">
+            <li><a href="#" class="hover:text-red-600">Breakthrough in battery tech promises longer range</a></li>
+            <li><a href="#" class="hover:text-red-600">Local elections turnout hits record high</a></li>
+            <li><a href="#" class="hover:text-red-600">New streaming service announces global launch</a></li>
+          </ul>
+        </div>
+
+        <div class="bg-white p-4 rounded-md shadow-sm">
+          <h3 class="font-semibold mb-2">Most read</h3>
+          <ol class="list-decimal list-inside text-sm text-slate-700 space-y-1">
+            <li><a href="#" class="hover:text-red-600">AI shaping the job market — what to expect</a></li>
+            <li><a href="#" class="hover:text-red-600">Top 10 travel spots this year</a></li>
+            <li><a href="#" class="hover:text-red-600">Health: simple habits that make a difference</a></li>
+          </ol>
+        </div>
+      </aside>
     </section>
 
-    <!-- FEATURES -->
-    <section class="py-16">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div class="bg-white rounded-lg p-6 border shadow-sm">
-            <div class="inline-flex items-center justify-center w-12 h-12 rounded-md bg-primary/10 text-primary">
-              <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 12h18M12 3v18"/></svg>
-            </div>
-            <h4 class="mt-4 font-semibold text-slate-800">Fast to build</h4>
-            <p class="mt-2 text-sm text-slate-600">Compose components using utility classes — change layout and styles rapidly.</p>
-          </div>
+    <!-- Grid of sections -->
+    <section class="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="bg-white p-4 rounded-md shadow-sm">
+        <h4 class="font-semibold mb-3">Technology</h4>
+        <article class="space-y-2">
+          <a href="#" class="block text-sm font-medium hover:text-red-600">How small startups are driving big AI progress</a>
+          <p class="text-sm text-slate-600">Investors pour money into emerging teams focused on specialized models...</p>
+        </article>
+      </div>
 
-          <div class="bg-white rounded-lg p-6 border shadow-sm">
-            <div class="inline-flex items-center justify-center w-12 h-12 rounded-md bg-accent/10 text-accent">
-              <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 8v8M8 12h8"/></svg>
-            </div>
-            <h4 class="mt-4 font-semibold text-slate-800">Responsive by default</h4>
-            <p class="mt-2 text-sm text-slate-600">Mobile-first utilities make it easy to adapt to any screen size.</p>
-          </div>
+      <div class="bg-white p-4 rounded-md shadow-sm">
+        <h4 class="font-semibold mb-3">Culture</h4>
+        <article class="space-y-2">
+          <a href="#" class="block text-sm font-medium hover:text-red-600">The rise of immersive theater</a>
+          <p class="text-sm text-slate-600">Audiences are choosing experiences that blur the line between stage and reality...</p>
+        </article>
+      </div>
 
-          <div class="bg-white rounded-lg p-6 border shadow-sm">
-            <div class="inline-flex items-center justify-center w-12 h-12 rounded-md bg-slate-100 text-slate-700">
-              <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg>
-            </div>
-            <h4 class="mt-4 font-semibold text-slate-800">Customizable</h4>
-            <p class="mt-2 text-sm text-slate-600">Extend the config or add components to match your brand and design system.</p>
-          </div>
-        </div>
+      <div class="bg-white p-4 rounded-md shadow-sm">
+        <h4 class="font-semibold mb-3">Business</h4>
+        <article class="space-y-2">
+          <a href="#" class="block text-sm font-medium hover:text-red-600">Markets react to central bank signals</a>
+          <p class="text-sm text-slate-600">Stocks fluctuated after the latest guidance on interest rates...</p>
+        </article>
       </div>
     </section>
   </main>
 
-  <!-- FOOTER -->
+  <!-- Footer -->
   <footer class="bg-white border-t">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-        <div>
-          <a class="inline-flex items-center gap-3" href="#">
-            <svg class="w-8 h-8 text-primary" viewBox="0 0 24 24" fill="currentColor"><rect width="24" height="24" rx="6"/></svg>
-            <span class="font-semibold">Brand</span>
-          </a>
-          <p class="mt-3 text-sm text-slate-600 max-w-xs">Small description or copyright line goes here.</p>
-        </div>
-
-        <div class="flex gap-6">
-          <a class="text-slate-600 hover:text-slate-900" href="#">Privacy</a>
-          <a class="text-slate-600 hover:text-slate-900" href="#">Terms</a>
-          <a class="text-slate-600 hover:text-slate-900" href="#">Contact</a>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 text-sm text-slate-600">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div>© <span id="year"></span> FreeReporter — Free news for everyone.</div>
+        <div class="flex items-center gap-4">
+          <a href="#" class="hover:text-red-600">Privacy</a>
+          <a href="#" class="hover:text-red-600">Terms</a>
+          <a href="#" class="hover:text-red-600">Contact</a>
         </div>
       </div>
     </div>
   </footer>
 
+  <!-- Minimal JS for menu and accordion -->
   <script>
-    // Mobile nav toggle
-    const menuBtn = document.getElementById('menuBtn');
-    const mobileNav = document.getElementById('mobileNav');
-    menuBtn?.addEventListener('click', () => {
-      mobileNav.classList.toggle('hidden');
+    // set year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenuPanel = document.getElementById('mobileMenuPanel');
+    const mobileOverlay = document.getElementById('mobileOverlay');
+    const mobileClose = document.getElementById('mobileClose');
+    const burgerIcon = document.getElementById('burgerIcon');
+    const closeIcon = document.getElementById('closeIcon');
+    const panelAside = mobileMenuPanel.querySelector('aside');
+
+    function openMobileMenu() {
+      mobileMenuPanel.classList.remove('pointer-events-none');
+      mobileOverlay.classList.remove('opacity-0');
+      panelAside.classList.remove('-translate-x-full');
+      panelAside.classList.add('translate-x-0');
+      burgerIcon.classList.add('hidden');
+      closeIcon.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+      panelAside.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeMobileMenu() {
+      mobileOverlay.classList.add('opacity-0');
+      panelAside.classList.add('-translate-x-full');
+      panelAside.classList.remove('translate-x-0');
+      burgerIcon.classList.remove('hidden');
+      closeIcon.classList.add('hidden');
+      document.body.style.overflow = '';
+      setTimeout(() => {
+        mobileMenuPanel.classList.add('pointer-events-none');
+      }, 260);
+      panelAside.setAttribute('aria-hidden', 'true');
+    }
+
+    mobileMenuBtn.addEventListener('click', () => {
+      const hidden = mobileMenuPanel.classList.contains('pointer-events-none');
+      if (hidden) openMobileMenu(); else closeMobileMenu();
     });
-  </script>
-</body>
-</html>
+
+    mobileClose.addEventListener('click', closeMobileMenu);
+    mobileOverlay.addEventListener('click', closeMobileMenu);
+
+    // close with Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeMobileMenu();
+    });
+
+    // Accordion controls (mobile)
+    document.querySelectorAll('[data-accordion]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const icon = btn.querySelector('[data-acc-icon]');
+        const panel = btn.nextElementSibling && btn.nextElementSibling.matches('[data-acc-panel]') ? btn.nextElementSibling : null;
+        if (!panel) return;
+
+        const isOpen = panel.classList.contains('max-h-96');
+        if (isOpen) {
+          panel.classList.remove('max-h-96');
+          panel.classList.add('max-h-0');
+          if (icon) icon.style.transform = '';
+        } else {
+          // close sibling panels at this level (optional single-open behavior)
+          const parent = btn.parentElement.parentElement;
+          parent.querySelectorAll('[data-acc-panel]').f
