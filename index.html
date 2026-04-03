@@ -1,135 +1,157 @@
-<!doctype html>
-<html lang="bg">
+<!DOCTYPE html><html lang="bg">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Drilldown News Menu</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CV - Уеб Разработчик</title>
   <script src="https://cdn.tailwindcss.com"></script>
-
-  <style>
-    .panel {
-      transition: transform .3s ease;
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(to bottom right, #f8fafc, #e2f7f7);
     }
-  </style>
-</head>
+  </style></head><body class="text-gray-800">  <!-- Hero Section -->  <section class="max-w-6xl mx-auto px-6 py-16">
+    <div class="bg-white rounded-3xl shadow-xl p-10">
+      <h1 class="text-4xl font-bold mb-2">
+        Уеб Разработчик & UI/UX Дизайнер
+      </h1><p class="text-lg text-gray-600 mb-6">
+    Създавам модерни, интерактивни и висококонвертиращи уеб приложения с фокус върху потребителското изживяване, дизайн и производителност.
+  </p>
 
-<body class="bg-slate-100">
-
-<!-- HEADER -->
-<header class="bg-white border-b fixed top-0 inset-x-0 z-50">
-  <div class="h-16 flex items-center px-4 justify-between">
-    <div class="font-semibold">FreeReporter</div>
-    <button id="openMenu" class="text-2xl">☰</button>
-  </div>
-</header>
-
-<!-- OVERLAY -->
-<div id="overlay" class="fixed inset-0 bg-black/40 hidden z-40"></div>
-
-<!-- OFFCANVAS -->
-<div id="menu" class="fixed inset-y-0 left-0 w-full max-w-sm bg-white z-50 overflow-hidden">
-
-  <!-- LEVELS WRAPPER -->
-  <div id="levels" class="flex h-full panel">
-
-    <!-- ROOT -->
-    <nav class="w-full shrink-0 p-4">
-      <h2 class="text-lg font-semibold mb-4">Sections</h2>
-      <ul class="space-y-3">
-
-        <li>
-          <button onclick="go(1)" class="w-full flex justify-between">
-            World <span>›</span>
-          </button>
-        </li>
-
-        <li>
-          <button onclick="go(2)" class="w-full flex justify-between">
-            Technology <span>›</span>
-          </button>
-        </li>
-
-        <li><a href="#">Business</a></li>
-        <li><a href="#">Sports</a></li>
-
-      </ul>
-    </nav>
-
-    <!-- WORLD -->
-    <nav class="w-full shrink-0 p-4">
-      <button onclick="back()" class="text-sm mb-4 text-slate-500">← Back</button>
-      <h2 class="text-lg font-semibold mb-4">World</h2>
-      <ul class="space-y-3">
-        <li><a href="#">Europe</a></li>
-        <li><a href="#">Asia</a></li>
-        <li><a href="#">Americas</a></li>
-        <li><a href="#">Middle East</a></li>
-      </ul>
-    </nav>
-
-    <!-- TECHNOLOGY -->
-    <nav class="w-full shrink-0 p-4">
-      <button onclick="back()" class="text-sm mb-4 text-slate-500">← Back</button>
-      <h2 class="text-lg font-semibold mb-4">Technology</h2>
-      <ul class="space-y-3">
-
-        <li><a href="#">AI & ML</a></li>
-
-        <li>
-          <button onclick="go(3)" class="w-full flex justify-between">
-            Security <span>›</span>
-          </button>
-        </li>
-
-        <li><a href="#">Startups</a></li>
-        <li><a href="#">Gadgets</a></li>
-      </ul>
-    </nav>
-
-    <!-- SECURITY -->
-    <nav class="w-full shrink-0 p-4">
-      <button onclick="back()" class="text-sm mb-4 text-slate-500">← Back</button>
-      <h2 class="text-lg font-semibold mb-4">Security</h2>
-      <ul class="space-y-3">
-        <li><a href="#">Privacy</a></li>
-        <li><a href="#">Cyber Threats</a></li>
-        <li><a href="#">Data Leaks</a></li>
-      </ul>
-    </nav>
-
+  <div class="flex flex-wrap gap-3">
+    <span class="bg-cyan-100 text-cyan-700 px-4 py-2 rounded-full text-sm">Next.js</span>
+    <span class="bg-cyan-100 text-cyan-700 px-4 py-2 rounded-full text-sm">React</span>
+    <span class="bg-cyan-100 text-cyan-700 px-4 py-2 rounded-full text-sm">Tailwind CSS</span>
+    <span class="bg-cyan-100 text-cyan-700 px-4 py-2 rounded-full text-sm">Sanity CMS</span>
+    <span class="bg-cyan-100 text-cyan-700 px-4 py-2 rounded-full text-sm">UI/UX Design</span>
   </div>
 </div>
 
-<script>
-  const menu = document.getElementById('menu');
-  const overlay = document.getElementById('overlay');
-  const levels = document.getElementById('levels');
-  let current = 0;
+  </section>  <!-- About Section -->  <section class="max-w-6xl mx-auto px-6 pb-16">
+    <div class="grid md:grid-cols-2 gap-8"><div class="bg-white rounded-3xl shadow-lg p-8">
+    <h2 class="text-2xl font-semibold mb-4">За мен</h2>
 
-  document.getElementById('openMenu').onclick = () => {
-    menu.style.transform = 'translateX(0)';
-    overlay.classList.remove('hidden');
-  };
+    <p class="text-gray-600 leading-relaxed">
+      Самостоятелен разработчик, специализиран в създаването на модерни уеб приложения, онлайн магазини и дигитални платформи. Работя върху проекти от нулата — от дизайн концепция до финална имплементация и оптимизация.
+    </p>
 
-  overlay.onclick = closeMenu;
+    <p class="text-gray-600 leading-relaxed mt-4">
+      Имам силен интерес към визуалния дизайн, анимации и изграждане на интерфейси, които изглеждат професионално и работят бързо. Създавам решения за реални бизнес нужди — включително онлайн магазини, AI инструменти и дигитални системи за ресторанти.
+    </p>
+  </div>
 
-  function closeMenu() {
-    menu.style.transform = 'translateX(-100%)';
-    overlay.classList.add('hidden');
-    current = 0;
-    levels.style.transform = 'translateX(0)';
-  }
+  <div class="bg-white rounded-3xl shadow-lg p-8">
+    <h2 class="text-2xl font-semibold mb-4">Основни умения</h2>
 
-  function go(level) {
-    current = level;
-    levels.style.transform = `translateX(-${level * 100}%)`;
-  }
+    <ul class="space-y-3 text-gray-600">
+      <li>• Разработка с Next.js и React</li>
+      <li>• Изграждане на онлайн магазини</li>
+      <li>• UI/UX дизайн и модерни интерфейси</li>
+      <li>• Интеграция на CMS (Sanity)</li>
+      <li>• Създаване на интерактивни компоненти</li>
+      <li>• Оптимизация на производителност</li>
+      <li>• Работа с API и backend логика</li>
+    </ul>
+  </div>
 
-  function back() {
-    current--;
-    levels.style.transform = `translateX(-${current * 100}%)`;
-  }
-</script>
+</div>
 
-</body>
+  </section>  <!-- Projects Section -->  <section class="max-w-6xl mx-auto px-6 pb-16"><h2 class="text-3xl font-bold mb-8">Проекти</h2>
+
+<div class="grid md:grid-cols-2 gap-8">
+
+  <div class="bg-white rounded-3xl shadow-lg p-8 hover:shadow-xl transition">
+    <h3 class="text-xl font-semibold mb-3">Онлайн магазин за книги и антикварни издания</h3>
+
+    <p class="text-gray-600">
+      Разработен с Next.js и Sanity CMS. Включва динамични категории, търсачка, количка с таймер и модерен UI дизайн с фокус върху потребителското изживяване.
+    </p>
+  </div>
+
+
+  <div class="bg-white rounded-3xl shadow-lg p-8 hover:shadow-xl transition">
+    <h3 class="text-xl font-semibold mb-3">AI инструмент за Wild Rift играчи</h3>
+
+    <p class="text-gray-600">
+      Уеб приложение за анализ и автоматично генериране на билдове според текущия пач. Включва интерактивни UI компоненти и визуални анимации.
+    </p>
+  </div>
+
+
+  <div class="bg-white rounded-3xl shadow-lg p-8 hover:shadow-xl transition">
+    <h3 class="text-xl font-semibold mb-3">Дигитални решения за ресторанти</h3>
+
+    <p class="text-gray-600">
+      Създаване на модерни онлайн менюта, системи за поръчки и визуално привлекателни интерфейси, предназначени за ресторанти и гурме заведения.
+    </p>
+  </div>
+
+
+  <div class="bg-white rounded-3xl shadow-lg p-8 hover:shadow-xl transition">
+    <h3 class="text-xl font-semibold mb-3">Платформа с лицево разпознаване</h3>
+
+    <p class="text-gray-600">
+      Разработка на система за разпознаване на лица, генериране на сигнатури и търсене на съвпадения чрез алгоритми и обработка на изображения.
+    </p>
+  </div>
+
+</div>
+
+  </section>  <!-- Tech Stack -->  <section class="max-w-6xl mx-auto px-6 pb-16"><div class="bg-white rounded-3xl shadow-lg p-8">
+  <h2 class="text-2xl font-semibold mb-6">Технологии</h2>
+
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+
+    <div class="bg-gray-50 rounded-2xl p-4 text-center">
+      <p class="font-medium">Next.js</p>
+    </div>
+
+    <div class="bg-gray-50 rounded-2xl p-4 text-center">
+      <p class="font-medium">React</p>
+    </div>
+
+    <div class="bg-gray-50 rounded-2xl p-4 text-center">
+      <p class="font-medium">Tailwind CSS</p>
+    </div>
+
+    <div class="bg-gray-50 rounded-2xl p-4 text-center">
+      <p class="font-medium">Sanity CMS</p>
+    </div>
+
+    <div class="bg-gray-50 rounded-2xl p-4 text-center">
+      <p class="font-medium">JavaScript</p>
+    </div>
+
+    <div class="bg-gray-50 rounded-2xl p-4 text-center">
+      <p class="font-medium">Node.js</p>
+    </div>
+
+    <div class="bg-gray-50 rounded-2xl p-4 text-center">
+      <p class="font-medium">API Integration</p>
+    </div>
+
+    <div class="bg-gray-50 rounded-2xl p-4 text-center">
+      <p class="font-medium">UI/UX Design</p>
+    </div>
+
+  </div>
+
+</div>
+
+  </section>  <!-- Contact -->  <section class="max-w-6xl mx-auto px-6 pb-20"><div class="bg-white rounded-3xl shadow-xl p-10 text-center">
+
+  <h2 class="text-2xl font-semibold mb-4">Контакт</h2>
+
+  <p class="text-gray-600 mb-6">
+    Готов съм да създам модерни и ефективни дигитални решения за вашия бизнес.
+  </p>
+
+  <div class="space-y-2 text-gray-700">
+    <p>📧 email@example.com</p>
+    <p>🌐 your-website.com</p>
+    <p>📍 България</p>
+  </div>
+
+</div>
+
+  </section></body>
 </html>
