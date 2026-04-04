@@ -7,10 +7,11 @@
     <style>
         :root {
             --primary: #0072C6;
-            --secondary: #00b4d8;
+            --accent: #00b4d8;
             --light: #f9f9f9;
             --dark: #222;
             --radius: 8px;
+            --font-family: Arial, sans-serif;
         }
 
         * {
@@ -20,7 +21,7 @@
         }
 
         body {
-            font-family: Arial, sans-serif;
+            font-family: var(--font-family);
             background-color: var(--light);
             color: var(--dark);
             line-height: 1.6;
@@ -29,33 +30,33 @@
         header {
             background: var(--primary);
             color: white;
-            padding: 15px;
+            padding: 20px 10px;
             text-align: center;
+            border-bottom: 5px solid var(--accent);
         }
 
-        h1 {
-            margin-bottom: 5px;
+        header h1 {
+            font-size: 24px;
         }
 
-        p.subtitle {
-            margin-top: 0;
-            font-size: 14px;
-            color: #ddd;
+        header p {
+            margin-top: 5px;
+            color: #eee;
         }
 
         .container {
-            width: 90%;
-            max-width: 800px;
             margin: 20px auto;
+            max-width: 800px;
+            padding: 10px;
         }
 
         .news-item {
-            background: white;
+            background-color: white;
+            margin: 10px 0;
             padding: 15px;
             border-radius: var(--radius);
-            margin: 15px 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             border: 1px solid #ddd;
-            box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);
         }
 
         .news-item h2 {
@@ -66,14 +67,13 @@
 
         .news-item p {
             font-size: 14px;
-            color: #555;
+            margin-bottom: 10px;
         }
 
         .news-item a {
             display: inline-block;
-            margin-top: 10px;
-            color: var(--secondary);
             text-decoration: none;
+            color: var(--accent);
             font-weight: bold;
         }
 
@@ -81,93 +81,111 @@
             text-decoration: underline;
         }
 
-        footer {
+        .error-message {
+            color: #ff0000;
             text-align: center;
-            margin-top: 30px;
-            background: var(--dark);
-            color: white;
+            margin-top: 20px;
+        }
+
+        footer {
+            background-color: var(--dark);
             padding: 15px;
+            text-align: center;
+            color: white;
+            margin-top: 20px;
+        }
+
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
+    <header>
+        <h1>News Aggregator</h1>
+        <p>Latest headlines from trusted sources</p>
+    </header>
+    <main class="container">
+        <div id="loading-message">Loading the latest headlines...</div>
+        <div id="news-container"></div>
+        <p class="error-message" id="error-message" style="display: none;">Unable to load news. Please try again later.</p>
+    </main>
+    <footer>
+        <p>&copy; 2026 News Aggregator | Powered by RSS Feeds. <a href="#">Privacy Policy</a></p>
+    </footer>
 
-<header>
-    <h1>News Aggregator</h1>
-    <p class="subtitle">Bringing you the latest news from trusted sources</p>
-</header>
+    <script>
+        // RSS Sources
+        const rssFeeds = [
+            "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml", // NY Times RSS
+            "http://feeds.bbci.co.uk/news/world/rss.xml", // BBC World News RSS
+            "http://rss.cnn.com/rss/edition.rss" // CNN RSS
+        ];
 
-<main class="container">
-    <!-- Loading message -->
-    <p id="loading" style="text-align:center; color: var(--primary);">Loading news...</p>
-    <!-- News items container -->
-    <div id="news-container"></div>
-</main>
+        const newsContainer = document.getElementById("news-container");
+        const loadingMessage = document.getElementById("loading-message");
+        const errorMessage = document.getElementById("error-message");
 
-<footer>
-    <p>&copy; 2026 News Aggregator. Powered by RSS Feeds.</p>
-</footer>
+        // Fetch RSS Feeds
+        async function fetchRSSFeeds() {
+            loadingMessage.style.display = "block";
+            errorMessage.style.display = "none";
+            newsContainer.innerHTML = ""; // Clear previous news items
 
-<script>
-    // RSS Feed Sources
-    const rssFeeds = [
-        "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml", // NY Times
-        "http://feeds.bbci.co.uk/news/world/rss.xml", // BBC World
-        "http://rss.cnn.com/rss/edition.rss" // CNN
-    ];
-
-    const newsContainer = document.getElementById("news-container");
-    const loadingMessage = document.getElementById("loading");
-
-    // Fetch RSS feeds
-    async function fetchRSSFeeds() {
-        try {
-            // Fetch all feeds and parse them
-            const feeds = await Promise.all(
-                rssFeeds.map(feed =>
+            try {
+                // Fetch and parse multiple RSS feeds
+                const feedPromises = rssFeeds.map(feed =>
                     fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(feed)}`)
-                        .then(response => response.json())
+                        .then(response => {
+                            if (!response.ok) throw new Error("Failed to fetch RSS feed");
+                            return response.json();
+                        })
                         .then(data => new DOMParser().parseFromString(data.contents, "application/xml"))
-                )
-            );
+                );
 
-            // Collect articles from all parsed feeds
-            const articles = [];
-            feeds.forEach(feed => {
-                const items = feed.querySelectorAll("item");
-                items.forEach(item => {
-                    articles.push({
-                        title: item.querySelector("title").textContent,
-                        link: item.querySelector("link").textContent,
-                        description: item.querySelector("description") ? item.querySelector("description").textContent : "No description available."
+                const feeds = await Promise.all(feedPromises);
+
+                // Collect and display articles
+                const articles = [];
+                feeds.forEach(feed => {
+                    const items = feed.querySelectorAll("item");
+                    items.forEach(item => {
+                        articles.push({
+                            title: item.querySelector("title")?.textContent,
+                            link: item.querySelector("link")?.textContent,
+                            description: item.querySelector("description")?.textContent || "No description available."
+                        });
                     });
                 });
-            });
 
-            // Sort articles by publication date or relevance (additional logic can be added)
-            // Render the top 10 articles
-            renderNews(articles.slice(0, 10));
-        } catch (error) {
-            console.error("Failed to fetch RSS feeds:", error);
-            newsContainer.innerHTML = "<p>Error loading news. Please try again later.</p>";
+                // Render articles
+                displayArticles(articles.slice(0, 10));
+            } catch (error) {
+                console.error("Error fetching RSS feeds:", error);
+                errorMessage.style.display = "block";
+            } finally {
+                loadingMessage.style.display = "none";
+            }
         }
-    }
 
-    // Render news list
-    function renderNews(articles) {
-        loadingMessage.style.display = "none";
-        newsContainer.innerHTML = articles.map(article => `
-            <div class="news-item">
-                <h2>${article.title}</h2>
-                <p>${article.description}</p>
-                <a href="${article.link}" target="_blank">Read full article</a>
-            </div>
-        `).join('');
-    }
+        // Display articles
+        function displayArticles(articles) {
+            newsContainer.innerHTML = articles.map(article => `
+                <div class="news-item">
+                    <h2>${article.title}</h2>
+                    <p>${article.description}</p>
+                    <a href="${article.link}" target="_blank">Read more</a>
+                </div>
+            `).join('');
+        }
 
-    // Fetch news on page load
-    fetchRSSFeeds();
-</script>
-
+        // Fetch and render news on page load
+        fetchRSSFeeds();
+    </script>
 </body>
 </html>
