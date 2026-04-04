@@ -1,15 +1,16 @@
 <!DOCTYPE html>
-<html lang="bg">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Новини от България</title>
+    <title>News Aggregator</title>
     <style>
         :root {
-            --primary: #00356b;
-            --accent: #0f9ed2;
-            --light: #f4f4f4;
+            --primary: #0072C6;
+            --secondary: #00b4d8;
+            --light: #f9f9f9;
             --dark: #222;
+            --radius: 8px;
         }
 
         * {
@@ -20,7 +21,7 @@
 
         body {
             font-family: Arial, sans-serif;
-            background: var(--light);
+            background-color: var(--light);
             color: var(--dark);
             line-height: 1.6;
         }
@@ -32,128 +33,140 @@
             text-align: center;
         }
 
+        h1 {
+            margin-bottom: 5px;
+        }
+
+        p.subtitle {
+            margin-top: 0;
+            font-size: 14px;
+            color: #ddd;
+        }
+
         .container {
             width: 90%;
-            max-width: 1100px;
+            max-width: 800px;
             margin: 20px auto;
         }
 
         .news-item {
             background: white;
-            margin: 10px 0;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            border-radius: var(--radius);
+            margin: 15px 0;
+            border: 1px solid #ddd;
+            box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);
         }
 
         .news-item h2 {
             font-size: 18px;
-            margin-bottom: 8px;
             color: var(--primary);
+            margin-bottom: 8px;
         }
 
         .news-item p {
             font-size: 14px;
-            color: var(--dark);
+            color: #555;
         }
 
         .news-item a {
-            color: var(--accent);
-            text-decoration: none;
-            font-weight: bold;
             display: inline-block;
             margin-top: 10px;
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: bold;
         }
 
         .news-item a:hover {
             text-decoration: underline;
         }
 
-        .loading {
-            text-align: center;
-            color: var(--primary);
-            padding: 20px;
-        }
-
         footer {
-            margin-top: 20px;
+            text-align: center;
+            margin-top: 30px;
             background: var(--dark);
             color: white;
-            text-align: center;
-            padding: 10px;
+            padding: 15px;
         }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>Новини от България</h1>
-    <p>Последни новини от водещи източници</p>
+    <h1>News Aggregator</h1>
+    <p class="subtitle">Bringing you the latest news from trusted sources</p>
 </header>
 
 <main class="container">
-    <div class="loading">Зареждане на новини...</div>
-    <div id="news"></div>
+    <!-- Loading message -->
+    <p id="loading" style="text-align:center; color: var(--primary);">Loading news...</p>
+    <!-- News items container -->
+    <div id="news-container"></div>
 </main>
 
 <footer>
-    <p>&copy; 2026 Българските Новини. Всички права запазени.</p>
+    <p>&copy; 2026 News Aggregator. Powered by RSS Feeds.</p>
 </footer>
 
 <script>
-    // RSS Feed URLs от български източници
+    // RSS Feed Sources
     const rssFeeds = [
-        "https://www.dnevnik.bg/rssc/?rubrid=1656",
-        "https://www.capital.bg/rss/",
-        "https://nova.bg/rss/latest"
+        "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml", // NY Times
+        "http://feeds.bbci.co.uk/news/world/rss.xml", // BBC World
+        "http://rss.cnn.com/rss/edition.rss" // CNN
     ];
 
-    const newsContainer = document.getElementById("news");
+    const newsContainer = document.getElementById("news-container");
+    const loadingMessage = document.getElementById("loading");
 
-    async function fetchRSS() {
+    // Fetch RSS feeds
+    async function fetchRSSFeeds() {
         try {
-            // Зареждане на всеки RSS feed
-            const results = await Promise.all(
-                rssFeeds.map(feed => 
+            // Fetch all feeds and parse them
+            const feeds = await Promise.all(
+                rssFeeds.map(feed =>
                     fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(feed)}`)
-                        .then(res => res.json())
-                        .then(data => new window.DOMParser().parseFromString(data.contents, "text/xml"))
+                        .then(response => response.json())
+                        .then(data => new DOMParser().parseFromString(data.contents, "application/xml"))
                 )
             );
 
-            // Обработка на новините от резултатите
+            // Collect articles from all parsed feeds
             const articles = [];
-            results.forEach(rss => {
-                const items = rss.querySelectorAll("item");
+            feeds.forEach(feed => {
+                const items = feed.querySelectorAll("item");
                 items.forEach(item => {
                     articles.push({
-                        title: item.querySelector("title")?.textContent,
-                        link: item.querySelector("link")?.textContent,
-                        description: item.querySelector("description")?.textContent
+                        title: item.querySelector("title").textContent,
+                        link: item.querySelector("link").textContent,
+                        description: item.querySelector("description") ? item.querySelector("description").textContent : "No description available."
                     });
                 });
             });
 
-            // Селектиране на топ 10 новини
-            const topArticles = articles.slice(0, 10);
-
-            // Изграждане на HTML за всяка новина
-            newsContainer.innerHTML = topArticles.map(article => `
-                <div class="news-item">
-                    <h2>${article.title}</h2>
-                    <p>${article.description || "Описание не е налично."}</p>
-                    <a href="${article.link}" target="_blank">Прочетете повече</a>
-                </div>
-            `).join("");
-
+            // Sort articles by publication date or relevance (additional logic can be added)
+            // Render the top 10 articles
+            renderNews(articles.slice(0, 10));
         } catch (error) {
-            console.error("Грешка при зареждане на RSS:", error);
-            newsContainer.innerHTML = `<p>Не успяхме да заредим новините. Моля, опитайте по-късно.</p>`;
+            console.error("Failed to fetch RSS feeds:", error);
+            newsContainer.innerHTML = "<p>Error loading news. Please try again later.</p>";
         }
     }
 
-    // Извикване на функцията за зареждане на RSS feed
-    fetchRSS();
+    // Render news list
+    function renderNews(articles) {
+        loadingMessage.style.display = "none";
+        newsContainer.innerHTML = articles.map(article => `
+            <div class="news-item">
+                <h2>${article.title}</h2>
+                <p>${article.description}</p>
+                <a href="${article.link}" target="_blank">Read full article</a>
+            </div>
+        `).join('');
+    }
+
+    // Fetch news on page load
+    fetchRSSFeeds();
 </script>
 
 </body>
