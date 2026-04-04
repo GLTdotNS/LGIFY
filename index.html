@@ -1,17 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bg">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blockchain App | Solidity Interaction</title>
-    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+    <title>Новини от България</title>
     <style>
         :root {
-            --primary: #2E86DE;
-            --light: #F9F9F9;
-            --dark: #1A1A1A;
-            --radius: 8px;
-            --font: Arial, sans-serif;
+            --primary: #00356b;
+            --accent: #0f9ed2;
+            --light: #f4f4f4;
+            --dark: #222;
         }
 
         * {
@@ -21,8 +19,8 @@
         }
 
         body {
-            font-family: var(--font);
-            background-color: var(--light);
+            font-family: Arial, sans-serif;
+            background: var(--light);
             color: var(--dark);
             line-height: 1.6;
         }
@@ -36,132 +34,126 @@
 
         .container {
             width: 90%;
-            max-width: 500px;
-            margin: 30px auto;
-            border: 1px solid #ddd;
-            border-radius: var(--radius);
-            padding: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            max-width: 1100px;
+            margin: 20px auto;
+        }
+
+        .news-item {
             background: white;
-        }
-
-        button, input {
-            display: block;
-            width: 100%;
-            padding: 10px;
             margin: 10px 0;
-            border: 1px solid var(--primary);
-            border-radius: var(--radius);
-            font-size: 1rem;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
 
-        button {
-            background: var(--primary);
+        .news-item h2 {
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: var(--primary);
+        }
+
+        .news-item p {
+            font-size: 14px;
+            color: var(--dark);
+        }
+
+        .news-item a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .news-item a:hover {
+            text-decoration: underline;
+        }
+
+        .loading {
+            text-align: center;
+            color: var(--primary);
+            padding: 20px;
+        }
+
+        footer {
+            margin-top: 20px;
+            background: var(--dark);
             color: white;
-            border: none;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background: #005bb5;
+            text-align: center;
+            padding: 10px;
         }
     </style>
 </head>
 <body>
 
-<!-- Header -->
 <header>
-    <h1>Blockchain DApp</h1>
-    <p>Interact with Smart Contracts</p>
+    <h1>Новини от България</h1>
+    <p>Последни новини от водещи източници</p>
 </header>
 
-<!-- Container -->
-<div class="container">
-    <h2>Simple Storage Contract</h2>
-    <form id="store-value-form">
-        <input type="number" id="valueInput" placeholder="Enter a value to store" required>
-        <button type="submit">Store Value</button>
-    </form>
-    <button id="get-value-btn">Get Stored Value</button>
-    <p><strong>Stored Value:</strong> <span id="stored-value">N/A</span></p>
-</div>
+<main class="container">
+    <div class="loading">Зареждане на новини...</div>
+    <div id="news"></div>
+</main>
+
+<footer>
+    <p>&copy; 2026 Българските Новини. Всички права запазени.</p>
+</footer>
 
 <script>
-    // Initialize web3 and contract variables
-    let web3;
-    const contractABI = [
-        {
-            "inputs": [
-                {
-                    "internalType": "uint256",
-                    "name": "_data",
-                    "type": "uint256"
-                }
-            ],
-            "name": "set",
-            "outputs": [],
-            "stateMutability": "nonpayable",
-            "type": "function"
-        },
-        {
-            "inputs": [],
-            "name": "get",
-            "outputs": [
-                {
-                    "internalType": "uint256",
-                    "name": "",
-                    "type": "uint256"
-                }
-            ],
-            "stateMutability": "view",
-            "type": "function"
-        }
+    // RSS Feed URLs от български източници
+    const rssFeeds = [
+        "https://www.dnevnik.bg/rssc/?rubrid=1656",
+        "https://www.capital.bg/rss/",
+        "https://nova.bg/rss/latest"
     ];
-    const contractAddress = "YOUR_CONTRACT_ADDRESS_HERE"; // Replace with the deployed contract address
-    let contract;
 
-    // Load web3 instance and connect to Metamask
-    async function connectBlockchain() {
-        if (window.ethereum) {
-            web3 = new Web3(window.ethereum);
-            await window.ethereum.request({ method: "eth_requestAccounts" });
-            contract = new web3.eth.Contract(contractABI, contractAddress);
-        } else {
-            alert("Please install Metamask or another wallet extension to use this app.");
-        }
-    }
+    const newsContainer = document.getElementById("news");
 
-    // Store Value in the Smart Contract
-    async function storeValue(event) {
-        event.preventDefault();
-        const value = document.getElementById("valueInput").value;
-        const accounts = await web3.eth.getAccounts();
+    async function fetchRSS() {
         try {
-            await contract.methods.set(value).send({ from: accounts[0] });
-            alert("Value stored successfully!");
+            // Зареждане на всеки RSS feed
+            const results = await Promise.all(
+                rssFeeds.map(feed => 
+                    fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(feed)}`)
+                        .then(res => res.json())
+                        .then(data => new window.DOMParser().parseFromString(data.contents, "text/xml"))
+                )
+            );
+
+            // Обработка на новините от резултатите
+            const articles = [];
+            results.forEach(rss => {
+                const items = rss.querySelectorAll("item");
+                items.forEach(item => {
+                    articles.push({
+                        title: item.querySelector("title")?.textContent,
+                        link: item.querySelector("link")?.textContent,
+                        description: item.querySelector("description")?.textContent
+                    });
+                });
+            });
+
+            // Селектиране на топ 10 новини
+            const topArticles = articles.slice(0, 10);
+
+            // Изграждане на HTML за всяка новина
+            newsContainer.innerHTML = topArticles.map(article => `
+                <div class="news-item">
+                    <h2>${article.title}</h2>
+                    <p>${article.description || "Описание не е налично."}</p>
+                    <a href="${article.link}" target="_blank">Прочетете повече</a>
+                </div>
+            `).join("");
+
         } catch (error) {
-            console.error("Error storing value:", error);
-            alert("Transaction failed. Check console for details.");
+            console.error("Грешка при зареждане на RSS:", error);
+            newsContainer.innerHTML = `<p>Не успяхме да заредим новините. Моля, опитайте по-късно.</p>`;
         }
     }
 
-    // Retrieve Stored Value
-    async function getValue() {
-        try {
-            const value = await contract.methods.get().call();
-            document.getElementById("stored-value").textContent = value;
-        } catch (error) {
-            console.error("Error retrieving value:", error);
-            alert("Failed to retrieve value. Check console for details.");
-        }
-    }
-
-    // Event Listeners
-    document.getElementById("store-value-form").addEventListener("submit", storeValue);
-    document.getElementById("get-value-btn").addEventListener("click", getValue);
-
-    // Connect to blockchain on load
-    connectBlockchain();
+    // Извикване на функцията за зареждане на RSS feed
+    fetchRSS();
 </script>
 
 </body>
