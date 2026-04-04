@@ -1,335 +1,320 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>LGIFY — Enterprise Solutions</title>
-  <meta name="description" content="LGIFY — Enterprise SAP-style solutions, consulting, implementation and support."/>
-  <style>
-    /* Mobile-first variables & base */
-    :root{
-      --primary:#0072C6;
-      --primary-700:#005a9e;
-      --muted:#6b7280;
-      --bg:#f8fafc;
-      --card:#ffffff;
-      --radius:10px;
-      --gap:16px;
-      --max-width:1100px;
-      --brand-font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family:var(--brand-font);
-      color:#0f172a;
-      background:var(--bg);
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      line-height:1.45;
-      -webkit-tap-highlight-color:transparent;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LGIFY - Enterprise Solutions</title>
+    <style>
+        :root {
+            --primary: #0072C6;
+            --secondary: #004A99;
+            --light: #f8f9fa;
+            --dark: #1a1a1a;
+            --accent: #00b4d8;
+            --font-family: 'Segoe UI', Arial, sans-serif;
+            --radius: 8px;
+        }
 
-    /* Header / Nav (mobile-first) */
-    header{
-      position:sticky; top:0; z-index:1200;
-      background: #fff;
-      border-bottom: 1px solid rgba(15,23,42,0.06);
-      backdrop-filter: blur(4px);
-    }
-    .nav-row{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:var(--gap);
-      padding:12px;
-      max-width:var(--max-width);
-      margin:0 auto;
-    }
-    .brand{
-      display:flex; gap:12px; align-items:center; text-decoration:none; color:var(--primary);
-      font-weight:700; font-size:18px;
-    }
-    .brand svg{width:36px;height:36px;flex:0 0 36px}
-    .nav-toggle{
-      background:transparent;border:0;padding:8px;display:flex;align-items:center;
-      justify-content:center;border-radius:8px;color:var(--muted);
-    }
-    .nav-toggle:focus{outline:2px solid rgba(0,114,198,0.15)}
-    nav ul{
-      list-style:none; padding:12px; margin:0;
-      display:flex; gap:10px; flex-direction:column; width:100%;
-    }
-    nav a{ text-decoration:none; color: #0f172a; padding:10px 8px; display:block; border-radius:8px; font-weight:600}
-    nav a[aria-current="page"]{ color:var(--primary) }
-    .nav-cta{ background:var(--primary); color:#fff; text-align:center; padding:10px; border-radius:8px; font-weight:700 }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    /* Collapsible mobile menu defaults hidden */
-    .menu{
-      position:fixed; inset:60px 12px auto 12px; /* sits below header */
-      background:var(--card);
-      border-radius:12px;
-      box-shadow:0 10px 30px rgba(2,6,23,0.08);
-      max-width:420px;
-      width:calc(100% - 24px);
-      transform-origin:top right;
-      display:none;
-    }
+        body {
+            font-family: var(--font-family);
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
 
-    /* Hero */
-    .hero{
-      padding:48px 20px;
-      text-align:center;
-      background:linear-gradient(160deg,var(--primary),#00b4d8 80%);
-      color:#fff;
-    }
-    .hero-inner{max-width:980px;margin:0 auto}
-    .hero h1{font-size:28px;line-height:1.08;margin-bottom:12px}
-    .hero p{color:rgba(255,255,255,0.95); margin-bottom:18px}
-    .hero .actions{display:flex;gap:10px;flex-direction:column}
-    .btn{display:inline-block;padding:12px 16px;border-radius:10px;text-decoration:none;font-weight:700}
-    .btn-primary{background:#fff;color:var(--primary)}
-    .btn-ghost{background:transparent;color:#fff;border:2px solid rgba(255,255,255,0.16)}
+        a {
+            text-decoration: none;
+            color: var(--primary);
+        }
 
-    /* Content sections */
-    .container{max-width:var(--max-width);margin:0 auto;padding:36px 20px}
-    .section-title{font-size:20px;margin-bottom:18px;font-weight:700;color:#0f172a;text-align:center}
-    .grid{display:grid;grid-template-columns:1fr;gap:16px}
+        ul {
+            list-style: none;
+        }
 
-    .card{
-      background:var(--card); border-radius:var(--radius); padding:18px; box-shadow:0 6px 18px rgba(2,6,23,0.04);
-    }
-    .feature-icon{width:56px;height:56px;border-radius:12px;background:rgba(0,114,198,0.08);display:flex;align-items:center;justify-content:center;margin-bottom:12px;color:var(--primary);font-weight:700}
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
 
-    /* Stats row */
-    .stats{display:flex;gap:12px;justify-content:space-between;align-items:center}
-    .stat{flex:1;text-align:center;padding:14px;background:linear-gradient(90deg,rgba(0,114,198,0.06),rgba(0,114,198,0.02));border-radius:10px}
+        .nav-container {
+            max-width: 1200px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-    /* Contact form */
-    form{display:grid;gap:10px}
-    input,textarea{width:100%;padding:12px;border-radius:8px;border:1px solid rgba(2,6,23,0.08);font-size:15px}
-    input:focus,textarea:focus{outline:2px solid rgba(0,114,198,0.12);border-color:rgba(0,114,198,0.25)}
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
 
-    footer{padding:24px 20px;background:#0b1220;color:#cbd5e1;text-align:center;font-size:14px;margin-top:30px}
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
 
-    /* Larger screens */
-    @media(min-width:720px){
-      .nav-toggle{display:none}
-      .menu{position:static;display:block;background:transparent;box-shadow:none;width:auto;padding:0}
-      nav ul{flex-direction:row;align-items:center;width:auto;padding:0}
-      nav a{padding:8px 12px}
-      .nav-cta{padding:10px 18px}
-      .hero{padding:96px 20px}
-      .hero h1{font-size:44px}
-      .hero .actions{flex-direction:row;justify-content:center}
-      .grid{grid-template-columns:repeat(2,1fr)}
-      .features-grid{grid-template-columns:repeat(2,1fr);gap:18px}
-    }
+        .nav-link {
+            color: var(--dark);
+            padding: 5px 10px;
+            transition: color 0.3s ease;
+        }
 
-    @media(min-width:1000px){
-      .grid{grid-template-columns:repeat(3,1fr)}
-      .menu{width:auto}
-      .hero h1{font-size:56px}
-    }
-  </style>
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        .cta-btn {
+            background: var(--primary);
+            color: white;
+            padding: 10px 20px;
+            border-radius: var(--radius);
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .cta-btn:hover {
+            background: var(--secondary);
+        }
+
+        .hero {
+            text-align: center;
+            padding: 100px 20px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            animation: fadeIn 3s ease-in-out;
+        }
+
+        .hero-button {
+            padding: 10px 25px;
+            font-weight: bold;
+            border-radius: var(--radius);
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: white;
+            color: var(--primary);
+        }
+
+        .btn-primary:hover {
+            background: var(--light);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: var(--primary);
+        }
+
+        .services {
+            max-width: 1200px;
+            padding: 50px 20px;
+            margin: auto;
+            text-align: center;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .service-card {
+            padding: 20px;
+            border-radius: var(--radius);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            background: white;
+            transition: 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .testimonials {
+            background: var(--primary);
+            padding: 50px 20px;
+            text-align: center;
+            color: white;
+        }
+
+        .testimonial-item {
+            font-style: italic;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: var(--radius);
+            margin-bottom: 20px;
+        }
+
+        .faq {
+            max-width: 1200px;
+            margin: auto;
+            padding: 50px 20px;
+        }
+
+        .faq h2 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .faq-item {
+            margin-bottom: 20px;
+        }
+
+        .faq-item h3 {
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        .faq-item p {
+            display: none;
+            margin-top: 10px;
+            color: var(--dark);
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: var(--dark);
+            color: white;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <div class="nav-row" role="navigation" aria-label="Main navigation">
-      <a class="brand" href="/">
-        <!-- simple svg mark -->
-        <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
-          <rect x="4" y="8" width="40" height="32" rx="6" fill="#0072C6"></rect>
-          <path d="M12 18h24v4H12z" fill="#fff" opacity="0.9"></path>
-        </svg>
-        LGIFY
-      </a>
 
-      <!-- collapsed menu for mobile -->
-      <button class="nav-toggle" aria-expanded="false" aria-controls="main-navigation" title="Toggle menu">
-        <span style="font-size:18px">☰</span>
-      </button>
-
-      <nav id="main-navigation" class="menu" aria-hidden="true">
-        <ul>
-          <li><a href="#features" class="nav-link">Features</a></li>
-          <li><a href="#services" class="nav-link">Services</a></li>
-          <li><a href="#about" class="nav-link">About</a></li>
-          <li><a href="#contact" class="nav-link">Contact</a></li>
-          <li><a href="#get-started" class="nav-cta">Get Started</a></li>
-        </ul>
-      </nav>
+<!-- Header -->
+<header>
+    <div class="nav-container">
+        <a href="#" class="nav-logo">LGIFY</a>
+        <nav role="navigation">
+            <ul class="nav-links">
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#services" class="nav-link">Services</a></li>
+                <li><a href="#testimonials" class="nav-link">Testimonials</a></li>
+                <li><a href="#faq" class="nav-link">FAQ</a></li>
+                <li><a href="#contact" class="cta-btn">Get in Touch</a></li>
+            </ul>
+        </nav>
     </div>
-  </header>
+</header>
 
-  <main>
-    <section class="hero" aria-labelledby="hero-heading">
-      <div class="hero-inner">
-        <h1 id="hero-heading">Transform your enterprise with modern SAP-native solutions</h1>
-        <p>Expert consulting, seamless implementation and 24/7 support — drive digital transformation with confidence.</p>
-        <div class="actions">
-          <a class="btn btn-primary" href="#get-started">Start Free Trial</a>
-          <a class="btn btn-ghost" href="#services">See Services</a>
-        </div>
-      </div>
-    </section>
-
-    <section class="container">
-      <h2 class="section-title">Why customers choose LGIFY</h2>
-      <div class="grid features-grid">
-        <div class="card">
-          <div class="feature-icon" aria-hidden="true">⚡</div>
-          <h3>Performance & Reliability</h3>
-          <p>High throughput and enterprise-grade SLAs to keep mission-critical processes running.</p>
-        </div>
-
-        <div class="card">
-          <div class="feature-icon" aria-hidden="true">🔒</div>
-          <h3>Security & Compliance</h3>
-          <p>End-to-end encryption, role-based access and compliance-ready controls for regulated industries.</p>
-        </div>
-
-        <div class="card">
-          <div class="feature-icon" aria-hidden="true">🔗</div>
-          <h3>Seamless Integration</h3>
-          <p>Pre-built connectors, APIs and automation to integrate with your SAP landscape and third-party tools.</p>
-        </div>
-
-        <div class="card">
-          <div class="feature-icon" aria-hidden="true">🤝</div>
-          <h3>Trusted Support</h3>
-          <p>Dedicated consultants, 24/7 support and a partner-first approach for long-term success.</p>
-        </div>
-
-        <div class="card">
-          <div class="feature-icon" aria-hidden="true">📊</div>
-          <h3>Analytics & Insights</h3>
-          <p>Real-time dashboards and tailored reporting for data-driven decision making.</p>
-        </div>
-
-        <div class="card">
-          <div class="feature-icon" aria-hidden="true">🌍</div>
-          <h3>Global Delivery</h3>
-          <p>Distributed infrastructure and localized teams to support your global footprint.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="container" id="services">
-      <h2 class="section-title">Services</h2>
-      <div class="grid">
-        <div class="card">
-          <h4>Consulting & Strategy</h4>
-          <p>Workshops, assessments and roadmaps to align technology with business goals.</p>
-        </div>
-        <div class="card">
-          <h4>Implementation</h4>
-          <p>End-to-end deployment with proven templates and minimal business disruption.</p>
-        </div>
-        <div class="card">
-          <h4>Custom Development</h4>
-          <p>Extensions, integrations and enhancements tailored to your processes.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="container" aria-labelledby="stats-heading">
-      <h2 id="stats-heading" class="section-title">Proven outcomes</h2>
-      <div class="stats">
-        <div class="stat card">
-          <strong style="font-size:20px;display:block">500+</strong>
-          <span style="color:var(--muted)">Clients worldwide</span>
-        </div>
-        <div class="stat card">
-          <strong style="font-size:20px;display:block">1,000+</strong>
-          <span style="color:var(--muted)">Projects delivered</span>
-        </div>
-        <div class="stat card">
-          <strong style="font-size:20px;display:block">98%</strong>
-          <span style="color:var(--muted)">Customer satisfaction</span>
-        </div>
-      </div>
-    </section>
-
-    <section class="container" id="contact" aria-labelledby="contact-heading">
-      <h2 id="contact-heading" class="section-title">Get in touch</h2>
-      <div class="card" style="max-width:760px;margin:0 auto">
-        <form onsubmit="event.preventDefault(); alert('Thanks — form submission not configured in demo.');">
-          <div style="display:grid;gap:10px">
-            <input name="name" type="text" placeholder="Full name" required />
-            <input name="email" type="email" placeholder="Work email" required />
-            <input name="company" type="text" placeholder="Company (optional)" />
-            <textarea name="message" placeholder="Tell us about your project" rows="5" required></textarea>
-            <div style="display:flex;gap:10px;flex-wrap:wrap">
-              <button class="btn btn-primary" type="submit">Send message</button>
-              <a class="btn btn-ghost" href="mailto:contact@lgify.example">Email us</a>
-            </div>
-          </div>
-        </form>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <div style="max-width:var(--max-width);margin:0 auto">
-      <div style="margin-bottom:8px">© 2026 LGIFY — All rights reserved</div>
-      <div style="color:var(--muted);font-size:13px">Privacy • Terms • Cookie policy</div>
+<!-- Hero Section -->
+<section class="hero" id="hero">
+    <h1>Transform Your Business</h1>
+    <p>Your partner in digital innovation and enterprise solutions.</p>
+    <div class="hero-buttons">
+        <a href="#services" class="hero-button btn-primary">Explore Services</a>
+        <a href="#about" class="hero-button btn-secondary">Learn More</a>
     </div>
-  </footer>
+</section>
 
-  <script>
-    // Mobile menu toggle with accessibility handling
-    (function(){
-      const btn = document.querySelector('.nav-toggle');
-      const menu = document.getElementById('main-navigation');
-      const focusables = menu ? menu.querySelectorAll('a,button') : [];
+<!-- Services Section -->
+<section class="services" id="services">
+    <h2>Our Services</h2>
+    <p>We provide cutting-edge solutions tailored to your business.</p>
+    <div class="services-grid">
+        <div class="service-card">
+            <h3>Consulting</h3>
+            <p>Expert guidance for your digital transformation journey.</p>
+        </div>
+        <div class="service-card">
+            <h3>Implementation</h3>
+            <p>End-to-end deployment to ensure success.</p>
+        </div>
+        <div class="service-card">
+            <h3>Support & Maintenance</h3>
+            <p>24/7 support to keep you running smoothly.</p>
+        </div>
+    </div>
+</section>
 
-      function openMenu(){
-        menu.style.display = 'block';
-        menu.setAttribute('aria-hidden','false');
-        btn.setAttribute('aria-expanded','true');
-        // trap focus: focus first link
-        if(focusables[0]) focusables[0].focus();
-      }
-      function closeMenu(){
-        menu.style.display = '';
-        menu.setAttribute('aria-hidden','true');
-        btn.setAttribute('aria-expanded','false');
-        btn.focus();
-      }
+<!-- Testimonials Section -->
+<section class="testimonials" id="testimonials">
+    <h2>What Our Clients Say</h2>
+    <div class="testimonial-item">"LGIFY has been critical in our digital transformation."</div>
+    <div class="testimonial-item">"Outstanding support and services."</div>
+    <div class="testimonial-item">"They made complex projects seamless and efficient."</div>
+</section>
 
-      btn.addEventListener('click', ()=>{
-        const expanded = btn.getAttribute('aria-expanded') === 'true';
-        if(expanded) closeMenu(); else openMenu();
-      });
+<!-- FAQ Section -->
+<section class="faq" id="faq">
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-item">
+        <h3>What services do you offer?</h3>
+        <p>We offer consulting, implementation, maintenance, and more.</p>
+    </div>
+    <div class="faq-item">
+        <h3>How do I get started?</h3>
+        <p>Contact us using the button below to discuss your needs.</p>
+    </div>
+</section>
 
-      // close when user clicks a nav link (good for single-page scrolling)
-      menu.querySelectorAll('a').forEach(a=>{
-        a.addEventListener('click', ()=> {
-          if(window.innerWidth < 720) closeMenu();
+<!-- Footer -->
+<footer>
+    <p>&copy; 2026 LGIFY. All rights reserved.</p>
+    <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+</footer>
+
+<script>
+    // FAQ toggle
+    document.querySelectorAll('.faq-item h3').forEach((item) => {
+        item.addEventListener('click', () => {
+            const p = item.nextElementSibling;
+            p.style.display = p.style.display === 'block' ? 'none' : 'block';
         });
-      });
+    });
+</script>
 
-      // close on ESC
-      document.addEventListener('keydown', (e)=> {
-        if(e.key === 'Escape') closeMenu();
-      });
-
-      // ensure menu visibility for large screens
-      function mediaCheck(){
-        if(window.innerWidth >= 720){
-          menu.style.display = 'block';
-          menu.setAttribute('aria-hidden','false');
-          btn.setAttribute('aria-expanded','false');
-        } else {
-          menu.style.display = '';
-          menu.setAttribute('aria-hidden','true');
-        }
-      }
-      mediaCheck();
-      window.addEventListener('resize', mediaCheck);
-    })();
-  </script>
 </body>
 </html>
