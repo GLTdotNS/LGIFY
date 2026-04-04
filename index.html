@@ -3,22 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CryptoCorp | Revolutionizing Blockchain</title>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Blockchain App | Solidity Interaction</title>
+    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
     <style>
-        /* Root Variables */
         :root {
             --primary: #2E86DE;
-            --secondary: #54A0FF;
+            --light: #F9F9F9;
             --dark: #1A1A1A;
-            --light: #FAFAFA;
-            --accent: #00CC99;
-            --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            --radius: 10px;
+            --radius: 8px;
+            --font: Arial, sans-serif;
         }
 
-        /* Mobile-first Defaults */
         * {
             margin: 0;
             padding: 0;
@@ -26,154 +21,49 @@
         }
 
         body {
-            font-family: var(--font-family);
+            font-family: var(--font);
             background-color: var(--light);
             color: var(--dark);
             line-height: 1.6;
-            overflow-x: hidden;
         }
 
-        /* Header Section */
         header {
-            background: white;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 20px;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--primary);
-        }
-
-        .menu {
-            display: none;
-            flex-direction: column;
-            gap: 10px;
-            background: white;
-            position: absolute;
-            top: 60px;
-            left: 0;
-            width: 100%;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            border-radius: var(--radius);
-        }
-
-        .menu a {
-            display: block;
-            padding: 15px;
-            text-decoration: none;
-            color: var(--dark);
-            text-align: center;
-            font-weight: 500;
-        }
-
-        .menu a:hover {
-            background-color: var(--light);
-        }
-
-        .hamburger {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-            cursor: pointer;
-        }
-
-        .bar {
-            width: 25px;
-            height: 3px;
-            background: var(--dark);
-        }
-
-        .nav-open .menu {
-            display: flex;
-        }
-
-        /* Hero Section */
-        .hero {
-            height: 100vh;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: var(--primary);
             color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
+            padding: 15px;
             text-align: center;
         }
 
-        .hero h1 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
-        }
-
-        .hero-buttons button {
-            padding: 10px 20px;
-            border: none;
+        .container {
+            width: 90%;
+            max-width: 500px;
+            margin: 30px auto;
+            border: 1px solid #ddd;
             border-radius: var(--radius);
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             background: white;
-            color: var(--primary);
-            font-weight: bold;
-            cursor: pointer;
-            margin: 10px;
-            transition: background 0.3s ease-in-out;
         }
 
-        /* Statistics Section */
-        .stats {
-            padding: 50px 20px;
-            background-color: var(--light);
-            text-align: center;
-        }
-
-        .stats h2 {
-            margin-bottom: 20px;
-        }
-
-        .stats canvas {
-            max-width: 90vw;
-        }
-
-        /* 3D Canvas Section */
-        #threejs-canvas {
-            width: 100vw;
-            height: 400px;
+        button, input {
             display: block;
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid var(--primary);
+            border-radius: var(--radius);
+            font-size: 1rem;
         }
 
-        /* Responsive Design */
-        @media (min-width: 768px) {
-            .hero h1 {
-                font-size: 3rem;
-            }
+        button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
 
-            .hero p {
-                font-size: 1.4rem;
-            }
-
-            .menu {
-                display: flex;
-                position: static;
-                flex-direction: row;
-                gap: 20px;
-            }
-
-            .hamburger {
-                display: none;
-            }
+        button:hover {
+            background: #005bb5;
         }
     </style>
 </head>
@@ -181,102 +71,98 @@
 
 <!-- Header -->
 <header>
-    <div class="nav-container">
-        <div class="logo">CryptoCorp</div>
-        <div class="hamburger" onclick="toggleMenu()">
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-        </div>
-        <nav class="menu">
-            <a href="#hero">Home</a>
-            <a href="#stats">Statistics</a>
-            <a href="#threejs">3D Visuals</a>
-            <a href="#contact">Contact</a>
-        </nav>
-    </div>
+    <h1>Blockchain DApp</h1>
+    <p>Interact with Smart Contracts</p>
 </header>
 
-<!-- Hero Section -->
-<section id="hero" class="hero">
-    <h1>Welcome to CryptoCorp</h1>
-    <p>Innovate in the blockchain space with our modern solutions.</p>
-    <div class="hero-buttons">
-        <button onclick="scrollToSection('stats')">Discover Stats</button>
-        <button onclick="scrollToSection('threejs')">Explore 3D</button>
-    </div>
-</section>
-
-<!-- Statistics Section -->
-<section id="stats" class="stats">
-    <h2>Market Overview</h2>
-    <canvas id="cryptoChart"></canvas>
-</section>
-
-<!-- 3D Visual Section -->
-<section id="threejs">
-    <canvas id="threejs-canvas"></canvas>
-</section>
-
-<!-- Footer -->
-<footer style="background: var(--dark); color: white; text-align: center; padding: 20px;">
-    <p>&copy; 2026 CryptoCorp. All Rights Reserved.</p>
-</footer>
+<!-- Container -->
+<div class="container">
+    <h2>Simple Storage Contract</h2>
+    <form id="store-value-form">
+        <input type="number" id="valueInput" placeholder="Enter a value to store" required>
+        <button type="submit">Store Value</button>
+    </form>
+    <button id="get-value-btn">Get Stored Value</button>
+    <p><strong>Stored Value:</strong> <span id="stored-value">N/A</span></p>
+</div>
 
 <script>
-    // Mobile Menu Toggle
-    function toggleMenu() {
-        document.querySelector('.menu').classList.toggle('nav-open');
-    }
-
-    // Scroll-to Section
-    function scrollToSection(sectionId) {
-        document.getElementById(sectionId).scrollIntoView({ behavior: "smooth" });
-    }
-
-    // Chart.js for Statistics
-    const ctx = document.getElementById('cryptoChart').getContext('2d');
-    new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['Bitcoin', 'Ethereum', 'Dogecoin', 'Solana'],
-            datasets: [{
-                label: 'Market Cap (Billion $)',
-                data: [800, 400, 50, 60],
-                backgroundColor: ['rgba(46, 134, 222, 0.6)', 'rgba(84, 160, 255, 0.6)', 'rgba(255, 193, 7, 0.6)', 'rgba(0, 204, 153, 0.6)'],
-                borderColor: ['rgba(46, 134, 222, 1)', 'rgba(84, 160, 255, 1)', 'rgba(255, 193, 7, 1)', 'rgba(0, 204, 153, 1)'],
-                borderWidth: 2
-            }]
+    // Initialize web3 and contract variables
+    let web3;
+    const contractABI = [
+        {
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "_data",
+                    "type": "uint256"
+                }
+            ],
+            "name": "set",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
         },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: { display: true, position: 'top' },
-            }
+        {
+            "inputs": [],
+            "name": "get",
+            "outputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
         }
-    });
+    ];
+    const contractAddress = "YOUR_CONTRACT_ADDRESS_HERE"; // Replace with the deployed contract address
+    let contract;
 
-    // Three.js Visual
-    const canvas = document.querySelector('#threejs-canvas');
-    const renderer = new THREE.WebGLRenderer({ canvas });
-    renderer.setSize(canvas.width, canvas.height);
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, canvas.width / canvas.height, 0.1, 1000);
-    camera.position.z = 5;
-
-    const geometry = new THREE.BoxGeometry();
-    const material = new THREE.MeshBasicMaterial({ color: var(--primary) });
-    const cube = new THREE.Mesh(geometry, material);
-    scene.add(cube);
-    renderer.render(scene, camera);
-
-    function animate() {
-        requestAnimationFrame(animate);
-        cube.rotation.x += 0.01;
-        cube.rotation.y += 0.01;
-        renderer.render(scene, camera);
+    // Load web3 instance and connect to Metamask
+    async function connectBlockchain() {
+        if (window.ethereum) {
+            web3 = new Web3(window.ethereum);
+            await window.ethereum.request({ method: "eth_requestAccounts" });
+            contract = new web3.eth.Contract(contractABI, contractAddress);
+        } else {
+            alert("Please install Metamask or another wallet extension to use this app.");
+        }
     }
-    animate();
+
+    // Store Value in the Smart Contract
+    async function storeValue(event) {
+        event.preventDefault();
+        const value = document.getElementById("valueInput").value;
+        const accounts = await web3.eth.getAccounts();
+        try {
+            await contract.methods.set(value).send({ from: accounts[0] });
+            alert("Value stored successfully!");
+        } catch (error) {
+            console.error("Error storing value:", error);
+            alert("Transaction failed. Check console for details.");
+        }
+    }
+
+    // Retrieve Stored Value
+    async function getValue() {
+        try {
+            const value = await contract.methods.get().call();
+            document.getElementById("stored-value").textContent = value;
+        } catch (error) {
+            console.error("Error retrieving value:", error);
+            alert("Failed to retrieve value. Check console for details.");
+        }
+    }
+
+    // Event Listeners
+    document.getElementById("store-value-form").addEventListener("submit", storeValue);
+    document.getElementById("get-value-btn").addEventListener("click", getValue);
+
+    // Connect to blockchain on load
+    connectBlockchain();
 </script>
+
 </body>
 </html>
