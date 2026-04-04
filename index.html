@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>News Aggregator</title>
+    <title>NY Times News</title>
     <style>
         :root {
             --primary: #0072C6;
@@ -107,8 +107,8 @@
 </head>
 <body>
     <header>
-        <h1>News Aggregator</h1>
-        <p>Latest headlines from trusted sources</p>
+        <h1>NY Times News</h1>
+        <p>Latest headlines from The New York Times</p>
     </header>
     <main class="container">
         <div id="loading-message">Loading the latest headlines...</div>
@@ -116,64 +116,50 @@
         <p class="error-message" id="error-message" style="display: none;">Unable to load news. Please try again later.</p>
     </main>
     <footer>
-        <p>&copy; 2026 News Aggregator | Powered by RSS Feeds. <a href="#">Privacy Policy</a></p>
+        <p>&copy; 2026 NY Times News Aggregator | Powered by RSS Feeds. <a href="#">Privacy Policy</a></p>
     </footer>
 
     <script>
-        // RSS Sources
-        const rssFeeds = [
-            "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml", // NY Times RSS
-            "http://feeds.bbci.co.uk/news/world/rss.xml", // BBC World News RSS
-            "http://rss.cnn.com/rss/edition.rss" // CNN RSS
-        ];
+        // RSS Source от NY Times
+        const rssFeed = "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml";
 
         const newsContainer = document.getElementById("news-container");
         const loadingMessage = document.getElementById("loading-message");
         const errorMessage = document.getElementById("error-message");
 
-        // Fetch RSS Feeds
-        async function fetchRSSFeeds() {
+        // Функция за зареждане на RSS
+        async function fetchRSSFeed() {
             loadingMessage.style.display = "block";
             errorMessage.style.display = "none";
-            newsContainer.innerHTML = ""; // Clear previous news items
+            newsContainer.innerHTML = ""; // Изчистване на предишни новини
 
             try {
-                // Fetch and parse multiple RSS feeds
-                const feedPromises = rssFeeds.map(feed =>
-                    fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(feed)}`)
-                        .then(response => {
-                            if (!response.ok) throw new Error("Failed to fetch RSS feed");
-                            return response.json();
-                        })
-                        .then(data => new DOMParser().parseFromString(data.contents, "application/xml"))
-                );
+                // Fetch и парсване на RSS
+                const response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(rssFeed)}`);
+                if (!response.ok) throw new Error("Failed to fetch RSS feed");
 
-                const feeds = await Promise.all(feedPromises);
+                const data = await response.json();
+                const rss = new DOMParser().parseFromString(data.contents, "application/xml");
 
-                // Collect and display articles
-                const articles = [];
-                feeds.forEach(feed => {
-                    const items = feed.querySelectorAll("item");
-                    items.forEach(item => {
-                        articles.push({
-                            title: item.querySelector("title")?.textContent,
-                            link: item.querySelector("link")?.textContent,
-                            description: item.querySelector("description")?.textContent || "No description available."
-                        });
-                    });
-                });
+                // Извличане на новини
+                const items = rss.querySelectorAll("item");
+                const articles = Array.from(items).map(item => ({
+                    title: item.querySelector("title")?.textContent,
+                    link: item.querySelector("link")?.textContent,
+                    description: item.querySelector("description")?.textContent || "No description available."
+                }));
 
-                // Render articles
+                // Рендериране на новини
                 displayArticles(articles.slice(0, 10));
             } catch (error) {
-                console.error("Error fetching RSS feeds:", error);
+                console.error("Error fetching RSS feed:", error);
                 errorMessage.style.display = "block";
             } finally {
                 loadingMessage.style.display = "none";
             }
         }
 
-        // Display articles
+        // Функция за визуализация на новини
         function displayArticles(articles) {
             newsContainer.innerHTML = articles.map(article => `
                 <div class="news-item">
@@ -184,8 +170,8 @@
             `).join('');
         }
 
-        // Fetch and render news on page load
-        fetchRSSFeeds();
+        // Извикване на функцията при зареждане на страницата
+        fetchRSSFeed();
     </script>
 </body>
 </html>
