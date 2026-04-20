@@ -1,134 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>SEO Crawler</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0e1113;
-      color: white;
-      padding: 20px;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SEO Crawler Demo</title>
 
-    h1 {
-      color: #f472b6;
-      font-size: 22px;
-    }
-
-    input, button {
-      width: 100%;
-      padding: 12px;
-      margin-top: 10px;
-      border-radius: 10px;
-      border: none;
-      font-size: 14px;
-    }
-
-    input {
-      background: #1f1f1f;
-      color: white;
-    }
-
-    button {
-      background: #ec4899;
-      color: black;
-      font-weight: bold;
-    }
-
-    button:active {
-      transform: scale(0.98);
-    }
-
-    .log {
-      margin-top: 20px;
-      background: #111;
-      padding: 15px;
-      border-radius: 10px;
-      max-height: 400px;
-      overflow-y: auto;
-      font-size: 13px;
-    }
-
-    .item {
-      border-bottom: 1px solid #333;
-      padding: 8px 0;
-    }
-
-    .title {
-      color: #f472b6;
-      font-weight: bold;
-    }
-
-    .url {
-      color: #aaa;
-      font-size: 12px;
-    }
-  </style>
+<style>
+  body {
+    font-family: Arial;
+    background: #0e1113;
+    color: white;
+    padding: 20px;
+  }
+  input, button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border-radius: 10px;
+    border: none;
+  }
+  button {
+    background: hotpink;
+    color: black;
+    font-weight: bold;
+  }
+  .box {
+    margin-top: 20px;
+    padding: 15px;
+    background: #1a1d21;
+    border-radius: 12px;
+    white-space: pre-wrap;
+  }
+</style>
 </head>
+
 <body>
 
-  <h1>SEO Crawler Tool</h1>
+<h2>SEO Crawler (Mobile Demo)</h2>
 
-  <input id="url" placeholder="Enter URL (example: https://example.com)" />
-  <button onclick="crawl()">Start Crawling</button>
+<input id="url" placeholder="Enter URL (https://...)" />
+<button onclick="crawl()">Run Crawl</button>
 
-  <div class="log" id="log"></div>
+<div id="output" class="box">Results will appear here...</div>
 
-  <script>
-    const logBox = document.getElementById("log");
+<script>
+async function crawl() {
+  const url = document.getElementById("url").value;
+  const output = document.getElementById("output");
 
-    function log(message) {
-      const div = document.createElement("div");
-      div.className = "item";
-      div.innerHTML = message;
-      logBox.appendChild(div);
-    }
+  output.innerText = "Fetching...";
 
-    async function crawl() {
-      const url = document.getElementById("url").value;
+  try {
+    // NOTE: direct fetch often fails due to CORS
+    const res = await fetch(url);
+    const html = await res.text();
 
-      if (!url) {
-        alert("Enter a URL");
-        return;
-      }
+    // extract SEO basics
+    const title = html.match(/<title>(.*?)<\/title>/i)?.[1] || "No title";
+    const metaDesc = html.match(/name="description" content="(.*?)"/i)?.[1] || "No description";
+    const h1 = html.match(/<h1.*?>(.*?)<\/h1>/i)?.[1] || "No H1";
 
-      log("🚀 Starting crawl: " + url);
+    output.innerText =
+      "TITLE:\n" + title +
+      "\n\nDESCRIPTION:\n" + metaDesc +
+      "\n\nH1:\n" + h1 +
+      "\n\nRAW HTML LENGTH:\n" + html.length;
 
-      try {
-        const res = await fetch(url);
-        const html = await res.text();
-
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, "text/html");
-
-        const title = doc.querySelector("title")?.innerText || "No title";
-        const metaDesc =
-          doc.querySelector('meta[name="description"]')?.content || "No meta description";
-
-        const h1 = doc.querySelector("h1")?.innerText || "No H1 found";
-
-        log(`<div class="title">TITLE:</div> ${title}`);
-        log(`<div class="title">META DESCRIPTION:</div> ${metaDesc}`);
-        log(`<div class="title">H1:</div> ${h1}`);
-
-        const links = [...doc.querySelectorAll("a")].slice(0, 10);
-
-        log(`<div class="title">TOP LINKS:</div>`);
-
-        links.forEach((a) => {
-          log(`<div class="url">${a.href}</div>`);
-        });
-
-        log("✅ Crawl finished");
-
-      } catch (err) {
-        log("❌ Error: " + err.message);
-      }
-    }
-  </script>
+  } catch (err) {
+    output.innerText =
+      "❌ Fetch failed (CORS blocked)\n\n" +
+      "Solution:\n" +
+      "Use a proxy like:\n" +
+      "https://api.allorigins.win/raw?url=" + url;
+  }
+}
+</script>
 
 </body>
 </html>
