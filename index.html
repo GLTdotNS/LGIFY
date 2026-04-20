@@ -1,176 +1,134 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dynamic News Portal</title>
-    <style>
-        :root {
-            --primary: #2E86DE;
-            --accent: #00CC99;
-            --light: #f9f9f9;
-            --dark: #1a1a1a;
-            --text: #333;
-            --font-family: Arial, sans-serif;
-            --radius: 8px;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SEO Crawler</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0e1113;
+      color: white;
+      padding: 20px;
+    }
 
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: var(--light);
-            font-family: var(--font-family);
-            color: var(--text);
-            line-height: 1.6;
-        }
+    h1 {
+      color: #f472b6;
+      font-size: 22px;
+    }
 
-        header {
-            background-color: var(--primary);
-            color: white;
-            text-align: center;
-            padding: 20px;
-        }
+    input, button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border-radius: 10px;
+      border: none;
+      font-size: 14px;
+    }
 
-        header h1 {
-            font-size: 2rem;
-            margin-bottom: 5px;
-        }
+    input {
+      background: #1f1f1f;
+      color: white;
+    }
 
-        header p {
-            font-size: 1rem;
-            color: #ddd;
-        }
+    button {
+      background: #ec4899;
+      color: black;
+      font-weight: bold;
+    }
 
-        nav {
-            background-color: var(--dark);
-            padding: 10px 0;
-            text-align: center;
-        }
+    button:active {
+      transform: scale(0.98);
+    }
 
-        nav a {
-            color: white;
-            text-decoration: none;
-            font-size: 1rem;
-            margin: 0 10px;
-            font-weight: bold;
-        }
+    .log {
+      margin-top: 20px;
+      background: #111;
+      padding: 15px;
+      border-radius: 10px;
+      max-height: 400px;
+      overflow-y: auto;
+      font-size: 13px;
+    }
 
-        nav a:hover {
-            text-decoration: underline;
-        }
+    .item {
+      border-bottom: 1px solid #333;
+      padding: 8px 0;
+    }
 
-        .container {
-            padding: 20px;
-            margin: 0 auto;
-            max-width: 1200px;
-        }
+    .title {
+      color: #f472b6;
+      font-weight: bold;
+    }
 
-        .news-item {
-            background: white;
-            margin: 20px 0;
-            padding: 15px;
-            border-radius: var(--radius);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .news-item h2 {
-            font-size: 1.25rem;
-            color: var(--primary);
-            margin-bottom: 10px;
-        }
-
-        .news-item p {
-            font-size: 1rem;
-            line-height: 1.5;
-            color: var(--text);
-        }
-
-        .news-item a {
-            font-weight: bold;
-            text-decoration: none;
-            color: var(--accent);
-        }
-
-        .news-item a:hover {
-            text-decoration: underline;
-        }
-
-        footer {
-            background-color: var(--dark);
-            color: white;
-            text-align: center;
-            padding: 15px;
-        }
-
-        footer a {
-            color: var(--accent);
-            text-decoration: none;
-        }
-
-        footer a:hover {
-            text-decoration: underline;
-        }
-    </style>
+    .url {
+      color: #aaa;
+      font-size: 12px;
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>Dynamic News Portal</h1>
-        <p>Get the latest headlines, updated dynamically</p>
-    </header>
-    <nav>
-        <a href="#world">World</a>
-        <a href="#tech">Tech</a>
-        <a href="#finance">Finance</a>
-    </nav>
-    <main class="container">
-        <div id="loading">Loading latest news...</div>
-        <div id="news-grid"></div>
-    </main>
-    <footer>
-        <p>&copy; 2026 Dynamic News Portal | Powered by News APIs</p>
-    </footer>
 
-    <script>
-        const RSS_FEED = "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml"; // NY Times RSS (Changeable)
-        const API_PROXY = "https://api.allorigins.win/get?url="; // Proxy for CORS
-        const newsContainer = document.getElementById("news-grid");
-        const loadingIndicator = document.getElementById("loading");
+  <h1>SEO Crawler Tool</h1>
 
-        // Fetch and Parse RSS News
-        async function fetchNews() {
-            try {
-                // Fetch RSS Feed Using Proxy
-                const response = await fetch(`${API_PROXY}${encodeURIComponent(RSS_FEED)}`);
-                if (!response.ok) throw new Error("Failed to fetch RSS Feed");
+  <input id="url" placeholder="Enter URL (example: https://example.com)" />
+  <button onclick="crawl()">Start Crawling</button>
 
-                const result = await response.json();
-                const parser = new DOMParser();
-                const rssDocument = parser.parseFromString(result.contents, "application/xml");
+  <div class="log" id="log"></div>
 
-                const items = rssDocument.querySelectorAll("item");
-                const newsHTML = Array.from(items).slice(0, 10).map((item) => { // Limit to 10 articles
-                    const title = item.querySelector("title")?.textContent || "No Title";
-                    const description = item.querySelector("description")?.textContent || "No Description Available";
-                    const link = item.querySelector("link")?.textContent || "#";
+  <script>
+    const logBox = document.getElementById("log");
 
-                    return `
-                        <div class="news-item">
-                            <h2>${title}</h2>
-                            <p>${description}</p>
-                            <a href="${link}" target="_blank">Read more</a>
-                        </div>
-                    `;
-                });
-                loadingIndicator.style.display = "none"; // Hide Loading Message
-                newsContainer.innerHTML = newsHTML.join(""); // Render News
-            } catch (error) {
-                console.error("Error fetching news:", error);
-                loadingIndicator.textContent = "Failed to load news. Please try again later.";
-            }
-        }
+    function log(message) {
+      const div = document.createElement("div");
+      div.className = "item";
+      div.innerHTML = message;
+      logBox.appendChild(div);
+    }
 
-        // Initial Call to Load News
-        fetchNews();
-    </script>
+    async function crawl() {
+      const url = document.getElementById("url").value;
+
+      if (!url) {
+        alert("Enter a URL");
+        return;
+      }
+
+      log("🚀 Starting crawl: " + url);
+
+      try {
+        const res = await fetch(url);
+        const html = await res.text();
+
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, "text/html");
+
+        const title = doc.querySelector("title")?.innerText || "No title";
+        const metaDesc =
+          doc.querySelector('meta[name="description"]')?.content || "No meta description";
+
+        const h1 = doc.querySelector("h1")?.innerText || "No H1 found";
+
+        log(`<div class="title">TITLE:</div> ${title}`);
+        log(`<div class="title">META DESCRIPTION:</div> ${metaDesc}`);
+        log(`<div class="title">H1:</div> ${h1}`);
+
+        const links = [...doc.querySelectorAll("a")].slice(0, 10);
+
+        log(`<div class="title">TOP LINKS:</div>`);
+
+        links.forEach((a) => {
+          log(`<div class="url">${a.href}</div>`);
+        });
+
+        log("✅ Crawl finished");
+
+      } catch (err) {
+        log("❌ Error: " + err.message);
+      }
+    }
+  </script>
+
 </body>
 </html>
