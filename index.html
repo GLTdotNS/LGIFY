@@ -1,42 +1,35 @@
 <!DOCTYPE html>
 <html lang="bg">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Георги Тонков — Шеф Готвач & Консултант</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 
   <script>
     tailwind.config = {
       theme: {
         extend: {
           colors: {
-            gold:    '#C9A84C',
-            'gold-light': '#E8C97A',
-            'gold-dark':  '#8B6914',
-            carbon:  '#0F0F0F',
-            'carbon-2': '#1A1A1A',
-            'carbon-3': '#252525',
-            cream:   '#F5EFE0',
-            'cream-2':'#EDE5D0',
-            rust:    '#B94B2C',
+            ink:     '#111318',
+            'ink-2': '#2C2F38',
+            'ink-3': '#4A4E5A',
+            slate:   '#6B7280',
+            mist:    '#F4F5F7',
+            'mist-2':'#ECEEF2',
+            'mist-3':'#E2E5EB',
+            white:   '#FFFFFF',
+            accent:  '#1D4ED8',
+            'accent-2':'#3B82F6',
+            'accent-light':'#EFF6FF',
+            'accent-mid':'#BFDBFE',
+            copper:  '#C2773A',
+            'copper-light':'#F5E6D8',
           },
           fontFamily: {
-            display: ['"Cormorant Garamond"', 'serif'],
-            body:    ['"Outfit"', 'sans-serif'],
-          },
-          animation: {
-            'fade-up':   'fadeUp 0.8s ease forwards',
-            'fade-in':   'fadeIn 1s ease forwards',
-            'slide-left':'slideLeft 0.7s ease forwards',
-            'float':     'float 6s ease-in-out infinite',
-          },
-          keyframes: {
-            fadeUp:    { '0%': { opacity:'0', transform:'translateY(40px)' }, '100%': { opacity:'1', transform:'translateY(0)' } },
-            fadeIn:    { '0%': { opacity:'0' }, '100%': { opacity:'1' } },
-            slideLeft: { '0%': { opacity:'0', transform:'translateX(60px)' }, '100%': { opacity:'1', transform:'translateX(0)' } },
-            float:     { '0%,100%': { transform:'translateY(0px)' }, '50%': { transform:'translateY(-12px)' } },
+            display: ['"Playfair Display"', 'serif'],
+            body:    ['"DM Sans"', 'sans-serif'],
           },
         }
       }
@@ -45,788 +38,826 @@
 
   <style>
     html { scroll-behavior: smooth; }
-    body { background-color: #0F0F0F; font-family: 'Outfit', sans-serif; }
+    body { background: #FFFFFF; font-family: 'DM Sans', sans-serif; color: #111318; }
 
-    /* Gold gradient text */
-    .gold-text {
-      background: linear-gradient(135deg, #C9A84C 0%, #E8C97A 50%, #C9A84C 100%);
+    ::-webkit-scrollbar { width: 3px; }
+    ::-webkit-scrollbar-track { background: #F4F5F7; }
+    ::-webkit-scrollbar-thumb { background: #1D4ED8; border-radius: 2px; }
+
+    /* Reveal */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s cubic-bezier(.4,0,.2,1), transform 0.7s cubic-bezier(.4,0,.2,1); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-left { opacity: 0; transform: translateX(-32px); transition: opacity 0.7s cubic-bezier(.4,0,.2,1), transform 0.7s cubic-bezier(.4,0,.2,1); }
+    .reveal-left.visible { opacity: 1; transform: translateX(0); }
+    .reveal-right { opacity: 0; transform: translateX(32px); transition: opacity 0.7s cubic-bezier(.4,0,.2,1), transform 0.7s cubic-bezier(.4,0,.2,1); }
+    .reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+    /* Nav */
+    .nav-scroll { box-shadow: 0 1px 0 rgba(0,0,0,0.06); }
+
+    /* Hover underline */
+    .ul-hover { position: relative; }
+    .ul-hover::after { content:''; position:absolute; bottom:-2px; left:0; width:0; height:1.5px; background:#1D4ED8; transition:width .3s ease; }
+    .ul-hover:hover::after { width:100%; }
+
+    /* Service cards */
+    .svc-card { transition: box-shadow .3s ease, transform .3s ease, border-color .3s ease; }
+    .svc-card:hover { transform: translateY(-4px); box-shadow: 0 20px 48px rgba(17,19,24,.10); border-color: #BFDBFE !important; }
+    .svc-card:hover .svc-icon { background: #1D4ED8; color: #fff; }
+    .svc-icon { transition: background .3s ease, color .3s ease; }
+
+    /* Stats */
+    @keyframes countUp { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+    .stat-num { animation: countUp .6s ease forwards; }
+
+    /* Hero lines */
+    @keyframes lineGrow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+    .line-anim { transform-origin: left; animation: lineGrow .8s cubic-bezier(.4,0,.2,1) forwards; }
+
+    /* Floating badge */
+    @keyframes floatBadge { 0%,100%{ transform:translateY(0px); } 50%{ transform:translateY(-8px); } }
+    .float-badge { animation: floatBadge 4s ease-in-out infinite; }
+
+    /* Tag pill */
+    .tag { display:inline-flex; align-items:center; gap:6px; padding:4px 12px; border-radius:999px; font-size:11px; font-weight:500; letter-spacing:.06em; text-transform:uppercase; }
+
+    /* Testimonial */
+    .testi-card { transition: box-shadow .3s ease, transform .3s ease; }
+    .testi-card:hover { transform:translateY(-3px); box-shadow: 0 16px 40px rgba(17,19,24,.08); }
+
+    /* Form inputs */
+    .f-input { background:#F4F5F7; border:1.5px solid #E2E5EB; transition:border-color .25s, box-shadow .25s; }
+    .f-input:focus { outline:none; border-color:#1D4ED8; box-shadow:0 0 0 3px rgba(29,78,216,.1); background:#fff; }
+
+    /* Gradient headline */
+    .grad-text {
+      background: linear-gradient(135deg, #1D4ED8 0%, #3B82F6 60%, #C2773A 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
 
-    /* Noise texture overlay */
-    .noise::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none;
-      opacity: 0.4;
-      z-index: 0;
-    }
+    /* Section label */
+    .section-label { font-family:'DM Sans',sans-serif; font-size:11px; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:#1D4ED8; }
 
-    /* Glow ring */
-    .glow-ring {
-      box-shadow: 0 0 0 1px rgba(201,168,76,0.3), 0 0 40px rgba(201,168,76,0.08);
-    }
+    /* Divider line */
+    .h-line { height:1px; background: linear-gradient(90deg, #1D4ED8 0%, #BFDBFE 60%, transparent 100%); }
 
-    /* Animated underline */
-    .hover-line {
-      position: relative;
-    }
-    .hover-line::after {
-      content: '';
-      position: absolute;
-      bottom: -2px; left: 0;
-      width: 0; height: 1px;
-      background: #C9A84C;
-      transition: width 0.35s ease;
-    }
-    .hover-line:hover::after { width: 100%; }
+    /* Checklist item */
+    .check-item { display:flex; gap:12px; align-items:flex-start; }
+    .check-icon { width:20px; height:20px; border-radius:50%; background:#EFF6FF; border:1.5px solid #BFDBFE; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px; }
 
-    /* Section reveal */
-    .reveal { opacity: 0; transform: translateY(36px); transition: opacity 0.75s ease, transform 0.75s ease; }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
+    /* Image frame */
+    .img-frame { position:relative; }
+    .img-frame::before { content:''; position:absolute; top:16px; left:16px; right:-16px; bottom:-16px; border:1.5px solid #BFDBFE; border-radius:2px; z-index:0; }
 
-    /* Card hover */
-    .service-card {
-      transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
-    }
-    .service-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 24px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(201,168,76,0.4);
-      border-color: rgba(201,168,76,0.5) !important;
-    }
+    /* Hero grid bg */
+    .hero-grid { background-image: linear-gradient(rgba(29,78,216,.04) 1px, transparent 1px), linear-gradient(90deg, rgba(29,78,216,.04) 1px, transparent 1px); background-size:48px 48px; }
 
-    /* Nav blur */
-    .nav-blur {
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-    }
+    /* Card number */
+    .card-num { font-family:'Playfair Display',serif; font-size:3.5rem; font-weight:400; line-height:1; color:rgba(29,78,216,.08); position:absolute; top:16px; right:20px; }
 
-    /* Diagonal divider */
-    .diagonal-clip {
-      clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
-    }
+    /* Process step line */
+    .step-line { position:absolute; top:24px; left:calc(50% + 32px); right:calc(-50% + 32px); height:1px; background: linear-gradient(90deg, #BFDBFE, #E2E5EB); }
 
-    /* Hero plate decoration */
-    .plate-ring {
-      border: 1px solid rgba(201,168,76,0.25);
-      border-radius: 50%;
-      position: absolute;
-    }
-
-    /* Scrollbar */
-    ::-webkit-scrollbar { width: 4px; }
-    ::-webkit-scrollbar-track { background: #0F0F0F; }
-    ::-webkit-scrollbar-thumb { background: #C9A84C; border-radius: 2px; }
-
-    /* Stats counter style */
-    .stat-number {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 300;
-      line-height: 1;
-    }
-
-    /* Gallery image hover */
-    .gallery-img {
-      transition: transform 0.5s ease, filter 0.5s ease;
-      filter: grayscale(20%) brightness(0.85);
-    }
-    .gallery-img:hover {
-      transform: scale(1.03);
-      filter: grayscale(0%) brightness(1);
-    }
-
-    /* Testimonial quote mark */
-    .quote-mark {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 8rem;
-      line-height: 0.6;
-      color: rgba(201,168,76,0.15);
-      position: absolute;
-      top: 0; left: -8px;
-    }
-
-    /* Contact input */
-    .form-input {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.1);
-      transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    }
-    .form-input:focus {
-      outline: none;
-      border-color: rgba(201,168,76,0.5);
-      box-shadow: 0 0 0 3px rgba(201,168,76,0.08);
-    }
+    /* Marquee */
+    @keyframes marquee { 0%{ transform:translateX(0); } 100%{ transform:translateX(-50%); } }
+    .marquee-inner { display:flex; animation:marquee 22s linear infinite; width:max-content; }
+    .marquee-inner:hover { animation-play-state:paused; }
   </style>
 </head>
-<body class="text-cream">
+<body>
 
-  <!-- ─── NAVIGATION ──────────────────────────────────────────────────── -->
-  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 nav-blur bg-carbon/70 border-b border-white/5 transition-all duration-300">
-    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-      <a href="#hero" class="font-display text-xl font-semibold tracking-widest gold-text uppercase">GT</a>
-      <ul class="hidden md:flex items-center gap-8 font-body text-sm font-light tracking-wider text-cream/70">
-        <li><a href="#about"    class="hover-line hover:text-cream transition-colors">За мен</a></li>
-        <li><a href="#services" class="hover-line hover:text-cream transition-colors">Услуги</a></li>
-        <li><a href="#gallery"  class="hover-line hover:text-cream transition-colors">Галерия</a></li>
-        <li><a href="#reviews"  class="hover-line hover:text-cream transition-colors">Отзиви</a></li>
-        <li><a href="#contact"  class="hover-line hover:text-cream transition-colors">Контакт</a></li>
-      </ul>
-      <a href="#contact" class="hidden md:inline-flex items-center gap-2 px-5 py-2.5 border border-gold/40 text-gold text-sm font-body tracking-wider hover:bg-gold hover:text-carbon transition-all duration-300 rounded-sm">
+<!-- ─── NAV ───────────────────────────────────────────────────────────── -->
+<nav id="navbar" class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md transition-all duration-300">
+  <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+    <!-- Logo -->
+    <a href="#hero" class="flex items-center gap-2.5">
+      <div class="w-8 h-8 bg-accent rounded-sm flex items-center justify-center">
+        <span class="font-display text-white text-sm font-bold italic">G</span>
+      </div>
+      <span class="font-body font-600 text-ink text-sm tracking-wide">Георги Тонков</span>
+    </a>
+
+    <!-- Desktop links -->
+    <ul class="hidden md:flex items-center gap-8 font-body text-sm text-ink-3">
+      <li><a href="#about"    class="ul-hover hover:text-ink transition-colors">За мен</a></li>
+      <li><a href="#services" class="ul-hover hover:text-ink transition-colors">Услуги</a></li>
+      <li><a href="#process"  class="ul-hover hover:text-ink transition-colors">Процес</a></li>
+      <li><a href="#reviews"  class="ul-hover hover:text-ink transition-colors">Отзиви</a></li>
+      <li><a href="#contact"  class="ul-hover hover:text-ink transition-colors">Контакт</a></li>
+    </ul>
+
+    <div class="flex items-center gap-3">
+      <a href="tel:+359888123456" class="hidden md:flex items-center gap-2 text-ink-3 text-sm font-body hover:text-accent transition-colors">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+        +359 888 123 456
+      </a>
+      <a href="#contact" class="px-5 py-2 bg-accent text-white text-sm font-body font-medium rounded-sm hover:bg-blue-700 transition-colors">
         Резервирай
       </a>
-      <!-- Mobile menu button -->
-      <button id="menuBtn" class="md:hidden text-cream/70 hover:text-cream" onclick="document.getElementById('mobileMenu').classList.toggle('hidden')">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"/>
-        </svg>
+      <button class="md:hidden p-1 text-ink-3" onclick="document.getElementById('mob').classList.toggle('hidden')">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 6h16M4 12h16M4 18h16"/></svg>
       </button>
     </div>
-    <!-- Mobile menu -->
-    <div id="mobileMenu" class="hidden md:hidden bg-carbon-2 border-t border-white/5 px-6 py-4 flex flex-col gap-4 font-body text-sm text-cream/70">
-      <a href="#about"    onclick="document.getElementById('mobileMenu').classList.add('hidden')" class="hover:text-cream">За мен</a>
-      <a href="#services" onclick="document.getElementById('mobileMenu').classList.add('hidden')" class="hover:text-cream">Услуги</a>
-      <a href="#gallery"  onclick="document.getElementById('mobileMenu').classList.add('hidden')" class="hover:text-cream">Галерия</a>
-      <a href="#reviews"  onclick="document.getElementById('mobileMenu').classList.add('hidden')" class="hover:text-cream">Отзиви</a>
-      <a href="#contact"  onclick="document.getElementById('mobileMenu').classList.add('hidden')" class="hover:text-cream">Контакт</a>
-    </div>
-  </nav>
+  </div>
+  <!-- Mobile -->
+  <div id="mob" class="hidden md:hidden border-t border-mist-3 bg-white px-6 py-4 flex flex-col gap-4 text-sm font-body text-ink-3">
+    <a href="#about"    onclick="document.getElementById('mob').classList.add('hidden')" class="hover:text-accent">За мен</a>
+    <a href="#services" onclick="document.getElementById('mob').classList.add('hidden')" class="hover:text-accent">Услуги</a>
+    <a href="#process"  onclick="document.getElementById('mob').classList.add('hidden')" class="hover:text-accent">Процес</a>
+    <a href="#reviews"  onclick="document.getElementById('mob').classList.add('hidden')" class="hover:text-accent">Отзиви</a>
+    <a href="#contact"  onclick="document.getElementById('mob').classList.add('hidden')" class="hover:text-accent">Контакт</a>
+  </div>
+</nav>
 
-  <!-- ─── HERO ────────────────────────────────────────────────────────── -->
-  <section id="hero" class="relative min-h-screen flex items-center overflow-hidden diagonal-clip noise bg-carbon">
-    <!-- Background gradient mesh -->
-    <div class="absolute inset-0 z-0">
-      <div class="absolute top-0 right-0 w-[700px] h-[700px] rounded-full bg-gold/5 blur-[120px] -translate-y-1/3 translate-x-1/3"></div>
-      <div class="absolute bottom-0 left-0 w-[500px] h-[500px] rounded-full bg-rust/8 blur-[100px] translate-y-1/3 -translate-x-1/3"></div>
-      <!-- Grid lines -->
-      <div class="absolute inset-0" style="background-image: linear-gradient(rgba(201,168,76,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(201,168,76,0.03) 1px, transparent 1px); background-size: 80px 80px;"></div>
-    </div>
+<!-- ─── HERO ──────────────────────────────────────────────────────────── -->
+<section id="hero" class="relative min-h-screen flex items-center overflow-hidden bg-white hero-grid pt-16">
+  <!-- Subtle gradient blobs -->
+  <div class="absolute top-0 right-0 w-[600px] h-[600px] rounded-full bg-accent-light opacity-60 blur-[120px] -translate-y-1/3 translate-x-1/4 pointer-events-none"></div>
+  <div class="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full bg-copper-light opacity-50 blur-[100px] translate-y-1/3 -translate-x-1/4 pointer-events-none"></div>
 
-    <!-- Decorative plate rings (animated float) -->
-    <div class="absolute right-[8%] top-1/2 -translate-y-1/2 hidden lg:block animate-float z-10">
-      <div class="relative w-[380px] h-[380px]">
-        <div class="plate-ring w-full h-full opacity-30"></div>
-        <div class="plate-ring w-[88%] h-[88%] top-[6%] left-[6%] opacity-20"></div>
-        <div class="plate-ring w-[72%] h-[72%] top-[14%] left-[14%] opacity-15"></div>
-        <!-- Chef silhouette / avatar placeholder -->
-        <div class="absolute inset-[14%] rounded-full overflow-hidden glow-ring">
-          <div class="w-full h-full bg-gradient-to-br from-carbon-3 via-carbon-2 to-carbon flex items-center justify-center">
-            <!-- SVG chef icon -->
-            <svg viewBox="0 0 160 200" class="w-48 h-48 opacity-80" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <ellipse cx="80" cy="155" rx="55" ry="28" fill="rgba(201,168,76,0.12)"/>
-              <!-- Toque -->
-              <rect x="48" y="28" width="64" height="44" rx="6" fill="rgba(201,168,76,0.18)" stroke="rgba(201,168,76,0.5)" stroke-width="1.2"/>
-              <ellipse cx="80" cy="28" rx="32" ry="14" fill="rgba(201,168,76,0.22)" stroke="rgba(201,168,76,0.5)" stroke-width="1.2"/>
-              <!-- Head -->
-              <ellipse cx="80" cy="84" rx="24" ry="26" fill="rgba(201,168,76,0.14)" stroke="rgba(201,168,76,0.4)" stroke-width="1"/>
-              <!-- Body / jacket -->
-              <path d="M44 168 C44 130 56 112 80 108 C104 112 116 130 116 168" fill="rgba(201,168,76,0.12)" stroke="rgba(201,168,76,0.4)" stroke-width="1.2"/>
-              <!-- Buttons -->
-              <circle cx="80" cy="126" r="2" fill="rgba(201,168,76,0.6)"/>
-              <circle cx="80" cy="136" r="2" fill="rgba(201,168,76,0.6)"/>
-              <circle cx="80" cy="146" r="2" fill="rgba(201,168,76,0.6)"/>
-            </svg>
-          </div>
-        </div>
-      </div>
-    </div>
+  <div class="max-w-7xl mx-auto px-6 py-20 w-full relative z-10">
+    <div class="grid lg:grid-cols-2 gap-12 items-center">
 
-    <div class="relative z-10 max-w-7xl mx-auto px-6 pt-28 pb-24">
-      <!-- Label -->
-      <div class="inline-flex items-center gap-3 mb-8 animate-fade-in">
-        <span class="w-8 h-px bg-gold"></span>
-        <span class="text-gold font-body text-xs tracking-[0.3em] uppercase">Шеф Готвач & Кулинарен Консултант</span>
-        <span class="w-8 h-px bg-gold"></span>
-      </div>
-
-      <!-- Name -->
-      <h1 class="font-display text-[clamp(3rem,10vw,8rem)] font-light leading-[0.9] mb-6 animate-fade-up" style="animation-delay:0.1s">
-        Георги<br>
-        <span class="italic gold-text">Тонков</span>
-      </h1>
-
-      <p class="max-w-lg font-body text-lg font-light text-cream/65 leading-relaxed mb-10 animate-fade-up" style="animation-delay:0.25s">
-        Над 15 години страст, прецизност и творчество в кухнята. Авторска кухня с дълбоки корени в 
-        българската традиция и дух на съвременната гастрономия.
-      </p>
-
-      <div class="flex flex-wrap gap-4 animate-fade-up" style="animation-delay:0.4s">
-        <a href="#services" class="inline-flex items-center gap-3 px-7 py-4 bg-gold text-carbon font-body font-semibold text-sm tracking-wider hover:bg-gold-light transition-all duration-300 rounded-sm group">
-          Открий услугите
-          <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-        </a>
-        <a href="#about" class="inline-flex items-center gap-3 px-7 py-4 border border-white/15 text-cream/70 font-body text-sm tracking-wider hover:border-gold/40 hover:text-cream transition-all duration-300 rounded-sm">
-          За мен
-        </a>
-      </div>
-
-      <!-- Stats row -->
-      <div class="flex flex-wrap gap-10 mt-16 pt-10 border-t border-white/8 animate-fade-up" style="animation-delay:0.55s">
-        <div>
-          <div class="stat-number text-5xl gold-text">15+</div>
-          <div class="text-cream/50 text-xs font-body tracking-wider mt-1">Години опит</div>
-        </div>
-        <div>
-          <div class="stat-number text-5xl gold-text">3</div>
-          <div class="text-cream/50 text-xs font-body tracking-wider mt-1">Ресторанта</div>
-        </div>
-        <div>
-          <div class="stat-number text-5xl gold-text">200+</div>
-          <div class="text-cream/50 text-xs font-body tracking-wider mt-1">Клиенти</div>
-        </div>
-        <div>
-          <div class="stat-number text-5xl gold-text">40+</div>
-          <div class="text-cream/50 text-xs font-body tracking-wider mt-1">Награди</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Scroll indicator -->
-    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-float z-10">
-      <span class="text-cream/30 text-xs font-body tracking-widest">SCROLL</span>
-      <div class="w-px h-12 bg-gradient-to-b from-gold/60 to-transparent"></div>
-    </div>
-  </section>
-
-  <!-- ─── ABOUT ────────────────────────────────────────────────────────── -->
-  <section id="about" class="py-28 bg-carbon-2 relative overflow-hidden">
-    <div class="absolute top-0 left-1/2 w-[600px] h-[600px] rounded-full bg-gold/4 blur-[120px] -translate-x-1/4 -translate-y-1/2 pointer-events-none"></div>
-
-    <div class="max-w-7xl mx-auto px-6 relative z-10">
-      <div class="grid lg:grid-cols-2 gap-16 items-center">
-
-        <!-- Left: image block -->
-        <div class="reveal relative">
-          <div class="relative">
-            <!-- Decorative frame -->
-            <div class="absolute -top-4 -left-4 w-full h-full border border-gold/20 rounded-sm z-0"></div>
-            <div class="relative z-10 bg-carbon-3 rounded-sm overflow-hidden aspect-[4/5] flex items-center justify-center glow-ring">
-              <!-- Visual: decorative chef composition -->
-              <div class="w-full h-full bg-gradient-to-br from-carbon-3 via-[#1e1a12] to-carbon-2 flex flex-col items-center justify-center p-12">
-                <div class="w-24 h-24 rounded-full border border-gold/30 flex items-center justify-center mb-6">
-                  <svg viewBox="0 0 60 60" class="w-14 h-14" fill="none">
-                    <path d="M30 8 C22 8 15 14 15 22 C15 26 17 29 20 31 L18 50 L42 50 L40 31 C43 29 45 26 45 22 C45 14 38 8 30 8Z" stroke="rgba(201,168,76,0.6)" stroke-width="1.2" fill="rgba(201,168,76,0.08)"/>
-                    <line x1="18" y1="38" x2="42" y2="38" stroke="rgba(201,168,76,0.3)" stroke-width="1"/>
-                    <line x1="19" y1="44" x2="41" y2="44" stroke="rgba(201,168,76,0.3)" stroke-width="1"/>
-                  </svg>
-                </div>
-                <div class="text-center space-y-3">
-                  <div class="font-display text-4xl italic text-gold/70 font-light">"Кухнята е</div>
-                  <div class="font-display text-4xl italic text-gold/70 font-light">моята поезия"</div>
-                  <div class="w-12 h-px bg-gold/30 mx-auto mt-4"></div>
-                  <p class="font-body text-sm text-cream/40 tracking-wider">— Георги Тонков</p>
-                </div>
-                <!-- Decorative elements -->
-                <div class="absolute bottom-8 left-8 right-8 flex justify-between items-end opacity-20">
-                  <div class="font-display text-[120px] leading-none text-gold font-light">G</div>
-                  <div class="font-display text-[80px] leading-none text-gold font-light">T</div>
-                </div>
-              </div>
-            </div>
-            <!-- Gold accent line -->
-            <div class="absolute -bottom-px left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-gold to-transparent"></div>
-          </div>
+      <!-- Left text -->
+      <div>
+        <!-- Tag -->
+        <div class="tag bg-accent-light text-accent mb-6" style="opacity:0;animation:countUp .6s .1s ease forwards">
+          <span class="w-1.5 h-1.5 rounded-full bg-accent inline-block"></span>
+          Шеф Готвач & Кулинарен Консултант
         </div>
 
-        <!-- Right: text -->
-        <div class="reveal space-y-6">
-          <div class="inline-flex items-center gap-3">
-            <span class="w-6 h-px bg-gold"></span>
-            <span class="text-gold font-body text-xs tracking-[0.25em] uppercase">История</span>
-          </div>
-          <h2 class="font-display text-[clamp(2.5rem,5vw,4.5rem)] font-light leading-tight">
-            Страст за <span class="italic gold-text">вкуса,</span><br>
-            точност в <span class="italic">детайла</span>
-          </h2>
-          <p class="font-body text-cream/65 leading-relaxed">
-            Роден в Пловдив, Георги Тонков открива любовта си към кулинарията в ранна детска 
-            възраст в кухнята на баба си. След обучение в Le Cordon Bleu Париж и работа в 
-            Мишленови ресторанти в Лондон и Барселона, той се завръща в България с мисия — 
-            да вдигне нивото на местната гастрономия.
-          </p>
-          <p class="font-body text-cream/65 leading-relaxed">
-            Днес Георги не само готви — той консултира ресторанти, менторира начинаещи готвачи 
-            и организира уникални хранителни изживявания, съчетаващи автентичност и иновация.
-          </p>
+        <h1 class="font-display text-[clamp(2.8rem,6vw,5.5rem)] font-medium leading-[1.05] text-ink mb-6" style="opacity:0;animation:countUp .7s .2s ease forwards">
+          Вкусът е<br>
+          <span class="italic grad-text">изкуство.</span><br>
+          Бизнесът —<br>
+          <span class="italic">наука.</span>
+        </h1>
 
-          <!-- Skills -->
-          <div class="grid grid-cols-2 gap-3 pt-2">
-            {['Авторска кухня','Ресторантна консултация','Chef experience','Менторство','Кетъринг премиум','Кулинарни обучения'].map(s => `
-            <div class="flex items-center gap-2 text-cream/60 font-body text-sm">
-              <span class="w-1.5 h-1.5 rounded-full bg-gold flex-shrink-0"></span>
-              ${s}
-            </div>`).join('')}
-          </div>
+        <div class="h-line w-16 mb-6 line-anim" style="animation-delay:.4s"></div>
 
-          <div class="pt-4">
-            <a href="#contact" class="inline-flex items-center gap-2 text-gold font-body text-sm tracking-wider hover-line">
-              Свържи се с мен
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ─── SERVICES ─────────────────────────────────────────────────────── -->
-  <section id="services" class="py-28 bg-carbon relative overflow-hidden">
-    <div class="absolute inset-0" style="background-image: radial-gradient(ellipse at 80% 50%, rgba(201,168,76,0.04) 0%, transparent 60%);"></div>
-
-    <div class="max-w-7xl mx-auto px-6 relative z-10">
-      <!-- Header -->
-      <div class="text-center max-w-2xl mx-auto mb-16 reveal">
-        <div class="inline-flex items-center gap-3 mb-5">
-          <span class="w-6 h-px bg-gold"></span>
-          <span class="text-gold font-body text-xs tracking-[0.25em] uppercase">Услуги</span>
-          <span class="w-6 h-px bg-gold"></span>
-        </div>
-        <h2 class="font-display text-[clamp(2rem,5vw,4rem)] font-light leading-tight mb-4">
-          Какво мога да направя<br><span class="italic gold-text">за вас</span>
-        </h2>
-        <p class="font-body text-cream/55 leading-relaxed">
-          Всяка услуга е персонализирана, внимателно обмислена и изпълнена с прецизност.
+        <p class="font-body text-slate text-lg leading-relaxed max-w-md mb-8" style="opacity:0;animation:countUp .7s .45s ease forwards">
+          15+ години авторска кухня, консултации на ресторанти и кулинарни обучения. 
+          Стратегически подход към гастрономията — от рецептата до рентабилността.
         </p>
+
+        <div class="flex flex-wrap gap-3 mb-10" style="opacity:0;animation:countUp .7s .55s ease forwards">
+          <a href="#services" class="inline-flex items-center gap-2 px-6 py-3 bg-accent text-white font-body text-sm font-medium rounded-sm hover:bg-blue-700 transition-all group">
+            Разгледай услугите
+            <svg class="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+          </a>
+          <a href="#about" class="inline-flex items-center gap-2 px-6 py-3 bg-mist text-ink-2 font-body text-sm font-medium rounded-sm hover:bg-mist-3 transition-all">
+            За Георги
+          </a>
+        </div>
+
+        <!-- Inline stats -->
+        <div class="flex flex-wrap gap-8 pt-6 border-t border-mist-3" style="opacity:0;animation:countUp .7s .65s ease forwards">
+          <div>
+            <div class="font-display text-3xl font-medium text-ink">15+</div>
+            <div class="font-body text-xs text-slate mt-0.5">Години опит</div>
+          </div>
+          <div>
+            <div class="font-display text-3xl font-medium text-ink">80+</div>
+            <div class="font-body text-xs text-slate mt-0.5">Ресторанта</div>
+          </div>
+          <div>
+            <div class="font-display text-3xl font-medium text-ink">500+</div>
+            <div class="font-body text-xs text-slate mt-0.5">Обучени готвачи</div>
+          </div>
+          <div>
+            <div class="font-display text-3xl font-medium text-ink">12</div>
+            <div class="font-body text-xs text-slate mt-0.5">Международни награди</div>
+          </div>
+        </div>
       </div>
 
-      <!-- Cards grid -->
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-
-        <!-- Card 1 -->
-        <div class="service-card reveal bg-carbon-2 border border-white/8 rounded-sm p-8 group cursor-pointer">
-          <div class="w-14 h-14 rounded-sm bg-gold/10 border border-gold/20 flex items-center justify-center mb-6 group-hover:bg-gold/15 transition-colors">
-            <svg class="w-7 h-7 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/>
-            </svg>
+      <!-- Right: Visual composition -->
+      <div class="hidden lg:block relative" style="opacity:0;animation:countUp .9s .3s ease forwards">
+        <!-- Main card -->
+        <div class="relative bg-white rounded-2xl shadow-2xl shadow-ink/8 border border-mist-3 p-8 ml-8 mt-8">
+          <!-- Corner accent -->
+          <div class="absolute top-0 left-0 w-16 h-16 overflow-hidden rounded-tl-2xl">
+            <div class="absolute top-0 left-0 w-full h-full bg-accent-light"></div>
+            <div class="absolute top-3 left-3 w-3 h-3 rounded-full bg-accent"></div>
           </div>
-          <h3 class="font-display text-2xl font-light mb-3 group-hover:gold-text transition-all">Ресторантна консултация</h3>
-          <p class="font-body text-cream/55 text-sm leading-relaxed mb-5">
-            Цялостен одит на менюто, кухненски процеси, обучение на персонал и стратегическо позициониране на бранда.
-          </p>
-          <div class="flex items-center gap-2 text-gold font-body text-sm">
-            <span class="hover-line cursor-pointer">Научи повече</span>
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+
+          <!-- Profile area -->
+          <div class="flex items-start gap-5 mb-6 pt-2">
+            <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-accent to-accent-2 flex items-center justify-center text-white font-display text-2xl italic font-medium flex-shrink-0">
+              GT
+            </div>
+            <div>
+              <h3 class="font-display text-xl font-medium text-ink">Георги Тонков</h3>
+              <p class="font-body text-sm text-slate">Executive Chef & Consultant</p>
+              <div class="flex items-center gap-1 mt-1.5">
+                <svg class="w-3.5 h-3.5 text-copper" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                <svg class="w-3.5 h-3.5 text-copper" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                <svg class="w-3.5 h-3.5 text-copper" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                <svg class="w-3.5 h-3.5 text-copper" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                <svg class="w-3.5 h-3.5 text-copper" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                <span class="font-body text-xs text-slate ml-1">5.0 · 200+ отзива</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Credentials list -->
+          <div class="space-y-3 mb-6">
+            <div class="flex items-center gap-3 p-3 bg-mist rounded-lg">
+              <div class="w-8 h-8 bg-accent-light rounded-md flex items-center justify-center flex-shrink-0">
+                <svg class="w-4 h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/></svg>
+              </div>
+              <div>
+                <div class="font-body text-xs font-medium text-ink">Le Cordon Bleu, Париж</div>
+                <div class="font-body text-xs text-slate">Diplôme de Cuisine</div>
+              </div>
+            </div>
+            <div class="flex items-center gap-3 p-3 bg-mist rounded-lg">
+              <div class="w-8 h-8 bg-copper-light rounded-md flex items-center justify-center flex-shrink-0">
+                <svg class="w-4 h-4 text-copper" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              </div>
+              <div>
+                <div class="font-body text-xs font-medium text-ink">Работил в 6 държави</div>
+                <div class="font-body text-xs text-slate">Лондон · Барселона · Токио</div>
+              </div>
+            </div>
+            <div class="flex items-center gap-3 p-3 bg-mist rounded-lg">
+              <div class="w-8 h-8 bg-accent-light rounded-md flex items-center justify-center flex-shrink-0">
+                <svg class="w-4 h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
+              </div>
+              <div>
+                <div class="font-body text-xs font-medium text-ink">Сертифициран консултант</div>
+                <div class="font-body text-xs text-slate">Restaurant & Hospitality Management</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Available badge -->
+          <div class="flex items-center justify-between p-3 bg-green-50 rounded-lg border border-green-100">
+            <div class="flex items-center gap-2">
+              <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+              <span class="font-body text-xs font-medium text-green-700">Свободен за нови проекти</span>
+            </div>
+            <a href="#contact" class="font-body text-xs text-accent font-medium hover:underline">Свържи се →</a>
           </div>
         </div>
 
-        <!-- Card 2 -->
-        <div class="service-card reveal bg-carbon-2 border border-white/8 rounded-sm p-8 group cursor-pointer" style="transition-delay:0.1s">
-          <div class="w-14 h-14 rounded-sm bg-rust/10 border border-rust/25 flex items-center justify-center mb-6 group-hover:bg-rust/20 transition-colors">
-            <svg class="w-7 h-7 text-rust" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
-            </svg>
-          </div>
-          <h3 class="font-display text-2xl font-light mb-3">Chef Experience</h3>
-          <p class="font-body text-cream/55 text-sm leading-relaxed mb-5">
-            Персонален готвач за частни събития, корпоративни вечери и специални поводи — незабравими кулинарни изживявания.
-          </p>
-          <div class="flex items-center gap-2 text-gold font-body text-sm">
-            <span class="hover-line cursor-pointer">Научи повече</span>
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        <!-- Floating badges -->
+        <div class="absolute -top-4 -right-4 float-badge">
+          <div class="bg-white shadow-lg shadow-ink/10 rounded-xl px-4 py-3 border border-mist-3">
+            <div class="font-display text-2xl font-medium text-accent">#1</div>
+            <div class="font-body text-xs text-slate">в България</div>
           </div>
         </div>
-
-        <!-- Card 3 -->
-        <div class="service-card reveal bg-gradient-to-br from-gold/12 to-gold/4 border border-gold/25 rounded-sm p-8 group cursor-pointer relative overflow-hidden" style="transition-delay:0.2s">
-          <div class="absolute top-4 right-4 bg-gold/20 text-gold text-[10px] font-body tracking-widest px-2.5 py-1 rounded-full">POPULAR</div>
-          <div class="w-14 h-14 rounded-sm bg-gold/15 border border-gold/30 flex items-center justify-center mb-6">
-            <svg class="w-7 h-7 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
-            </svg>
-          </div>
-          <h3 class="font-display text-2xl font-light mb-3 gold-text">Кулинарни обучения</h3>
-          <p class="font-body text-cream/60 text-sm leading-relaxed mb-5">
-            Групови и индивидуални майсторски класове — от базови техники до напреднала ресторантна кухня.
-          </p>
-          <div class="flex items-center gap-2 text-gold font-body text-sm">
-            <span class="hover-line cursor-pointer">Научи повече</span>
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        <div class="absolute -bottom-4 -left-4 float-badge" style="animation-delay:2s">
+          <div class="bg-white shadow-lg shadow-ink/10 rounded-xl px-4 py-3 border border-mist-3 flex items-center gap-2">
+            <div class="w-8 h-8 bg-copper-light rounded-lg flex items-center justify-center">
+              <svg class="w-4 h-4 text-copper" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            </div>
+            <div>
+              <div class="font-body text-xs font-semibold text-ink">Michelin</div>
+              <div class="font-body text-xs text-slate">Experience</div>
+            </div>
           </div>
         </div>
-
-        <!-- Card 4 -->
-        <div class="service-card reveal bg-carbon-2 border border-white/8 rounded-sm p-8 group cursor-pointer" style="transition-delay:0.05s">
-          <div class="w-14 h-14 rounded-sm bg-gold/10 border border-gold/20 flex items-center justify-center mb-6 group-hover:bg-gold/15 transition-colors">
-            <svg class="w-7 h-7 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
-            </svg>
-          </div>
-          <h3 class="font-display text-2xl font-light mb-3">Разработка на менюта</h3>
-          <p class="font-body text-cream/55 text-sm leading-relaxed mb-5">
-            Създаване на сезонни, тематични и авторски менюта, съобразени с концепцията на вашето заведение.
-          </p>
-          <div class="flex items-center gap-2 text-gold font-body text-sm">
-            <span class="hover-line cursor-pointer">Научи повече</span>
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-          </div>
-        </div>
-
-        <!-- Card 5 -->
-        <div class="service-card reveal bg-carbon-2 border border-white/8 rounded-sm p-8 group cursor-pointer" style="transition-delay:0.15s">
-          <div class="w-14 h-14 rounded-sm bg-gold/10 border border-gold/20 flex items-center justify-center mb-6 group-hover:bg-gold/15 transition-colors">
-            <svg class="w-7 h-7 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
-            </svg>
-          </div>
-          <h3 class="font-display text-2xl font-light mb-3">Премиум кетъринг</h3>
-          <p class="font-body text-cream/55 text-sm leading-relaxed mb-5">
-            Луксозно кетъринг обслужване за корпоративни и частни събития с внимание към всеки детайл.
-          </p>
-          <div class="flex items-center gap-2 text-gold font-body text-sm">
-            <span class="hover-line cursor-pointer">Научи повече</span>
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-          </div>
-        </div>
-
-        <!-- Card 6 -->
-        <div class="service-card reveal bg-carbon-2 border border-white/8 rounded-sm p-8 group cursor-pointer" style="transition-delay:0.25s">
-          <div class="w-14 h-14 rounded-sm bg-gold/10 border border-gold/20 flex items-center justify-center mb-6 group-hover:bg-gold/15 transition-colors">
-            <svg class="w-7 h-7 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M15 10l4.553-2.069A1 1 0 0121 8.87v6.26a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
-            </svg>
-          </div>
-          <h3 class="font-display text-2xl font-light mb-3">Видео & медия</h3>
-          <p class="font-body text-cream/55 text-sm leading-relaxed mb-5">
-            Кулинарно съдържание за социални мрежи, YouTube канали, реклами и кулинарни предавания.
-          </p>
-          <div class="flex items-center gap-2 text-gold font-body text-sm">
-            <span class="hover-line cursor-pointer">Научи повече</span>
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-          </div>
-        </div>
-
       </div>
     </div>
-  </section>
+  </div>
 
-  <!-- ─── GALLERY / FEATURED ────────────────────────────────────────────── -->
-  <section id="gallery" class="py-28 bg-carbon-2 overflow-hidden">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 reveal">
-        <div>
-          <div class="inline-flex items-center gap-3 mb-4">
-            <span class="w-6 h-px bg-gold"></span>
-            <span class="text-gold font-body text-xs tracking-[0.25em] uppercase">Визия</span>
+  <!-- Scroll cue -->
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5">
+    <span class="font-body text-[10px] text-slate tracking-widest uppercase">Scroll</span>
+    <div class="w-px h-8 bg-gradient-to-b from-accent/40 to-transparent"></div>
+  </div>
+</section>
+
+<!-- ─── MARQUEE BAND ───────────────────────────────────────────────────── -->
+<div class="border-y border-mist-3 bg-mist py-3 overflow-hidden">
+  <div class="marquee-inner">
+    <div class="flex items-center gap-8 pr-8 font-body text-xs font-medium text-slate tracking-wider uppercase">
+      <span class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-accent"></span>Ресторантна консултация</span>
+      <span class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-copper"></span>Авторска кухня</span>
+      <span class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-accent"></span>Менторство</span>
+      <span class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-copper"></span>Chef Experience</span>
+      <span class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-accent"></span>Кулинарни обучения</span>
+      <span class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-copper"></span>Премиум кетъринг</span>
+      <span class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-accent"></span>Разработка на меню</span>
+      <span class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-copper"></span>Видео & медия</span>
+    </div>
+    <div class="flex items-center gap-8 pr-8 font-body text-xs font-medium text-slate tracking-wider uppercase">
+      <span class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-accent"></span>Ресторантна консултация</span>
+      <span class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-copper"></span>Авторска кухня</span>
+      <span class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-accent"></span>Менторство</span>
+      <span class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-copper"></span>Chef Experience</span>
+      <span class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-accent"></span>Кулинарни обучения</span>
+      <span class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-copper"></span>Премиум кетъринг</span>
+      <span class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-accent"></span>Разработка на меню</span>
+      <span class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-copper"></span>Видео & медия</span>
+    </div>
+  </div>
+</div>
+
+<!-- ─── ABOUT ──────────────────────────────────────────────────────────── -->
+<section id="about" class="py-24 bg-white">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="grid lg:grid-cols-2 gap-16 items-center">
+
+      <!-- Left visual -->
+      <div class="reveal-left img-frame">
+        <div class="relative z-10 bg-gradient-to-br from-mist to-white rounded-xl border border-mist-3 overflow-hidden p-10 shadow-xl shadow-ink/5">
+          <!-- Timeline visual -->
+          <div class="section-label mb-8">Кариерна хронология</div>
+          <div class="space-y-0">
+            <div class="relative pl-8 pb-8 border-l-2 border-mist-3">
+              <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-accent border-2 border-white shadow-sm"></div>
+              <div class="font-body text-xs text-slate mb-1">2008 — 2010</div>
+              <div class="font-body text-sm font-medium text-ink">Le Cordon Bleu, Париж</div>
+              <div class="font-body text-xs text-slate">Diplôme de Cuisine с отличие</div>
+            </div>
+            <div class="relative pl-8 pb-8 border-l-2 border-mist-3">
+              <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-accent border-2 border-white shadow-sm"></div>
+              <div class="font-body text-xs text-slate mb-1">2010 — 2014</div>
+              <div class="font-body text-sm font-medium text-ink">Sous Chef, Лондон & Барселона</div>
+              <div class="font-body text-xs text-slate">Мишленови ресторанти (2 звезди)</div>
+            </div>
+            <div class="relative pl-8 pb-8 border-l-2 border-mist-3">
+              <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-copper border-2 border-white shadow-sm"></div>
+              <div class="font-body text-xs text-slate mb-1">2014 — 2018</div>
+              <div class="font-body text-sm font-medium text-ink">Executive Chef, Токио</div>
+              <div class="font-body text-xs text-slate">Fusion Bulgarian–Japanese кухня</div>
+            </div>
+            <div class="relative pl-8">
+              <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-accent border-2 border-white shadow-sm ring-4 ring-accent-light"></div>
+              <div class="font-body text-xs text-slate mb-1">2018 — Днес</div>
+              <div class="font-body text-sm font-medium text-ink">Консултант & Ментор, България</div>
+              <div class="font-body text-xs text-slate">80+ ресторанта · 500+ готвачи</div>
+            </div>
           </div>
-          <h2 class="font-display text-[clamp(2rem,5vw,4rem)] font-light leading-tight">
-            Ястия, които <span class="italic gold-text">разказват</span> истории
-          </h2>
+          <!-- Bottom metric row -->
+          <div class="mt-8 pt-6 border-t border-mist-3 grid grid-cols-3 gap-4 text-center">
+            <div>
+              <div class="font-display text-2xl font-medium text-ink">35%</div>
+              <div class="font-body text-xs text-slate mt-0.5">Ср. ръст в приходите</div>
+            </div>
+            <div class="border-x border-mist-3">
+              <div class="font-display text-2xl font-medium text-ink">4.9</div>
+              <div class="font-body text-xs text-slate mt-0.5">Среден рейтинг</div>
+            </div>
+            <div>
+              <div class="font-display text-2xl font-medium text-ink">98%</div>
+              <div class="font-body text-xs text-slate mt-0.5">Доволни клиенти</div>
+            </div>
+          </div>
         </div>
-        <a href="#contact" class="self-start md:self-auto text-cream/50 font-body text-sm tracking-wider hover:text-gold transition-colors hover-line flex items-center gap-2">
-          Виж всички
-          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </div>
+
+      <!-- Right text -->
+      <div class="reveal-right">
+        <div class="section-label mb-4">За Георги</div>
+        <h2 class="font-display text-[clamp(2rem,4vw,3.5rem)] font-medium leading-tight text-ink mb-6">
+          Стратег в кухнята.<br>
+          <span class="italic text-accent">Резултати</span> на масата.
+        </h2>
+        <p class="font-body text-slate leading-relaxed mb-5">
+          Роден в Пловдив, Георги Тонков съчетава класическото французко обучение с опита от едни 
+          от най-взискателните кухни в света. Завръщайки се в България, той основава консултантска 
+          практика, фокусирана върху устойчив растеж на ресторантния бизнес.
+        </p>
+        <p class="font-body text-slate leading-relaxed mb-8">
+          Неговият подход е аналитичен и ориентиран към данни — одит на операциите, 
+          оптимизация на себестойността, обучение на екипи и позициониране на бранда.
+        </p>
+
+        <!-- Checklist -->
+        <div class="space-y-3 mb-8">
+          <div class="check-item">
+            <div class="check-icon"><svg class="w-3 h-3 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg></div>
+            <p class="font-body text-sm text-ink-2">Цялостен одит и стратегия за ресторанта</p>
+          </div>
+          <div class="check-item">
+            <div class="check-icon"><svg class="w-3 h-3 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg></div>
+            <p class="font-body text-sm text-ink-2">Разработка на менюта с фокус върху маржа</p>
+          </div>
+          <div class="check-item">
+            <div class="check-icon"><svg class="w-3 h-3 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg></div>
+            <p class="font-body text-sm text-ink-2">Обучение на готвачи и кухненски персонал</p>
+          </div>
+          <div class="check-item">
+            <div class="check-icon"><svg class="w-3 h-3 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg></div>
+            <p class="font-body text-sm text-ink-2">Авторски Chef Experiences за корпоративни клиенти</p>
+          </div>
+        </div>
+
+        <a href="#contact" class="inline-flex items-center gap-2 text-accent font-body text-sm font-medium ul-hover">
+          Запишете безплатна консултация
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
         </a>
       </div>
-
-      <!-- Gallery grid -->
-      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 reveal">
-        <!-- Each "dish" is a styled placeholder card -->
-        <div class="gallery-img col-span-2 row-span-2 aspect-square bg-gradient-to-br from-[#2a1f0a] to-carbon-3 rounded-sm overflow-hidden relative glow-ring">
-          <div class="absolute inset-0 flex flex-col items-center justify-center p-8">
-            <div class="w-24 h-24 rounded-full border border-gold/30 flex items-center justify-center mb-4">
-              <svg class="w-12 h-12" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="18" stroke="rgba(201,168,76,0.4)" stroke-width="0.8"/><path d="M24 12 Q30 18 24 24 Q18 30 24 36" stroke="rgba(201,168,76,0.6)" stroke-width="1" fill="none"/><circle cx="24" cy="24" r="3" fill="rgba(201,168,76,0.5)"/></svg>
-            </div>
-            <span class="font-display italic text-xl text-gold/60">Tasting Menu</span>
-            <span class="font-body text-xs text-cream/30 mt-1 tracking-wider">8 COURSE</span>
-          </div>
-          <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-carbon/80 to-transparent p-4">
-            <span class="font-display text-lg text-cream/80">Дегустационно меню</span>
-          </div>
-        </div>
-
-        <div class="gallery-img aspect-square bg-gradient-to-br from-[#1a0a0a] to-carbon-3 rounded-sm overflow-hidden relative">
-          <div class="absolute inset-0 flex items-center justify-center">
-            <svg class="w-16 h-16 opacity-30" viewBox="0 0 64 64" fill="none"><path d="M32 8 C20 8 12 16 12 28 L8 56 L56 56 L52 28 C52 16 44 8 32 8Z" stroke="rgba(201,168,76,0.6)" stroke-width="0.8"/><path d="M22 20 Q32 14 42 20" stroke="rgba(201,168,76,0.4)" stroke-width="0.8" fill="none"/></svg>
-          </div>
-          <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-carbon/80 to-transparent p-3">
-            <span class="font-display text-sm text-cream/70">Авторска супа</span>
-          </div>
-        </div>
-
-        <div class="gallery-img aspect-square bg-gradient-to-br from-[#0a1a0a] to-carbon-3 rounded-sm overflow-hidden relative">
-          <div class="absolute inset-0 flex items-center justify-center">
-            <svg class="w-16 h-16 opacity-30" viewBox="0 0 64 64" fill="none"><rect x="12" y="20" width="40" height="28" rx="3" stroke="rgba(201,168,76,0.6)" stroke-width="0.8"/><path d="M20 20 L20 16 Q20 12 24 12 L40 12 Q44 12 44 16 L44 20" stroke="rgba(201,168,76,0.4)" stroke-width="0.8" fill="none"/><line x1="12" y1="30" x2="52" y2="30" stroke="rgba(201,168,76,0.3)" stroke-width="0.5"/></svg>
-          </div>
-          <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-carbon/80 to-transparent p-3">
-            <span class="font-display text-sm text-cream/70">Сезонен десерт</span>
-          </div>
-        </div>
-
-        <div class="gallery-img col-span-2 aspect-video bg-gradient-to-br from-[#0a0a1a] to-carbon-3 rounded-sm overflow-hidden relative">
-          <div class="absolute inset-0 flex items-center justify-center">
-            <svg class="w-20 h-20 opacity-25" viewBox="0 0 64 64" fill="none"><path d="M8 44 Q32 20 56 44" stroke="rgba(201,168,76,0.5)" stroke-width="0.8" fill="none"/><circle cx="20" cy="38" r="6" stroke="rgba(201,168,76,0.4)" stroke-width="0.8"/><circle cx="32" cy="30" r="8" stroke="rgba(201,168,76,0.5)" stroke-width="0.8"/><circle cx="44" cy="38" r="6" stroke="rgba(201,168,76,0.4)" stroke-width="0.8"/></svg>
-          </div>
-          <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-carbon/80 to-transparent p-3">
-            <span class="font-display text-lg text-cream/70">Fine Dining Experience</span>
-          </div>
-        </div>
-      </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ─── TESTIMONIALS ──────────────────────────────────────────────────── -->
-  <section id="reviews" class="py-28 bg-carbon relative overflow-hidden">
-    <div class="absolute inset-0" style="background-image: radial-gradient(ellipse at 20% 50%, rgba(185,75,44,0.05) 0%, transparent 50%);"></div>
-
-    <div class="max-w-7xl mx-auto px-6 relative z-10">
-      <div class="text-center mb-16 reveal">
-        <div class="inline-flex items-center gap-3 mb-4">
-          <span class="w-6 h-px bg-gold"></span>
-          <span class="text-gold font-body text-xs tracking-[0.25em] uppercase">Отзиви</span>
-          <span class="w-6 h-px bg-gold"></span>
-        </div>
-        <h2 class="font-display text-[clamp(2rem,5vw,4rem)] font-light">
-          Какво казват <span class="italic gold-text">клиентите</span>
+<!-- ─── SERVICES ───────────────────────────────────────────────────────── -->
+<section id="services" class="py-24 bg-mist">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 reveal">
+      <div>
+        <div class="section-label mb-3">Услуги</div>
+        <h2 class="font-display text-[clamp(2rem,4vw,3.5rem)] font-medium text-ink leading-tight">
+          Как мога да ви помогна
         </h2>
       </div>
+      <p class="font-body text-slate text-sm max-w-xs md:text-right leading-relaxed">
+        Всяко сътрудничество е персонализирано спрямо целите и мащаба на бизнеса ви.
+      </p>
+    </div>
 
-      <div class="grid md:grid-cols-3 gap-6">
-        <!-- Review 1 -->
-        <div class="reveal relative bg-carbon-2 border border-white/8 rounded-sm p-8">
-          <div class="quote-mark">"</div>
-          <div class="relative z-10">
-            <div class="flex gap-1 mb-4">
-              {[...Array(5)].map(()=>`<svg class="w-4 h-4 text-gold" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>`).join('')}
-            </div>
-            <p class="font-body text-cream/65 text-sm leading-relaxed mb-6 italic">
-              "Георги преобрази изцяло нашето меню. Продажбите се покачиха с 35% само за три месеца. Изключителен професионалист с уникално усещане за вкус."
-            </p>
-            <div class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-full bg-gold/20 flex items-center justify-center font-display text-gold text-lg">М</div>
-              <div>
-                <div class="font-body text-sm font-medium text-cream/90">Мариана Стоянова</div>
-                <div class="font-body text-xs text-cream/40">Ресторант "Оазис", София</div>
-              </div>
-            </div>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+
+      <!-- Card 1 -->
+      <div class="svc-card reveal bg-white rounded-xl border border-mist-3 p-7 relative overflow-hidden cursor-pointer">
+        <div class="card-num">01</div>
+        <div class="svc-icon w-12 h-12 rounded-xl bg-accent-light text-accent flex items-center justify-center mb-5">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+        </div>
+        <h3 class="font-display text-xl font-medium text-ink mb-2">Ресторантна консултация</h3>
+        <p class="font-body text-sm text-slate leading-relaxed mb-4">Цялостен анализ на операциите, себестойността и позиционирането. Конкретни KPI и план за изпълнение.</p>
+        <div class="flex items-center gap-1.5 text-accent font-body text-sm font-medium">
+          <span>Научи повече</span>
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="svc-card reveal bg-white rounded-xl border border-mist-3 p-7 relative overflow-hidden cursor-pointer" style="transition-delay:.07s">
+        <div class="card-num">02</div>
+        <div class="svc-icon w-12 h-12 rounded-xl bg-copper-light text-copper flex items-center justify-center mb-5">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
+        </div>
+        <h3 class="font-display text-xl font-medium text-ink mb-2">Разработка на менюта</h3>
+        <p class="font-body text-sm text-slate leading-relaxed mb-4">Сезонни, тематични и авторски менюта с оптимизирани food cost и максимална атрактивност.</p>
+        <div class="flex items-center gap-1.5 text-accent font-body text-sm font-medium">
+          <span>Научи повече</span>
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </div>
+      </div>
+
+      <!-- Card 3 — Featured -->
+      <div class="svc-card reveal bg-accent rounded-xl border border-accent p-7 relative overflow-hidden cursor-pointer md:col-span-2 lg:col-span-1" style="transition-delay:.14s">
+        <div class="absolute top-4 right-4 tag bg-white/20 text-white">Най-търсена</div>
+        <div class="card-num text-white/10">03</div>
+        <div class="w-12 h-12 rounded-xl bg-white/15 text-white flex items-center justify-center mb-5">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        </div>
+        <h3 class="font-display text-xl font-medium text-white mb-2">Кулинарни обучения</h3>
+        <p class="font-body text-sm text-blue-100 leading-relaxed mb-4">Индивидуални и групови майсторски класове — от базови техники до ниво professional kitchen.</p>
+        <div class="flex items-center gap-1.5 text-white font-body text-sm font-medium">
+          <span>Научи повече</span>
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="svc-card reveal bg-white rounded-xl border border-mist-3 p-7 relative overflow-hidden cursor-pointer" style="transition-delay:.21s">
+        <div class="card-num">04</div>
+        <div class="svc-icon w-12 h-12 rounded-xl bg-accent-light text-accent flex items-center justify-center mb-5">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
+        </div>
+        <h3 class="font-display text-xl font-medium text-ink mb-2">Chef Experience</h3>
+        <p class="font-body text-sm text-slate leading-relaxed mb-4">Персонален готвач за частни и корпоративни събития. Дегустационни менюта и fine dining у дома.</p>
+        <div class="flex items-center gap-1.5 text-accent font-body text-sm font-medium">
+          <span>Научи повече</span>
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </div>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="svc-card reveal bg-white rounded-xl border border-mist-3 p-7 relative overflow-hidden cursor-pointer" style="transition-delay:.28s">
+        <div class="card-num">05</div>
+        <div class="svc-icon w-12 h-12 rounded-xl bg-copper-light text-copper flex items-center justify-center mb-5">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
+        </div>
+        <h3 class="font-display text-xl font-medium text-ink mb-2">Премиум кетъринг</h3>
+        <p class="font-body text-sm text-slate leading-relaxed mb-4">Луксозно кетъринг за корпоративни прояви, бизнес срещи и специални поводи с 50–500 гости.</p>
+        <div class="flex items-center gap-1.5 text-accent font-body text-sm font-medium">
+          <span>Научи повече</span>
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </div>
+      </div>
+
+      <!-- Card 6 -->
+      <div class="svc-card reveal bg-white rounded-xl border border-mist-3 p-7 relative overflow-hidden cursor-pointer" style="transition-delay:.35s">
+        <div class="card-num">06</div>
+        <div class="svc-icon w-12 h-12 rounded-xl bg-accent-light text-accent flex items-center justify-center mb-5">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15 10l4.553-2.069A1 1 0 0121 8.87v6.26a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+        </div>
+        <h3 class="font-display text-xl font-medium text-ink mb-2">Видео & медия</h3>
+        <p class="font-body text-sm text-slate leading-relaxed mb-4">Кулинарно съдържание за социални мрежи, реклами, YouTube канали и телевизионни предавания.</p>
+        <div class="flex items-center gap-1.5 text-accent font-body text-sm font-medium">
+          <span>Научи повече</span>
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─── PROCESS ────────────────────────────────────────────────────────── -->
+<section id="process" class="py-24 bg-white overflow-hidden">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center mb-14 reveal">
+      <div class="section-label mb-3">Как работим</div>
+      <h2 class="font-display text-[clamp(2rem,4vw,3.5rem)] font-medium text-ink">Ясен процес. Измерими резултати.</h2>
+    </div>
+    <div class="grid md:grid-cols-4 gap-0 relative">
+
+      <!-- Step 1 -->
+      <div class="reveal text-center px-6 relative">
+        <div class="hidden md:block step-line"></div>
+        <div class="w-12 h-12 rounded-full bg-accent text-white flex items-center justify-center font-body font-semibold text-sm mx-auto mb-5 relative z-10 shadow-lg shadow-accent/25">01</div>
+        <h3 class="font-display text-lg font-medium text-ink mb-2">Диагностика</h3>
+        <p class="font-body text-sm text-slate leading-relaxed">Анализ на текущото състояние — меню, операции, финанси и позиция на пазара.</p>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="reveal text-center px-6 relative" style="transition-delay:.1s">
+        <div class="hidden md:block step-line"></div>
+        <div class="w-12 h-12 rounded-full bg-white border-2 border-accent text-accent flex items-center justify-center font-body font-semibold text-sm mx-auto mb-5 relative z-10">02</div>
+        <h3 class="font-display text-lg font-medium text-ink mb-2">Стратегия</h3>
+        <p class="font-body text-sm text-slate leading-relaxed">Разработване на персонализиран план с конкретни цели, KPI и времеви рамки.</p>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="reveal text-center px-6 relative" style="transition-delay:.2s">
+        <div class="hidden md:block step-line"></div>
+        <div class="w-12 h-12 rounded-full bg-white border-2 border-accent text-accent flex items-center justify-center font-body font-semibold text-sm mx-auto mb-5 relative z-10">03</div>
+        <h3 class="font-display text-lg font-medium text-ink mb-2">Изпълнение</h3>
+        <p class="font-body text-sm text-slate leading-relaxed">Активно внедряване — обучения, менюта, процеси, брандинг и стандарти.</p>
+      </div>
+
+      <!-- Step 4 -->
+      <div class="reveal text-center px-6 relative" style="transition-delay:.3s">
+        <div class="w-12 h-12 rounded-full bg-white border-2 border-copper text-copper flex items-center justify-center font-body font-semibold text-sm mx-auto mb-5 relative z-10">04</div>
+        <h3 class="font-display text-lg font-medium text-ink mb-2">Проследяване</h3>
+        <p class="font-body text-sm text-slate leading-relaxed">Регулярен мониторинг и оптимизация за устойчив растеж и постигнати цели.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─── TESTIMONIALS ───────────────────────────────────────────────────── -->
+<section id="reviews" class="py-24 bg-mist">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 reveal">
+      <div>
+        <div class="section-label mb-3">Отзиви</div>
+        <h2 class="font-display text-[clamp(2rem,4vw,3.5rem)] font-medium text-ink">Клиентите говорят</h2>
+      </div>
+      <div class="flex items-center gap-3 bg-white rounded-xl px-5 py-3 border border-mist-3 shadow-sm w-fit">
+        <div class="font-display text-3xl font-medium text-ink">4.9</div>
+        <div>
+          <div class="flex gap-0.5 mb-0.5">
+            <svg class="w-4 h-4 text-copper" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            <svg class="w-4 h-4 text-copper" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            <svg class="w-4 h-4 text-copper" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            <svg class="w-4 h-4 text-copper" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            <svg class="w-4 h-4 text-copper" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          </div>
+          <div class="font-body text-xs text-slate">200+ отзива</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-5">
+      <!-- Testi 1 -->
+      <div class="testi-card reveal bg-white rounded-xl border border-mist-3 p-7 shadow-sm">
+        <div class="flex gap-1 mb-5">
+          <svg class="w-4 h-4 text-copper" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-copper" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-copper" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-copper" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-copper" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+        </div>
+        <p class="font-body text-sm text-ink-2 leading-relaxed mb-6">
+          "Георги преобрази нашия ресторант в рамките на 3 месеца. Продажбите се покачиха с 38%, 
+          а екипът е по-мотивиран от всякога. Инвестицията се върна двойно."
+        </p>
+        <div class="flex items-center gap-3 pt-5 border-t border-mist-3">
+          <div class="w-9 h-9 rounded-full bg-accent-mid flex items-center justify-center font-body font-semibold text-accent text-sm">МС</div>
+          <div>
+            <div class="font-body text-sm font-medium text-ink">Мариана Стоянова</div>
+            <div class="font-body text-xs text-slate">Собственик, Ресторант "Оазис"</div>
           </div>
         </div>
+      </div>
 
-        <!-- Review 2 -->
-        <div class="reveal relative bg-carbon-2 border border-white/8 rounded-sm p-8" style="transition-delay:0.1s">
-          <div class="quote-mark">"</div>
-          <div class="relative z-10">
-            <div class="flex gap-1 mb-4">
-              {[...Array(5)].map(()=>`<svg class="w-4 h-4 text-gold" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>`).join('')}
-            </div>
-            <p class="font-body text-cream/65 text-sm leading-relaxed mb-6 italic">
-              "Корпоративната вечеря, която организира за нас, беше абсолютна магия. Гостите все още говорят за нея. Всеки детайл беше перфектен."
-            </p>
-            <div class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-full bg-rust/20 flex items-center justify-center font-display text-rust text-lg">Д</div>
-              <div>
-                <div class="font-body text-sm font-medium text-cream/90">Димитър Кирилов</div>
-                <div class="font-body text-xs text-cream/40">CEO, TechSoft Bulgaria</div>
-              </div>
-            </div>
+      <!-- Testi 2 -->
+      <div class="testi-card reveal bg-white rounded-xl border border-mist-3 p-7 shadow-sm" style="transition-delay:.1s">
+        <div class="flex gap-1 mb-5">
+          <svg class="w-4 h-4 text-copper" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-copper" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-copper" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-copper" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-copper" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+        </div>
+        <p class="font-body text-sm text-ink-2 leading-relaxed mb-6">
+          "Корпоративната вечеря с Георги беше незабравимо изживяване. Нашите партньори от 5 държави 
+          бяха впечатлени. Лично ще го препоръчвам на всеки бизнес."
+        </p>
+        <div class="flex items-center gap-3 pt-5 border-t border-mist-3">
+          <div class="w-9 h-9 rounded-full bg-copper-light flex items-center justify-center font-body font-semibold text-copper text-sm">ДК</div>
+          <div>
+            <div class="font-body text-sm font-medium text-ink">Димитър Кирилов</div>
+            <div class="font-body text-xs text-slate">CEO, TechSoft Bulgaria</div>
           </div>
         </div>
+      </div>
 
-        <!-- Review 3 -->
-        <div class="reveal relative bg-carbon-2 border border-white/8 rounded-sm p-8" style="transition-delay:0.2s">
-          <div class="quote-mark">"</div>
-          <div class="relative z-10">
-            <div class="flex gap-1 mb-4">
-              {[...Array(5)].map(()=>`<svg class="w-4 h-4 text-gold" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>`).join('')}
-            </div>
-            <p class="font-body text-cream/65 text-sm leading-relaxed mb-6 italic">
-              "Вземах частни уроци при Георги в продължение на 3 месеца. Научих повече, отколкото за 2 години в кулинарното училище. Невероятен ментор!"
-            </p>
-            <div class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-full bg-gold/20 flex items-center justify-center font-display text-gold text-lg">Е</div>
-              <div>
-                <div class="font-body text-sm font-medium text-cream/90">Елена Петрова</div>
-                <div class="font-body text-xs text-cream/40">Начинаещ готвач, Пловдив</div>
-              </div>
-            </div>
+      <!-- Testi 3 -->
+      <div class="testi-card reveal bg-white rounded-xl border border-mist-3 p-7 shadow-sm" style="transition-delay:.2s">
+        <div class="flex gap-1 mb-5">
+          <svg class="w-4 h-4 text-copper" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-copper" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-copper" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-copper" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-copper" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+        </div>
+        <p class="font-body text-sm text-ink-2 leading-relaxed mb-6">
+          "Индивидуалното обучение с Георги ме издигна на съвсем ново ниво. За 3 месеца 
+          усвоих повече от 2 години в кулинарното училище. Изключително препоръчвам!"
+        </p>
+        <div class="flex items-center gap-3 pt-5 border-t border-mist-3">
+          <div class="w-9 h-9 rounded-full bg-accent-mid flex items-center justify-center font-body font-semibold text-accent text-sm">ЕП</div>
+          <div>
+            <div class="font-body text-sm font-medium text-ink">Елена Петрова</div>
+            <div class="font-body text-xs text-slate">Готвач, Пловдив</div>
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ─── CTA BAND ──────────────────────────────────────────────────────── -->
-  <section class="py-20 bg-gradient-to-r from-gold-dark via-gold to-gold-dark relative overflow-hidden reveal">
-    <div class="absolute inset-0" style="background-image: repeating-linear-gradient(45deg, rgba(0,0,0,0.03) 0px, rgba(0,0,0,0.03) 1px, transparent 1px, transparent 8px);"></div>
-    <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
-      <h2 class="font-display text-[clamp(2rem,5vw,3.5rem)] font-light text-carbon leading-tight mb-4">
-        Готови ли сте да издигнете<br><em>кухнята си на ново ниво?</em>
-      </h2>
-      <p class="font-body text-carbon/70 mb-8 max-w-lg mx-auto leading-relaxed">
-        Нека поговорим за вашите нужди. Първата консултация е напълно безплатна.
-      </p>
-      <a href="#contact" class="inline-flex items-center gap-3 px-8 py-4 bg-carbon text-cream font-body font-semibold tracking-wider hover:bg-carbon-2 transition-colors rounded-sm group">
-        Резервирай консултация
-        <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+<!-- ─── CTA ───────────────────────────────────────────────────────────── -->
+<section class="py-20 bg-ink reveal">
+  <div class="max-w-4xl mx-auto px-6 text-center">
+    <div class="tag bg-white/10 text-white/70 mb-6 mx-auto w-fit">Безплатна първа консултация</div>
+    <h2 class="font-display text-[clamp(2rem,5vw,3.8rem)] font-medium text-white leading-tight mb-5">
+      Готови ли сте да развиете<br>
+      <span class="italic grad-text">бизнеса си?</span>
+    </h2>
+    <p class="font-body text-white/50 max-w-lg mx-auto mb-8 leading-relaxed">
+      Нека поговорим за вашите нужди и цели. Първата консултация е напълно безплатна и без ангажименти.
+    </p>
+    <div class="flex flex-wrap gap-3 justify-center">
+      <a href="#contact" class="inline-flex items-center gap-2 px-7 py-3.5 bg-accent text-white font-body text-sm font-medium rounded-sm hover:bg-blue-600 transition-colors group">
+        Резервирай среща
+        <svg class="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+      </a>
+      <a href="tel:+359888123456" class="inline-flex items-center gap-2 px-7 py-3.5 border border-white/15 text-white/70 font-body text-sm font-medium rounded-sm hover:border-white/30 hover:text-white transition-all">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+        +359 888 123 456
       </a>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ─── CONTACT ───────────────────────────────────────────────────────── -->
-  <section id="contact" class="py-28 bg-carbon-2 relative overflow-hidden">
-    <div class="absolute top-0 right-0 w-[400px] h-[400px] rounded-full bg-gold/4 blur-[100px] pointer-events-none"></div>
+<!-- ─── CONTACT ────────────────────────────────────────────────────────── -->
+<section id="contact" class="py-24 bg-white">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="grid lg:grid-cols-5 gap-12">
 
-    <div class="max-w-7xl mx-auto px-6 relative z-10">
-      <div class="grid lg:grid-cols-2 gap-16 items-start">
+      <!-- Left info col -->
+      <div class="lg:col-span-2 reveal">
+        <div class="section-label mb-4">Контакт</div>
+        <h2 class="font-display text-[clamp(2rem,4vw,3rem)] font-medium text-ink mb-5">Свържете се с мен</h2>
+        <p class="font-body text-slate text-sm leading-relaxed mb-8">
+          Ще се свържа с вас до 24 часа. За спешни запитвания — обадете се директно.
+        </p>
 
-        <!-- Left info -->
-        <div class="reveal space-y-8">
+        <div class="space-y-4 mb-8">
+          <a href="tel:+359888123456" class="flex items-center gap-4 p-4 rounded-xl bg-mist border border-mist-3 hover:border-accent-mid transition-colors group">
+            <div class="w-10 h-10 rounded-lg bg-accent-light flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+            </div>
+            <div>
+              <div class="font-body text-xs text-slate mb-0.5">Телефон</div>
+              <div class="font-body text-sm font-medium text-ink group-hover:text-accent transition-colors">+359 888 123 456</div>
+            </div>
+          </a>
+          <a href="mailto:georgi@tonkov.bg" class="flex items-center gap-4 p-4 rounded-xl bg-mist border border-mist-3 hover:border-accent-mid transition-colors group">
+            <div class="w-10 h-10 rounded-lg bg-accent-light flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+            </div>
+            <div>
+              <div class="font-body text-xs text-slate mb-0.5">Имейл</div>
+              <div class="font-body text-sm font-medium text-ink group-hover:text-accent transition-colors">georgi@tonkov.bg</div>
+            </div>
+          </a>
+          <div class="flex items-center gap-4 p-4 rounded-xl bg-mist border border-mist-3">
+            <div class="w-10 h-10 rounded-lg bg-copper-light flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5 text-copper" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            </div>
+            <div>
+              <div class="font-body text-xs text-slate mb-0.5">Локация</div>
+              <div class="font-body text-sm font-medium text-ink">София & Пловдив, България</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Social icons -->
+        <div class="flex items-center gap-3">
+          <span class="font-body text-xs text-slate tracking-wide">Следвай:</span>
+          <a href="#" class="w-9 h-9 rounded-lg bg-mist border border-mist-3 flex items-center justify-center text-slate hover:text-accent hover:border-accent-mid transition-all">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </a>
+          <a href="#" class="w-9 h-9 rounded-lg bg-mist border border-mist-3 flex items-center justify-center text-slate hover:text-accent hover:border-accent-mid transition-all">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.26 8.26 0 004.84 1.56V6.79a4.85 4.85 0 01-1.07-.1z"/></svg>
+          </a>
+          <a href="#" class="w-9 h-9 rounded-lg bg-mist border border-mist-3 flex items-center justify-center text-slate hover:text-accent hover:border-accent-mid transition-all">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Right form -->
+      <div class="lg:col-span-3 reveal bg-mist rounded-2xl border border-mist-3 p-8 shadow-sm">
+        <h3 class="font-display text-2xl font-medium text-ink mb-6">Изпрати запитване</h3>
+        <div class="space-y-4">
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div>
+              <label class="font-body text-xs font-medium text-ink-3 tracking-wide block mb-1.5">Имe *</label>
+              <input type="text" placeholder="Вашето име" class="f-input w-full px-4 py-3 rounded-lg font-body text-sm text-ink placeholder-slate/50">
+            </div>
+            <div>
+              <label class="font-body text-xs font-medium text-ink-3 tracking-wide block mb-1.5">Фамилия</label>
+              <input type="text" placeholder="Фамилия" class="f-input w-full px-4 py-3 rounded-lg font-body text-sm text-ink placeholder-slate/50">
+            </div>
+          </div>
           <div>
-            <div class="inline-flex items-center gap-3 mb-4">
-              <span class="w-6 h-px bg-gold"></span>
-              <span class="text-gold font-body text-xs tracking-[0.25em] uppercase">Контакт</span>
-            </div>
-            <h2 class="font-display text-[clamp(2rem,5vw,4rem)] font-light leading-tight">
-              Нека <span class="italic gold-text">поговорим</span>
-            </h2>
+            <label class="font-body text-xs font-medium text-ink-3 tracking-wide block mb-1.5">Имейл *</label>
+            <input type="email" placeholder="example@company.bg" class="f-input w-full px-4 py-3 rounded-lg font-body text-sm text-ink placeholder-slate/50">
           </div>
-          <p class="font-body text-cream/60 leading-relaxed">
-            Изпратете ми съобщение и ще се свържа с вас до 24 часа. За спешни запитвания — обадете се директно.
-          </p>
-
-          <!-- Contact details -->
-          <div class="space-y-5">
-            <div class="flex items-center gap-4">
-              <div class="w-11 h-11 rounded-sm border border-gold/20 flex items-center justify-center flex-shrink-0">
-                <svg class="w-5 h-5 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-              </div>
-              <div>
-                <div class="font-body text-xs text-cream/40 tracking-wider mb-0.5">ТЕЛЕФОН</div>
-                <a href="tel:+359888123456" class="font-body text-cream/80 hover:text-gold transition-colors">+359 888 123 456</a>
-              </div>
-            </div>
-            <div class="flex items-center gap-4">
-              <div class="w-11 h-11 rounded-sm border border-gold/20 flex items-center justify-center flex-shrink-0">
-                <svg class="w-5 h-5 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-              </div>
-              <div>
-                <div class="font-body text-xs text-cream/40 tracking-wider mb-0.5">ИМЕЙЛ</div>
-                <a href="mailto:georgi@tonkov.bg" class="font-body text-cream/80 hover:text-gold transition-colors">georgi@tonkov.bg</a>
-              </div>
-            </div>
-            <div class="flex items-center gap-4">
-              <div class="w-11 h-11 rounded-sm border border-gold/20 flex items-center justify-center flex-shrink-0">
-                <svg class="w-5 h-5 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-              </div>
-              <div>
-                <div class="font-body text-xs text-cream/40 tracking-wider mb-0.5">ЛОКАЦИЯ</div>
-                <span class="font-body text-cream/80">София & Пловдив, България</span>
-              </div>
-            </div>
+          <div>
+            <label class="font-body text-xs font-medium text-ink-3 tracking-wide block mb-1.5">Тип услуга</label>
+            <select class="f-input w-full px-4 py-3 rounded-lg font-body text-sm text-ink bg-mist">
+              <option value="">Изберете услуга...</option>
+              <option>Ресторантна консултация</option>
+              <option>Разработка на меню</option>
+              <option>Кулинарни обучения</option>
+              <option>Chef Experience</option>
+              <option>Премиум кетъринг</option>
+              <option>Видео & медия</option>
+            </select>
           </div>
-
-          <!-- Social -->
-          <div class="flex items-center gap-4 pt-2">
-            <span class="font-body text-xs text-cream/30 tracking-wider uppercase">Следвай</span>
-            <div class="flex gap-3">
-              <a href="#" class="w-9 h-9 rounded-sm border border-white/10 flex items-center justify-center hover:border-gold/40 hover:text-gold text-cream/40 transition-all">
-                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-              </a>
-              <a href="#" class="w-9 h-9 rounded-sm border border-white/10 flex items-center justify-center hover:border-gold/40 hover:text-gold text-cream/40 transition-all">
-                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-              </a>
-              <a href="#" class="w-9 h-9 rounded-sm border border-white/10 flex items-center justify-center hover:border-gold/40 hover:text-gold text-cream/40 transition-all">
-                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.26 8.26 0 004.84 1.56V6.79a4.85 4.85 0 01-1.07-.1z"/></svg>
-              </a>
-            </div>
+          <div>
+            <label class="font-body text-xs font-medium text-ink-3 tracking-wide block mb-1.5">Съобщение *</label>
+            <textarea rows="4" placeholder="Разкажете ни повече за проекта ви..." class="f-input w-full px-4 py-3 rounded-lg font-body text-sm text-ink placeholder-slate/50 resize-none"></textarea>
           </div>
+          <button onclick="this.innerHTML='<svg class=\'w-4 h-4 inline mr-2\' fill=\'none\' stroke=\'currentColor\' viewBox=\'0 0 24 24\'><path stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'2\' d=\'M5 13l4 4L19 7\'/></svg>Изпратено успешно!'; this.classList.add('bg-green-600'); this.disabled=true;"
+            class="w-full py-3.5 bg-accent text-white font-body text-sm font-medium rounded-lg hover:bg-blue-700 transition-all flex items-center justify-center gap-2 group">
+            Изпрати запитване
+            <svg class="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+          </button>
+          <p class="font-body text-xs text-slate text-center">Ще се свържем с вас до 24 часа · Без спам · Без ангажименти</p>
         </div>
-
-        <!-- Right: form -->
-        <div class="reveal bg-carbon-3 border border-white/8 rounded-sm p-8 glow-ring">
-          <h3 class="font-display text-2xl font-light mb-6">Изпрати запитване</h3>
-          <div class="space-y-4">
-            <div class="grid grid-cols-2 gap-4">
-              <div>
-                <label class="font-body text-xs text-cream/40 tracking-wider block mb-2">ИМЕ</label>
-                <input type="text" placeholder="Вашето име" class="form-input w-full px-4 py-3 rounded-sm font-body text-sm text-cream placeholder-cream/25 focus:placeholder-cream/40 transition-colors">
-              </div>
-              <div>
-                <label class="font-body text-xs text-cream/40 tracking-wider block mb-2">ИМЕЙЛ</label>
-                <input type="email" placeholder="email@example.com" class="form-input w-full px-4 py-3 rounded-sm font-body text-sm text-cream placeholder-cream/25">
-              </div>
-            </div>
-            <div>
-              <label class="font-body text-xs text-cream/40 tracking-wider block mb-2">УСЛУГА</label>
-              <select class="form-input w-full px-4 py-3 rounded-sm font-body text-sm text-cream/80 bg-transparent">
-                <option value="" class="bg-carbon-3">Изберете услуга...</option>
-                <option value="consult" class="bg-carbon-3">Ресторантна консултация</option>
-                <option value="chef" class="bg-carbon-3">Chef Experience</option>
-                <option value="training" class="bg-carbon-3">Кулинарни обучения</option>
-                <option value="menu" class="bg-carbon-3">Разработка на меню</option>
-                <option value="catering" class="bg-carbon-3">Премиум кетъринг</option>
-                <option value="media" class="bg-carbon-3">Видео & медия</option>
-              </select>
-            </div>
-            <div>
-              <label class="font-body text-xs text-cream/40 tracking-wider block mb-2">СЪОБЩЕНИЕ</label>
-              <textarea rows="4" placeholder="Разкажете ми повече за вашия проект..." class="form-input w-full px-4 py-3 rounded-sm font-body text-sm text-cream placeholder-cream/25 resize-none"></textarea>
-            </div>
-            <button onclick="this.textContent='Изпратено ✓'; this.disabled=true; this.classList.add('opacity-70');" 
-              class="w-full py-4 bg-gold text-carbon font-body font-semibold text-sm tracking-wider hover:bg-gold-light transition-all duration-300 rounded-sm group flex items-center justify-center gap-2">
-              Изпрати запитване
-              <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
-            </button>
-          </div>
-        </div>
-
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ─── FOOTER ────────────────────────────────────────────────────────── -->
-  <footer class="bg-carbon border-t border-white/6 py-10">
-    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
-      <div class="font-display text-2xl font-semibold gold-text tracking-widest">ГЕОРГИ ТОНКОВ</div>
-      <div class="font-body text-xs text-cream/25 tracking-wider text-center">
-        © 2025 Георги Тонков. Всички права запазени.
+<!-- ─── FOOTER ─────────────────────────────────────────────────────────── -->
+<footer class="bg-ink py-10 border-t border-white/5">
+  <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+    <div class="flex items-center gap-2.5">
+      <div class="w-7 h-7 bg-accent rounded-sm flex items-center justify-center">
+        <span class="font-display text-white text-xs font-bold italic">G</span>
       </div>
-      <div class="flex gap-6 font-body text-xs text-cream/30 tracking-wider">
-        <a href="#about" class="hover:text-cream/60 transition-colors">За мен</a>
-        <a href="#services" class="hover:text-cream/60 transition-colors">Услуги</a>
-        <a href="#contact" class="hover:text-cream/60 transition-colors">Контакт</a>
-      </div>
+      <span class="font-body text-white/70 text-sm">Георги Тонков</span>
     </div>
-  </footer>
+    <div class="font-body text-xs text-white/30">© 2025 Георги Тонков. Всички права запазени.</div>
+    <div class="flex gap-6 font-body text-xs text-white/40">
+      <a href="#about"    class="hover:text-white/70 transition-colors">За мен</a>
+      <a href="#services" class="hover:text-white/70 transition-colors">Услуги</a>
+      <a href="#contact"  class="hover:text-white/70 transition-colors">Контакт</a>
+    </div>
+  </div>
+</footer>
 
-  <!-- ─── SCROLL REVEAL + NAV SCRIPT ──────────────────────────────────── -->
-  <script>
-    // Intersection Observer for reveal
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
+<script>
+  // Scroll reveal
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => obs.observe(el));
 
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-    // Staggered reveal for cards
-    document.querySelectorAll('.service-card').forEach((card, i) => {
-      card.style.transitionDelay = `${i * 0.07}s`;
-    });
-
-    // Nav scroll effect
-    window.addEventListener('scroll', () => {
-      const nav = document.getElementById('navbar');
-      if (window.scrollY > 80) {
-        nav.classList.add('py-2', 'shadow-lg');
-        nav.classList.remove('py-4');
-      } else {
-        nav.classList.remove('py-2', 'shadow-lg');
-        nav.classList.add('py-4');
-      }
-    });
-
-    // Fix template literal in service cards (About section skills)
-    document.querySelectorAll('.grid .flex').forEach(el => {
-      if (el.textContent.includes('{[') || el.innerHTML.includes('{[')) {
-        el.remove();
-      }
-    });
-  </script>
+  // Nav shadow on scroll
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('nav-scroll', window.scrollY > 40);
+  });
+</script>
 </body>
 </html>
