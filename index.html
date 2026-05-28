@@ -1,863 +1,594 @@
 <!DOCTYPE html>
 <html lang="bg">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Георги Тонков — Шеф Готвач & Консултант</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            ink:     '#111318',
-            'ink-2': '#2C2F38',
-            'ink-3': '#4A4E5A',
-            slate:   '#6B7280',
-            mist:    '#F4F5F7',
-            'mist-2':'#ECEEF2',
-            'mist-3':'#E2E5EB',
-            white:   '#FFFFFF',
-            accent:  '#1D4ED8',
-            'accent-2':'#3B82F6',
-            'accent-light':'#EFF6FF',
-            'accent-mid':'#BFDBFE',
-            copper:  '#C2773A',
-            'copper-light':'#F5E6D8',
-          },
-          fontFamily: {
-            display: ['"Playfair Display"', 'serif'],
-            body:    ['"DM Sans"', 'sans-serif'],
-          },
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Работни дни & Заплата</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-      }
-    }
-  </script>
 
-  <style>
-    html { scroll-behavior: smooth; }
-    body { background: #FFFFFF; font-family: 'DM Sans', sans-serif; color: #111318; }
+        :root {
+            --primary: #6366f1;
+            --primary-light: #818cf8;
+            --accent: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --bg: #0f172a;
+            --surface: #1e293b;
+            --surface-light: #334155;
+            --text: #f1f5f9;
+            --text-secondary: #cbd5e1;
+        }
 
-    ::-webkit-scrollbar { width: 3px; }
-    ::-webkit-scrollbar-track { background: #F4F5F7; }
-    ::-webkit-scrollbar-thumb { background: #1D4ED8; border-radius: 2px; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--bg) 0%, #1a2847 100%);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 16px;
+            overflow-x: hidden;
+        }
 
-    /* Reveal */
-    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s cubic-bezier(.4,0,.2,1), transform 0.7s cubic-bezier(.4,0,.2,1); }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-    .reveal-left { opacity: 0; transform: translateX(-32px); transition: opacity 0.7s cubic-bezier(.4,0,.2,1), transform 0.7s cubic-bezier(.4,0,.2,1); }
-    .reveal-left.visible { opacity: 1; transform: translateX(0); }
-    .reveal-right { opacity: 0; transform: translateX(32px); transition: opacity 0.7s cubic-bezier(.4,0,.2,1), transform 0.7s cubic-bezier(.4,0,.2,1); }
-    .reveal-right.visible { opacity: 1; transform: translateX(0); }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
 
-    /* Nav */
-    .nav-scroll { box-shadow: 0 1px 0 rgba(0,0,0,0.06); }
+        header {
+            text-align: center;
+            margin-bottom: 32px;
+            animation: slideDown 0.6s ease-out;
+        }
 
-    /* Hover underline */
-    .ul-hover { position: relative; }
-    .ul-hover::after { content:''; position:absolute; bottom:-2px; left:0; width:0; height:1.5px; background:#1D4ED8; transition:width .3s ease; }
-    .ul-hover:hover::after { width:100%; }
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, var(--primary-light), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
 
-    /* Service cards */
-    .svc-card { transition: box-shadow .3s ease, transform .3s ease, border-color .3s ease; }
-    .svc-card:hover { transform: translateY(-4px); box-shadow: 0 20px 48px rgba(17,19,24,.10); border-color: #BFDBFE !important; }
-    .svc-card:hover .svc-icon { background: #1D4ED8; color: #fff; }
-    .svc-icon { transition: background .3s ease, color .3s ease; }
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
 
-    /* Stats */
-    @keyframes countUp { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
-    .stat-num { animation: countUp .6s ease forwards; }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 24px;
+            animation: fadeIn 0.8s ease-out 0.2s backwards;
+        }
 
-    /* Hero lines */
-    @keyframes lineGrow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
-    .line-anim { transform-origin: left; animation: lineGrow .8s cubic-bezier(.4,0,.2,1) forwards; }
+        .stat-card {
+            background: var(--surface);
+            border: 1px solid var(--surface-light);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
 
-    /* Floating badge */
-    @keyframes floatBadge { 0%,100%{ transform:translateY(0px); } 50%{ transform:translateY(-8px); } }
-    .float-badge { animation: floatBadge 4s ease-in-out infinite; }
+        .stat-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
 
-    /* Tag pill */
-    .tag { display:inline-flex; align-items:center; gap:6px; padding:4px 12px; border-radius:999px; font-size:11px; font-weight:500; letter-spacing:.06em; text-transform:uppercase; }
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary-light);
+            margin-bottom: 4px;
+        }
 
-    /* Testimonial */
-    .testi-card { transition: box-shadow .3s ease, transform .3s ease; }
-    .testi-card:hover { transform:translateY(-3px); box-shadow: 0 16px 40px rgba(17,19,24,.08); }
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
 
-    /* Form inputs */
-    .f-input { background:#F4F5F7; border:1.5px solid #E2E5EB; transition:border-color .25s, box-shadow .25s; }
-    .f-input:focus { outline:none; border-color:#1D4ED8; box-shadow:0 0 0 3px rgba(29,78,216,.1); background:#fff; }
+        .salary-card {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.2);
+            animation: slideUp 0.6s ease-out 0.3s backwards;
+        }
 
-    /* Gradient headline */
-    .grad-text {
-      background: linear-gradient(135deg, #1D4ED8 0%, #3B82F6 60%, #C2773A 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
+        .salary-label {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 14px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
 
-    /* Section label */
-    .section-label { font-family:'DM Sans',sans-serif; font-size:11px; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:#1D4ED8; }
+        .salary-amount {
+            font-size: 48px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 4px;
+        }
 
-    /* Divider line */
-    .h-line { height:1px; background: linear-gradient(90deg, #1D4ED8 0%, #BFDBFE 60%, transparent 100%); }
+        .salary-currency {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 18px;
+        }
 
-    /* Checklist item */
-    .check-item { display:flex; gap:12px; align-items:flex-start; }
-    .check-icon { width:20px; height:20px; border-radius:50%; background:#EFF6FF; border:1.5px solid #BFDBFE; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px; }
+        .calendar-section {
+            margin-bottom: 24px;
+            animation: fadeIn 0.8s ease-out 0.4s backwards;
+        }
 
-    /* Image frame */
-    .img-frame { position:relative; }
-    .img-frame::before { content:''; position:absolute; top:16px; left:16px; right:-16px; bottom:-16px; border:1.5px solid #BFDBFE; border-radius:2px; z-index:0; }
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--text);
+        }
 
-    /* Hero grid bg */
-    .hero-grid { background-image: linear-gradient(rgba(29,78,216,.04) 1px, transparent 1px), linear-gradient(90deg, rgba(29,78,216,.04) 1px, transparent 1px); background-size:48px 48px; }
+        .month-selector {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+        }
 
-    /* Card number */
-    .card-num { font-family:'Playfair Display',serif; font-size:3.5rem; font-weight:400; line-height:1; color:rgba(29,78,216,.08); position:absolute; top:16px; right:20px; }
+        .month-btn {
+            background: var(--surface);
+            border: 2px solid transparent;
+            color: var(--text-secondary);
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+        }
 
-    /* Process step line */
-    .step-line { position:absolute; top:24px; left:calc(50% + 32px); right:calc(-50% + 32px); height:1px; background: linear-gradient(90deg, #BFDBFE, #E2E5EB); }
+        .month-btn:hover {
+            border-color: var(--primary);
+        }
 
-    /* Marquee */
-    @keyframes marquee { 0%{ transform:translateX(0); } 100%{ transform:translateX(-50%); } }
-    .marquee-inner { display:flex; animation:marquee 22s linear infinite; width:max-content; }
-    .marquee-inner:hover { animation-play-state:paused; }
-  </style>
+        .month-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 6px;
+            margin-bottom: 16px;
+        }
+
+        .day-name {
+            text-align: center;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            padding: 8px 0;
+            text-transform: uppercase;
+        }
+
+        .day-cell {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: var(--surface);
+            border: 1px solid transparent;
+        }
+
+        .day-cell:hover {
+            transform: scale(1.05);
+        }
+
+        .day-cell.empty {
+            cursor: default;
+            background: transparent;
+        }
+
+        .day-cell.work {
+            background: var(--accent);
+            color: white;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        .day-cell.rest {
+            background: var(--surface-light);
+            color: var(--text-secondary);
+        }
+
+        .day-cell.off {
+            background: var(--danger);
+            color: white;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        }
+
+        .day-cell.today {
+            border: 2px solid var(--warning);
+        }
+
+        .legend {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            font-size: 12px;
+            margin-top: 16px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
+        }
+
+        .monthly-breakdown {
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 24px;
+            animation: fadeIn 0.8s ease-out 0.5s backwards;
+        }
+
+        .breakdown-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--surface-light);
+        }
+
+        .breakdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .breakdown-label {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .breakdown-value {
+            color: var(--primary-light);
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .info-bar {
+            background: rgba(16, 185, 129, 0.1);
+            border-left: 4px solid var(--accent);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 16px;
+            font-size: 13px;
+            color: var(--accent);
+            animation: slideUp 0.6s ease-out 0.2s backwards;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .year-stats {
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 24px;
+            border: 1px solid var(--surface-light);
+            animation: fadeIn 0.8s ease-out 0.6s backwards;
+        }
+
+        .year-stat-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            font-size: 14px;
+            border-bottom: 1px solid var(--surface-light);
+        }
+
+        .year-stat-row:last-child {
+            border-bottom: none;
+        }
+
+        .year-stat-label {
+            color: var(--text-secondary);
+        }
+
+        .year-stat-value {
+            color: var(--primary-light);
+            font-weight: 600;
+        }
+
+        .total-year {
+            font-size: 20px !important;
+            color: var(--accent) !important;
+            font-weight: 700 !important;
+        }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <header>
+            <h1>💼 Работни дни</h1>
+            <p class="subtitle">2на2 ротация · 90€ на ден</p>
+        </header>
 
-<!-- ─── NAV ───────────────────────────────────────────────────────────── -->
-<nav id="navbar" class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md transition-all duration-300">
-  <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-    <!-- Logo -->
-    <a href="#hero" class="flex items-center gap-2.5">
-      <div class="w-8 h-8 bg-accent rounded-sm flex items-center justify-center">
-        <span class="font-display text-white text-sm font-bold italic">G</span>
-      </div>
-      <span class="font-body font-600 text-ink text-sm tracking-wide">Георги Тонков</span>
-    </a>
-
-    <!-- Desktop links -->
-    <ul class="hidden md:flex items-center gap-8 font-body text-sm text-ink-3">
-      <li><a href="#about"    class="ul-hover hover:text-ink transition-colors">За мен</a></li>
-      <li><a href="#services" class="ul-hover hover:text-ink transition-colors">Услуги</a></li>
-      <li><a href="#process"  class="ul-hover hover:text-ink transition-colors">Процес</a></li>
-      <li><a href="#reviews"  class="ul-hover hover:text-ink transition-colors">Отзиви</a></li>
-      <li><a href="#contact"  class="ul-hover hover:text-ink transition-colors">Контакт</a></li>
-    </ul>
-
-    <div class="flex items-center gap-3">
-      <a href="tel:+359888123456" class="hidden md:flex items-center gap-2 text-ink-3 text-sm font-body hover:text-accent transition-colors">
-        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-        +359 888 123 456
-      </a>
-      <a href="#contact" class="px-5 py-2 bg-accent text-white text-sm font-body font-medium rounded-sm hover:bg-blue-700 transition-colors">
-        Резервирай
-      </a>
-      <button class="md:hidden p-1 text-ink-3" onclick="document.getElementById('mob').classList.toggle('hidden')">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 6h16M4 12h16M4 18h16"/></svg>
-      </button>
-    </div>
-  </div>
-  <!-- Mobile -->
-  <div id="mob" class="hidden md:hidden border-t border-mist-3 bg-white px-6 py-4 flex flex-col gap-4 text-sm font-body text-ink-3">
-    <a href="#about"    onclick="document.getElementById('mob').classList.add('hidden')" class="hover:text-accent">За мен</a>
-    <a href="#services" onclick="document.getElementById('mob').classList.add('hidden')" class="hover:text-accent">Услуги</a>
-    <a href="#process"  onclick="document.getElementById('mob').classList.add('hidden')" class="hover:text-accent">Процес</a>
-    <a href="#reviews"  onclick="document.getElementById('mob').classList.add('hidden')" class="hover:text-accent">Отзиви</a>
-    <a href="#contact"  onclick="document.getElementById('mob').classList.add('hidden')" class="hover:text-accent">Контакт</a>
-  </div>
-</nav>
-
-<!-- ─── HERO ──────────────────────────────────────────────────────────── -->
-<section id="hero" class="relative min-h-screen flex items-center overflow-hidden bg-white hero-grid pt-16">
-  <!-- Subtle gradient blobs -->
-  <div class="absolute top-0 right-0 w-[600px] h-[600px] rounded-full bg-accent-light opacity-60 blur-[120px] -translate-y-1/3 translate-x-1/4 pointer-events-none"></div>
-  <div class="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full bg-copper-light opacity-50 blur-[100px] translate-y-1/3 -translate-x-1/4 pointer-events-none"></div>
-
-  <div class="max-w-7xl mx-auto px-6 py-20 w-full relative z-10">
-    <div class="grid lg:grid-cols-2 gap-12 items-center">
-
-      <!-- Left text -->
-      <div>
-        <!-- Tag -->
-        <div class="tag bg-accent-light text-accent mb-6" style="opacity:0;animation:countUp .6s .1s ease forwards">
-          <span class="w-1.5 h-1.5 rounded-full bg-accent inline-block"></span>
-          Шеф Готвач & Кулинарен Консултант
+        <div class="info-bar">
+            📍 <strong>Днес и утре почивате.</strong> График е зададен за цялата година.
         </div>
 
-        <h1 class="font-display text-[clamp(2.8rem,6vw,5.5rem)] font-medium leading-[1.05] text-ink mb-6" style="opacity:0;animation:countUp .7s .2s ease forwards">
-          Вкусът е<br>
-          <span class="italic grad-text">изкуство.</span><br>
-          Бизнесът —<br>
-          <span class="italic">наука.</span>
-        </h1>
-
-        <div class="h-line w-16 mb-6 line-anim" style="animation-delay:.4s"></div>
-
-        <p class="font-body text-slate text-lg leading-relaxed max-w-md mb-8" style="opacity:0;animation:countUp .7s .45s ease forwards">
-          15+ години авторска кухня, консултации на ресторанти и кулинарни обучения. 
-          Стратегически подход към гастрономията — от рецептата до рентабилността.
-        </p>
-
-        <div class="flex flex-wrap gap-3 mb-10" style="opacity:0;animation:countUp .7s .55s ease forwards">
-          <a href="#services" class="inline-flex items-center gap-2 px-6 py-3 bg-accent text-white font-body text-sm font-medium rounded-sm hover:bg-blue-700 transition-all group">
-            Разгледай услугите
-            <svg class="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-          </a>
-          <a href="#about" class="inline-flex items-center gap-2 px-6 py-3 bg-mist text-ink-2 font-body text-sm font-medium rounded-sm hover:bg-mist-3 transition-all">
-            За Георги
-          </a>
+        <div class="salary-card">
+            <div class="salary-label">💰 Месечна заплата</div>
+            <div class="salary-amount" id="monthlySalary">0</div>
+            <div class="salary-currency">€</div>
         </div>
 
-        <!-- Inline stats -->
-        <div class="flex flex-wrap gap-8 pt-6 border-t border-mist-3" style="opacity:0;animation:countUp .7s .65s ease forwards">
-          <div>
-            <div class="font-display text-3xl font-medium text-ink">15+</div>
-            <div class="font-body text-xs text-slate mt-0.5">Години опит</div>
-          </div>
-          <div>
-            <div class="font-display text-3xl font-medium text-ink">80+</div>
-            <div class="font-body text-xs text-slate mt-0.5">Ресторанта</div>
-          </div>
-          <div>
-            <div class="font-display text-3xl font-medium text-ink">500+</div>
-            <div class="font-body text-xs text-slate mt-0.5">Обучени готвачи</div>
-          </div>
-          <div>
-            <div class="font-display text-3xl font-medium text-ink">12</div>
-            <div class="font-body text-xs text-slate mt-0.5">Международни награди</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Right: Visual composition -->
-      <div class="hidden lg:block relative" style="opacity:0;animation:countUp .9s .3s ease forwards">
-        <!-- Main card -->
-        <div class="relative bg-white rounded-2xl shadow-2xl shadow-ink/8 border border-mist-3 p-8 ml-8 mt-8">
-          <!-- Corner accent -->
-          <div class="absolute top-0 left-0 w-16 h-16 overflow-hidden rounded-tl-2xl">
-            <div class="absolute top-0 left-0 w-full h-full bg-accent-light"></div>
-            <div class="absolute top-3 left-3 w-3 h-3 rounded-full bg-accent"></div>
-          </div>
-
-          <!-- Profile area -->
-          <div class="flex items-start gap-5 mb-6 pt-2">
-            <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-accent to-accent-2 flex items-center justify-center text-white font-display text-2xl italic font-medium flex-shrink-0">
-              GT
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value" id="monthWorkDays">0</div>
+                <div class="stat-label">Работни дни</div>
             </div>
-            <div>
-              <h3 class="font-display text-xl font-medium text-ink">Георги Тонков</h3>
-              <p class="font-body text-sm text-slate">Executive Chef & Consultant</p>
-              <div class="flex items-center gap-1 mt-1.5">
-                <svg class="w-3.5 h-3.5 text-copper" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                <svg class="w-3.5 h-3.5 text-copper" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                <svg class="w-3.5 h-3.5 text-copper" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                <svg class="w-3.5 h-3.5 text-copper" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                <svg class="w-3.5 h-3.5 text-copper" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                <span class="font-body text-xs text-slate ml-1">5.0 · 200+ отзива</span>
-              </div>
+            <div class="stat-card">
+                <div class="stat-value" id="monthRestDays">0</div>
+                <div class="stat-label">Почивни дни</div>
             </div>
-          </div>
-
-          <!-- Credentials list -->
-          <div class="space-y-3 mb-6">
-            <div class="flex items-center gap-3 p-3 bg-mist rounded-lg">
-              <div class="w-8 h-8 bg-accent-light rounded-md flex items-center justify-center flex-shrink-0">
-                <svg class="w-4 h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/></svg>
-              </div>
-              <div>
-                <div class="font-body text-xs font-medium text-ink">Le Cordon Bleu, Париж</div>
-                <div class="font-body text-xs text-slate">Diplôme de Cuisine</div>
-              </div>
-            </div>
-            <div class="flex items-center gap-3 p-3 bg-mist rounded-lg">
-              <div class="w-8 h-8 bg-copper-light rounded-md flex items-center justify-center flex-shrink-0">
-                <svg class="w-4 h-4 text-copper" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-              </div>
-              <div>
-                <div class="font-body text-xs font-medium text-ink">Работил в 6 държави</div>
-                <div class="font-body text-xs text-slate">Лондон · Барселона · Токио</div>
-              </div>
-            </div>
-            <div class="flex items-center gap-3 p-3 bg-mist rounded-lg">
-              <div class="w-8 h-8 bg-accent-light rounded-md flex items-center justify-center flex-shrink-0">
-                <svg class="w-4 h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
-              </div>
-              <div>
-                <div class="font-body text-xs font-medium text-ink">Сертифициран консултант</div>
-                <div class="font-body text-xs text-slate">Restaurant & Hospitality Management</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Available badge -->
-          <div class="flex items-center justify-between p-3 bg-green-50 rounded-lg border border-green-100">
-            <div class="flex items-center gap-2">
-              <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-              <span class="font-body text-xs font-medium text-green-700">Свободен за нови проекти</span>
-            </div>
-            <a href="#contact" class="font-body text-xs text-accent font-medium hover:underline">Свържи се →</a>
-          </div>
         </div>
 
-        <!-- Floating badges -->
-        <div class="absolute -top-4 -right-4 float-badge">
-          <div class="bg-white shadow-lg shadow-ink/10 rounded-xl px-4 py-3 border border-mist-3">
-            <div class="font-display text-2xl font-medium text-accent">#1</div>
-            <div class="font-body text-xs text-slate">в България</div>
-          </div>
-        </div>
-        <div class="absolute -bottom-4 -left-4 float-badge" style="animation-delay:2s">
-          <div class="bg-white shadow-lg shadow-ink/10 rounded-xl px-4 py-3 border border-mist-3 flex items-center gap-2">
-            <div class="w-8 h-8 bg-copper-light rounded-lg flex items-center justify-center">
-              <svg class="w-4 h-4 text-copper" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+        <div class="year-stats">
+            <div class="year-stat-row">
+                <span class="year-stat-label">Работни дни (година)</span>
+                <span class="year-stat-value" id="yearWorkDays">0</span>
             </div>
-            <div>
-              <div class="font-body text-xs font-semibold text-ink">Michelin</div>
-              <div class="font-body text-xs text-slate">Experience</div>
+            <div class="year-stat-row">
+                <span class="year-stat-label">Работни часове (8ч/ден)</span>
+                <span class="year-stat-value" id="yearHours">0</span>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Scroll cue -->
-  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5">
-    <span class="font-body text-[10px] text-slate tracking-widest uppercase">Scroll</span>
-    <div class="w-px h-8 bg-gradient-to-b from-accent/40 to-transparent"></div>
-  </div>
-</section>
-
-<!-- ─── MARQUEE BAND ───────────────────────────────────────────────────── -->
-<div class="border-y border-mist-3 bg-mist py-3 overflow-hidden">
-  <div class="marquee-inner">
-    <div class="flex items-center gap-8 pr-8 font-body text-xs font-medium text-slate tracking-wider uppercase">
-      <span class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-accent"></span>Ресторантна консултация</span>
-      <span class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-copper"></span>Авторска кухня</span>
-      <span class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-accent"></span>Менторство</span>
-      <span class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-copper"></span>Chef Experience</span>
-      <span class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-accent"></span>Кулинарни обучения</span>
-      <span class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-copper"></span>Премиум кетъринг</span>
-      <span class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-accent"></span>Разработка на меню</span>
-      <span class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-copper"></span>Видео & медия</span>
-    </div>
-    <div class="flex items-center gap-8 pr-8 font-body text-xs font-medium text-slate tracking-wider uppercase">
-      <span class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-accent"></span>Ресторантна консултация</span>
-      <span class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-copper"></span>Авторска кухня</span>
-      <span class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-accent"></span>Менторство</span>
-      <span class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-copper"></span>Chef Experience</span>
-      <span class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-accent"></span>Кулинарни обучения</span>
-      <span class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-copper"></span>Премиум кетъринг</span>
-      <span class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-accent"></span>Разработка на меню</span>
-      <span class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-copper"></span>Видео & медия</span>
-    </div>
-  </div>
-</div>
-
-<!-- ─── ABOUT ──────────────────────────────────────────────────────────── -->
-<section id="about" class="py-24 bg-white">
-  <div class="max-w-7xl mx-auto px-6">
-    <div class="grid lg:grid-cols-2 gap-16 items-center">
-
-      <!-- Left visual -->
-      <div class="reveal-left img-frame">
-        <div class="relative z-10 bg-gradient-to-br from-mist to-white rounded-xl border border-mist-3 overflow-hidden p-10 shadow-xl shadow-ink/5">
-          <!-- Timeline visual -->
-          <div class="section-label mb-8">Кариерна хронология</div>
-          <div class="space-y-0">
-            <div class="relative pl-8 pb-8 border-l-2 border-mist-3">
-              <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-accent border-2 border-white shadow-sm"></div>
-              <div class="font-body text-xs text-slate mb-1">2008 — 2010</div>
-              <div class="font-body text-sm font-medium text-ink">Le Cordon Bleu, Париж</div>
-              <div class="font-body text-xs text-slate">Diplôme de Cuisine с отличие</div>
+            <div class="year-stat-row total-year">
+                <span>Годишна заплата</span>
+                <span id="yearSalary">0€</span>
             </div>
-            <div class="relative pl-8 pb-8 border-l-2 border-mist-3">
-              <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-accent border-2 border-white shadow-sm"></div>
-              <div class="font-body text-xs text-slate mb-1">2010 — 2014</div>
-              <div class="font-body text-sm font-medium text-ink">Sous Chef, Лондон & Барселона</div>
-              <div class="font-body text-xs text-slate">Мишленови ресторанти (2 звезди)</div>
-            </div>
-            <div class="relative pl-8 pb-8 border-l-2 border-mist-3">
-              <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-copper border-2 border-white shadow-sm"></div>
-              <div class="font-body text-xs text-slate mb-1">2014 — 2018</div>
-              <div class="font-body text-sm font-medium text-ink">Executive Chef, Токио</div>
-              <div class="font-body text-xs text-slate">Fusion Bulgarian–Japanese кухня</div>
-            </div>
-            <div class="relative pl-8">
-              <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-accent border-2 border-white shadow-sm ring-4 ring-accent-light"></div>
-              <div class="font-body text-xs text-slate mb-1">2018 — Днес</div>
-              <div class="font-body text-sm font-medium text-ink">Консултант & Ментор, България</div>
-              <div class="font-body text-xs text-slate">80+ ресторанта · 500+ готвачи</div>
-            </div>
-          </div>
-          <!-- Bottom metric row -->
-          <div class="mt-8 pt-6 border-t border-mist-3 grid grid-cols-3 gap-4 text-center">
-            <div>
-              <div class="font-display text-2xl font-medium text-ink">35%</div>
-              <div class="font-body text-xs text-slate mt-0.5">Ср. ръст в приходите</div>
-            </div>
-            <div class="border-x border-mist-3">
-              <div class="font-display text-2xl font-medium text-ink">4.9</div>
-              <div class="font-body text-xs text-slate mt-0.5">Среден рейтинг</div>
-            </div>
-            <div>
-              <div class="font-display text-2xl font-medium text-ink">98%</div>
-              <div class="font-body text-xs text-slate mt-0.5">Доволни клиенти</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Right text -->
-      <div class="reveal-right">
-        <div class="section-label mb-4">За Георги</div>
-        <h2 class="font-display text-[clamp(2rem,4vw,3.5rem)] font-medium leading-tight text-ink mb-6">
-          Стратег в кухнята.<br>
-          <span class="italic text-accent">Резултати</span> на масата.
-        </h2>
-        <p class="font-body text-slate leading-relaxed mb-5">
-          Роден в Пловдив, Георги Тонков съчетава класическото французко обучение с опита от едни 
-          от най-взискателните кухни в света. Завръщайки се в България, той основава консултантска 
-          практика, фокусирана върху устойчив растеж на ресторантния бизнес.
-        </p>
-        <p class="font-body text-slate leading-relaxed mb-8">
-          Неговият подход е аналитичен и ориентиран към данни — одит на операциите, 
-          оптимизация на себестойността, обучение на екипи и позициониране на бранда.
-        </p>
-
-        <!-- Checklist -->
-        <div class="space-y-3 mb-8">
-          <div class="check-item">
-            <div class="check-icon"><svg class="w-3 h-3 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg></div>
-            <p class="font-body text-sm text-ink-2">Цялостен одит и стратегия за ресторанта</p>
-          </div>
-          <div class="check-item">
-            <div class="check-icon"><svg class="w-3 h-3 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg></div>
-            <p class="font-body text-sm text-ink-2">Разработка на менюта с фокус върху маржа</p>
-          </div>
-          <div class="check-item">
-            <div class="check-icon"><svg class="w-3 h-3 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg></div>
-            <p class="font-body text-sm text-ink-2">Обучение на готвачи и кухненски персонал</p>
-          </div>
-          <div class="check-item">
-            <div class="check-icon"><svg class="w-3 h-3 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg></div>
-            <p class="font-body text-sm text-ink-2">Авторски Chef Experiences за корпоративни клиенти</p>
-          </div>
         </div>
 
-        <a href="#contact" class="inline-flex items-center gap-2 text-accent font-body text-sm font-medium ul-hover">
-          Запишете безплатна консултация
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
+        <div class="calendar-section">
+            <div class="section-title">📅 Избери месец</div>
+            <div class="month-selector" id="monthSelector"></div>
+        </div>
 
-<!-- ─── SERVICES ───────────────────────────────────────────────────────── -->
-<section id="services" class="py-24 bg-mist">
-  <div class="max-w-7xl mx-auto px-6">
-    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 reveal">
-      <div>
-        <div class="section-label mb-3">Услуги</div>
-        <h2 class="font-display text-[clamp(2rem,4vw,3.5rem)] font-medium text-ink leading-tight">
-          Как мога да ви помогна
-        </h2>
-      </div>
-      <p class="font-body text-slate text-sm max-w-xs md:text-right leading-relaxed">
-        Всяко сътрудничество е персонализирано спрямо целите и мащаба на бизнеса ви.
-      </p>
+        <div id="calendarContainer"></div>
+
+        <div class="monthly-breakdown">
+            <div class="section-title">📊 Преглед на месеца</div>
+            <div class="breakdown-item">
+                <span class="breakdown-label">Работни дни</span>
+                <span class="breakdown-value" id="breakdownWorkDays">0</span>
+            </div>
+            <div class="breakdown-item">
+                <span class="breakdown-label">Почивни дни</span>
+                <span class="breakdown-value" id="breakdownRestDays">0</span>
+            </div>
+            <div class="breakdown-item">
+                <span class="breakdown-label">Отпуск/Болнична</span>
+                <span class="breakdown-value" id="breakdownOffDays">0</span>
+            </div>
+            <div class="breakdown-item">
+                <span class="breakdown-label">Месечна заплата</span>
+                <span class="breakdown-value" id="breakdownSalary" style="color: var(--accent);">0€</span>
+            </div>
+        </div>
+
+        <div style="text-align: center; color: var(--text-secondary); font-size: 12px; margin-bottom: 32px;">
+            🟢 Работен ден · 🔴 Почивен ден · ⚫ Отпуск
+        </div>
     </div>
 
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+    <script>
+        const DAILY_RATE = 90;
+        const WORK_SCHEDULE = 2; // 2 дни работа
+        const REST_DAYS = 2;     // 2 дни почивка
 
-      <!-- Card 1 -->
-      <div class="svc-card reveal bg-white rounded-xl border border-mist-3 p-7 relative overflow-hidden cursor-pointer">
-        <div class="card-num">01</div>
-        <div class="svc-icon w-12 h-12 rounded-xl bg-accent-light text-accent flex items-center justify-center mb-5">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
-        </div>
-        <h3 class="font-display text-xl font-medium text-ink mb-2">Ресторантна консултация</h3>
-        <p class="font-body text-sm text-slate leading-relaxed mb-4">Цялостен анализ на операциите, себестойността и позиционирането. Конкретни KPI и план за изпълнение.</p>
-        <div class="flex items-center gap-1.5 text-accent font-body text-sm font-medium">
-          <span>Научи повече</span>
-          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-        </div>
-      </div>
+        let startDate = new Date(2026, 4, 29); // 29 май 2026 (днес - почивен ден)
+        let scheduleStart = new Date(2026, 4, 27); // 27 май беше работен ден
 
-      <!-- Card 2 -->
-      <div class="svc-card reveal bg-white rounded-xl border border-mist-3 p-7 relative overflow-hidden cursor-pointer" style="transition-delay:.07s">
-        <div class="card-num">02</div>
-        <div class="svc-icon w-12 h-12 rounded-xl bg-copper-light text-copper flex items-center justify-center mb-5">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
-        </div>
-        <h3 class="font-display text-xl font-medium text-ink mb-2">Разработка на менюта</h3>
-        <p class="font-body text-sm text-slate leading-relaxed mb-4">Сезонни, тематични и авторски менюта с оптимизирани food cost и максимална атрактивност.</p>
-        <div class="flex items-center gap-1.5 text-accent font-body text-sm font-medium">
-          <span>Научи повече</span>
-          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-        </div>
-      </div>
+        // Изчисляване на типа ден
+        function getDayType(date) {
+            const daysSinceStart = Math.floor((date - scheduleStart) / (1000 * 60 * 60 * 24));
+            const cyclePosition = daysSinceStart % 4;
 
-      <!-- Card 3 — Featured -->
-      <div class="svc-card reveal bg-accent rounded-xl border border-accent p-7 relative overflow-hidden cursor-pointer md:col-span-2 lg:col-span-1" style="transition-delay:.14s">
-        <div class="absolute top-4 right-4 tag bg-white/20 text-white">Най-търсена</div>
-        <div class="card-num text-white/10">03</div>
-        <div class="w-12 h-12 rounded-xl bg-white/15 text-white flex items-center justify-center mb-5">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-        </div>
-        <h3 class="font-display text-xl font-medium text-white mb-2">Кулинарни обучения</h3>
-        <p class="font-body text-sm text-blue-100 leading-relaxed mb-4">Индивидуални и групови майсторски класове — от базови техники до ниво professional kitchen.</p>
-        <div class="flex items-center gap-1.5 text-white font-body text-sm font-medium">
-          <span>Научи повече</span>
-          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-        </div>
-      </div>
+            if (cyclePosition === 0 || cyclePosition === 1) {
+                return 'work';
+            } else {
+                return 'rest';
+            }
+        }
 
-      <!-- Card 4 -->
-      <div class="svc-card reveal bg-white rounded-xl border border-mist-3 p-7 relative overflow-hidden cursor-pointer" style="transition-delay:.21s">
-        <div class="card-num">04</div>
-        <div class="svc-icon w-12 h-12 rounded-xl bg-accent-light text-accent flex items-center justify-center mb-5">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
-        </div>
-        <h3 class="font-display text-xl font-medium text-ink mb-2">Chef Experience</h3>
-        <p class="font-body text-sm text-slate leading-relaxed mb-4">Персонален готвач за частни и корпоративни събития. Дегустационни менюта и fine dining у дома.</p>
-        <div class="flex items-center gap-1.5 text-accent font-body text-sm font-medium">
-          <span>Научи повече</span>
-          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-        </div>
-      </div>
+        // Генериране на календар за месец
+        function generateCalendar(year, month) {
+            const firstDay = new Date(year, month, 1);
+            const lastDay = new Date(year, month + 1, 0);
+            const daysInMonth = lastDay.getDate();
+            const startingDayOfWeek = firstDay.getDay();
 
-      <!-- Card 5 -->
-      <div class="svc-card reveal bg-white rounded-xl border border-mist-3 p-7 relative overflow-hidden cursor-pointer" style="transition-delay:.28s">
-        <div class="card-num">05</div>
-        <div class="svc-icon w-12 h-12 rounded-xl bg-copper-light text-copper flex items-center justify-center mb-5">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
-        </div>
-        <h3 class="font-display text-xl font-medium text-ink mb-2">Премиум кетъринг</h3>
-        <p class="font-body text-sm text-slate leading-relaxed mb-4">Луксозно кетъринг за корпоративни прояви, бизнес срещи и специални поводи с 50–500 гости.</p>
-        <div class="flex items-center gap-1.5 text-accent font-body text-sm font-medium">
-          <span>Научи повече</span>
-          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-        </div>
-      </div>
+            let html = '<div class="calendar-grid">';
 
-      <!-- Card 6 -->
-      <div class="svc-card reveal bg-white rounded-xl border border-mist-3 p-7 relative overflow-hidden cursor-pointer" style="transition-delay:.35s">
-        <div class="card-num">06</div>
-        <div class="svc-icon w-12 h-12 rounded-xl bg-accent-light text-accent flex items-center justify-center mb-5">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15 10l4.553-2.069A1 1 0 0121 8.87v6.26a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
-        </div>
-        <h3 class="font-display text-xl font-medium text-ink mb-2">Видео & медия</h3>
-        <p class="font-body text-sm text-slate leading-relaxed mb-4">Кулинарно съдържание за социални мрежи, реклами, YouTube канали и телевизионни предавания.</p>
-        <div class="flex items-center gap-1.5 text-accent font-body text-sm font-medium">
-          <span>Научи повече</span>
-          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-        </div>
-      </div>
+            // День на седмицата
+            const dayNames = ['Нд', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
+            dayNames.forEach(name => {
+                html += `<div class="day-name">${name}</div>`;
+            });
 
-    </div>
-  </div>
-</section>
+            // Празни клетки преди първия ден
+            for (let i = 0; i < startingDayOfWeek; i++) {
+                html += '<div class="day-cell empty"></div>';
+            }
 
-<!-- ─── PROCESS ────────────────────────────────────────────────────────── -->
-<section id="process" class="py-24 bg-white overflow-hidden">
-  <div class="max-w-7xl mx-auto px-6">
-    <div class="text-center mb-14 reveal">
-      <div class="section-label mb-3">Как работим</div>
-      <h2 class="font-display text-[clamp(2rem,4vw,3.5rem)] font-medium text-ink">Ясен процес. Измерими резултати.</h2>
-    </div>
-    <div class="grid md:grid-cols-4 gap-0 relative">
+            // Дните на месеца
+            for (let day = 1; day <= daysInMonth; day++) {
+                const currentDate = new Date(year, month, day);
+                const dayType = getDayType(currentDate);
+                const isToday = currentDate.toDateString() === startDate.toDateString();
+                const isTomorrow = currentDate.toDateString() === new Date(startDate.getTime() + 24*60*60*1000).toDateString();
 
-      <!-- Step 1 -->
-      <div class="reveal text-center px-6 relative">
-        <div class="hidden md:block step-line"></div>
-        <div class="w-12 h-12 rounded-full bg-accent text-white flex items-center justify-center font-body font-semibold text-sm mx-auto mb-5 relative z-10 shadow-lg shadow-accent/25">01</div>
-        <h3 class="font-display text-lg font-medium text-ink mb-2">Диагностика</h3>
-        <p class="font-body text-sm text-slate leading-relaxed">Анализ на текущото състояние — меню, операции, финанси и позиция на пазара.</p>
-      </div>
+                let className = `day-cell ${dayType}`;
+                if (isToday || isTomorrow) className += ' today';
 
-      <!-- Step 2 -->
-      <div class="reveal text-center px-6 relative" style="transition-delay:.1s">
-        <div class="hidden md:block step-line"></div>
-        <div class="w-12 h-12 rounded-full bg-white border-2 border-accent text-accent flex items-center justify-center font-body font-semibold text-sm mx-auto mb-5 relative z-10">02</div>
-        <h3 class="font-display text-lg font-medium text-ink mb-2">Стратегия</h3>
-        <p class="font-body text-sm text-slate leading-relaxed">Разработване на персонализиран план с конкретни цели, KPI и времеви рамки.</p>
-      </div>
+                html += `<div class="${className}">${day}</div>`;
+            }
 
-      <!-- Step 3 -->
-      <div class="reveal text-center px-6 relative" style="transition-delay:.2s">
-        <div class="hidden md:block step-line"></div>
-        <div class="w-12 h-12 rounded-full bg-white border-2 border-accent text-accent flex items-center justify-center font-body font-semibold text-sm mx-auto mb-5 relative z-10">03</div>
-        <h3 class="font-display text-lg font-medium text-ink mb-2">Изпълнение</h3>
-        <p class="font-body text-sm text-slate leading-relaxed">Активно внедряване — обучения, менюта, процеси, брандинг и стандарти.</p>
-      </div>
+            html += '</div>';
+            return html;
+        }
 
-      <!-- Step 4 -->
-      <div class="reveal text-center px-6 relative" style="transition-delay:.3s">
-        <div class="w-12 h-12 rounded-full bg-white border-2 border-copper text-copper flex items-center justify-center font-body font-semibold text-sm mx-auto mb-5 relative z-10">04</div>
-        <h3 class="font-display text-lg font-medium text-ink mb-2">Проследяване</h3>
-        <p class="font-body text-sm text-slate leading-relaxed">Регулярен мониторинг и оптимизация за устойчив растеж и постигнати цели.</p>
-      </div>
+        // Изчисляване на статистика за месец
+        function getMonthStats(year, month) {
+            const firstDay = new Date(year, month, 1);
+            const lastDay = new Date(year, month + 1, 0);
+            const daysInMonth = lastDay.getDate();
 
-    </div>
-  </div>
-</section>
+            let workDays = 0, restDays = 0;
 
-<!-- ─── TESTIMONIALS ───────────────────────────────────────────────────── -->
-<section id="reviews" class="py-24 bg-mist">
-  <div class="max-w-7xl mx-auto px-6">
-    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 reveal">
-      <div>
-        <div class="section-label mb-3">Отзиви</div>
-        <h2 class="font-display text-[clamp(2rem,4vw,3.5rem)] font-medium text-ink">Клиентите говорят</h2>
-      </div>
-      <div class="flex items-center gap-3 bg-white rounded-xl px-5 py-3 border border-mist-3 shadow-sm w-fit">
-        <div class="font-display text-3xl font-medium text-ink">4.9</div>
-        <div>
-          <div class="flex gap-0.5 mb-0.5">
-            <svg class="w-4 h-4 text-copper" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-            <svg class="w-4 h-4 text-copper" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-            <svg class="w-4 h-4 text-copper" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-            <svg class="w-4 h-4 text-copper" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-            <svg class="w-4 h-4 text-copper" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-          </div>
-          <div class="font-body text-xs text-slate">200+ отзива</div>
-        </div>
-      </div>
-    </div>
+            for (let day = 1; day <= daysInMonth; day++) {
+                const currentDate = new Date(year, month, day);
+                const dayType = getDayType(currentDate);
 
-    <div class="grid md:grid-cols-3 gap-5">
-      <!-- Testi 1 -->
-      <div class="testi-card reveal bg-white rounded-xl border border-mist-3 p-7 shadow-sm">
-        <div class="flex gap-1 mb-5">
-          <svg class="w-4 h-4 text-copper" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-          <svg class="w-4 h-4 text-copper" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-          <svg class="w-4 h-4 text-copper" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-          <svg class="w-4 h-4 text-copper" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-          <svg class="w-4 h-4 text-copper" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-        </div>
-        <p class="font-body text-sm text-ink-2 leading-relaxed mb-6">
-          "Георги преобрази нашия ресторант в рамките на 3 месеца. Продажбите се покачиха с 38%, 
-          а екипът е по-мотивиран от всякога. Инвестицията се върна двойно."
-        </p>
-        <div class="flex items-center gap-3 pt-5 border-t border-mist-3">
-          <div class="w-9 h-9 rounded-full bg-accent-mid flex items-center justify-center font-body font-semibold text-accent text-sm">МС</div>
-          <div>
-            <div class="font-body text-sm font-medium text-ink">Мариана Стоянова</div>
-            <div class="font-body text-xs text-slate">Собственик, Ресторант "Оазис"</div>
-          </div>
-        </div>
-      </div>
+                if (dayType === 'work') workDays++;
+                else restDays++;
+            }
 
-      <!-- Testi 2 -->
-      <div class="testi-card reveal bg-white rounded-xl border border-mist-3 p-7 shadow-sm" style="transition-delay:.1s">
-        <div class="flex gap-1 mb-5">
-          <svg class="w-4 h-4 text-copper" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-          <svg class="w-4 h-4 text-copper" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-          <svg class="w-4 h-4 text-copper" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-          <svg class="w-4 h-4 text-copper" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-          <svg class="w-4 h-4 text-copper" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-        </div>
-        <p class="font-body text-sm text-ink-2 leading-relaxed mb-6">
-          "Корпоративната вечеря с Георги беше незабравимо изживяване. Нашите партньори от 5 държави 
-          бяха впечатлени. Лично ще го препоръчвам на всеки бизнес."
-        </p>
-        <div class="flex items-center gap-3 pt-5 border-t border-mist-3">
-          <div class="w-9 h-9 rounded-full bg-copper-light flex items-center justify-center font-body font-semibold text-copper text-sm">ДК</div>
-          <div>
-            <div class="font-body text-sm font-medium text-ink">Димитър Кирилов</div>
-            <div class="font-body text-xs text-slate">CEO, TechSoft Bulgaria</div>
-          </div>
-        </div>
-      </div>
+            return {
+                workDays,
+                restDays,
+                salary: workDays * DAILY_RATE
+            };
+        }
 
-      <!-- Testi 3 -->
-      <div class="testi-card reveal bg-white rounded-xl border border-mist-3 p-7 shadow-sm" style="transition-delay:.2s">
-        <div class="flex gap-1 mb-5">
-          <svg class="w-4 h-4 text-copper" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-          <svg class="w-4 h-4 text-copper" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-          <svg class="w-4 h-4 text-copper" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-          <svg class="w-4 h-4 text-copper" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-          <svg class="w-4 h-4 text-copper" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-        </div>
-        <p class="font-body text-sm text-ink-2 leading-relaxed mb-6">
-          "Индивидуалното обучение с Георги ме издигна на съвсем ново ниво. За 3 месеца 
-          усвоих повече от 2 години в кулинарното училище. Изключително препоръчвам!"
-        </p>
-        <div class="flex items-center gap-3 pt-5 border-t border-mist-3">
-          <div class="w-9 h-9 rounded-full bg-accent-mid flex items-center justify-center font-body font-semibold text-accent text-sm">ЕП</div>
-          <div>
-            <div class="font-body text-sm font-medium text-ink">Елена Петрова</div>
-            <div class="font-body text-xs text-slate">Готвач, Пловдив</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+        // Изчисляване на статистика за година
+        function getYearStats(year) {
+            let totalWorkDays = 0;
 
-<!-- ─── CTA ───────────────────────────────────────────────────────────── -->
-<section class="py-20 bg-ink reveal">
-  <div class="max-w-4xl mx-auto px-6 text-center">
-    <div class="tag bg-white/10 text-white/70 mb-6 mx-auto w-fit">Безплатна първа консултация</div>
-    <h2 class="font-display text-[clamp(2rem,5vw,3.8rem)] font-medium text-white leading-tight mb-5">
-      Готови ли сте да развиете<br>
-      <span class="italic grad-text">бизнеса си?</span>
-    </h2>
-    <p class="font-body text-white/50 max-w-lg mx-auto mb-8 leading-relaxed">
-      Нека поговорим за вашите нужди и цели. Първата консултация е напълно безплатна и без ангажименти.
-    </p>
-    <div class="flex flex-wrap gap-3 justify-center">
-      <a href="#contact" class="inline-flex items-center gap-2 px-7 py-3.5 bg-accent text-white font-body text-sm font-medium rounded-sm hover:bg-blue-600 transition-colors group">
-        Резервирай среща
-        <svg class="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-      </a>
-      <a href="tel:+359888123456" class="inline-flex items-center gap-2 px-7 py-3.5 border border-white/15 text-white/70 font-body text-sm font-medium rounded-sm hover:border-white/30 hover:text-white transition-all">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-        +359 888 123 456
-      </a>
-    </div>
-  </div>
-</section>
+            for (let month = 0; month < 12; month++) {
+                const stats = getMonthStats(year, month);
+                totalWorkDays += stats.workDays;
+            }
 
-<!-- ─── CONTACT ────────────────────────────────────────────────────────── -->
-<section id="contact" class="py-24 bg-white">
-  <div class="max-w-7xl mx-auto px-6">
-    <div class="grid lg:grid-cols-5 gap-12">
+            return {
+                workDays: totalWorkDays,
+                hours: totalWorkDays * 8,
+                salary: totalWorkDays * DAILY_RATE
+            };
+        }
 
-      <!-- Left info col -->
-      <div class="lg:col-span-2 reveal">
-        <div class="section-label mb-4">Контакт</div>
-        <h2 class="font-display text-[clamp(2rem,4vw,3rem)] font-medium text-ink mb-5">Свържете се с мен</h2>
-        <p class="font-body text-slate text-sm leading-relaxed mb-8">
-          Ще се свържа с вас до 24 часа. За спешни запитвания — обадете се директно.
-        </p>
+        // Инициализация
+        function init() {
+            const currentYear = startDate.getFullYear();
+            const currentMonth = startDate.getMonth();
 
-        <div class="space-y-4 mb-8">
-          <a href="tel:+359888123456" class="flex items-center gap-4 p-4 rounded-xl bg-mist border border-mist-3 hover:border-accent-mid transition-colors group">
-            <div class="w-10 h-10 rounded-lg bg-accent-light flex items-center justify-center flex-shrink-0">
-              <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-            </div>
-            <div>
-              <div class="font-body text-xs text-slate mb-0.5">Телефон</div>
-              <div class="font-body text-sm font-medium text-ink group-hover:text-accent transition-colors">+359 888 123 456</div>
-            </div>
-          </a>
-          <a href="mailto:georgi@tonkov.bg" class="flex items-center gap-4 p-4 rounded-xl bg-mist border border-mist-3 hover:border-accent-mid transition-colors group">
-            <div class="w-10 h-10 rounded-lg bg-accent-light flex items-center justify-center flex-shrink-0">
-              <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-            </div>
-            <div>
-              <div class="font-body text-xs text-slate mb-0.5">Имейл</div>
-              <div class="font-body text-sm font-medium text-ink group-hover:text-accent transition-colors">georgi@tonkov.bg</div>
-            </div>
-          </a>
-          <div class="flex items-center gap-4 p-4 rounded-xl bg-mist border border-mist-3">
-            <div class="w-10 h-10 rounded-lg bg-copper-light flex items-center justify-center flex-shrink-0">
-              <svg class="w-5 h-5 text-copper" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-            </div>
-            <div>
-              <div class="font-body text-xs text-slate mb-0.5">Локация</div>
-              <div class="font-body text-sm font-medium text-ink">София & Пловдив, България</div>
-            </div>
-          </div>
-        </div>
+            // Генериране на бутонмите за месец
+            const monthSelector = document.getElementById('monthSelector');
+            const monthNames = ['янв', 'февр', 'март', 'апр', 'май', 'юни', 'юли', 'авг', 'септ', 'окт', 'ноем', 'дец'];
 
-        <!-- Social icons -->
-        <div class="flex items-center gap-3">
-          <span class="font-body text-xs text-slate tracking-wide">Следвай:</span>
-          <a href="#" class="w-9 h-9 rounded-lg bg-mist border border-mist-3 flex items-center justify-center text-slate hover:text-accent hover:border-accent-mid transition-all">
-            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-          </a>
-          <a href="#" class="w-9 h-9 rounded-lg bg-mist border border-mist-3 flex items-center justify-center text-slate hover:text-accent hover:border-accent-mid transition-all">
-            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.26 8.26 0 004.84 1.56V6.79a4.85 4.85 0 01-1.07-.1z"/></svg>
-          </a>
-          <a href="#" class="w-9 h-9 rounded-lg bg-mist border border-mist-3 flex items-center justify-center text-slate hover:text-accent hover:border-accent-mid transition-all">
-            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-          </a>
-        </div>
-      </div>
+            monthNames.forEach((name, index) => {
+                const btn = document.createElement('button');
+                btn.className = `month-btn ${index === currentMonth ? 'active' : ''}`;
+                btn.textContent = name;
+                btn.onclick = () => selectMonth(index);
+                monthSelector.appendChild(btn);
+            });
 
-      <!-- Right form -->
-      <div class="lg:col-span-3 reveal bg-mist rounded-2xl border border-mist-3 p-8 shadow-sm">
-        <h3 class="font-display text-2xl font-medium text-ink mb-6">Изпрати запитване</h3>
-        <div class="space-y-4">
-          <div class="grid sm:grid-cols-2 gap-4">
-            <div>
-              <label class="font-body text-xs font-medium text-ink-3 tracking-wide block mb-1.5">Имe *</label>
-              <input type="text" placeholder="Вашето име" class="f-input w-full px-4 py-3 rounded-lg font-body text-sm text-ink placeholder-slate/50">
-            </div>
-            <div>
-              <label class="font-body text-xs font-medium text-ink-3 tracking-wide block mb-1.5">Фамилия</label>
-              <input type="text" placeholder="Фамилия" class="f-input w-full px-4 py-3 rounded-lg font-body text-sm text-ink placeholder-slate/50">
-            </div>
-          </div>
-          <div>
-            <label class="font-body text-xs font-medium text-ink-3 tracking-wide block mb-1.5">Имейл *</label>
-            <input type="email" placeholder="example@company.bg" class="f-input w-full px-4 py-3 rounded-lg font-body text-sm text-ink placeholder-slate/50">
-          </div>
-          <div>
-            <label class="font-body text-xs font-medium text-ink-3 tracking-wide block mb-1.5">Тип услуга</label>
-            <select class="f-input w-full px-4 py-3 rounded-lg font-body text-sm text-ink bg-mist">
-              <option value="">Изберете услуга...</option>
-              <option>Ресторантна консултация</option>
-              <option>Разработка на меню</option>
-              <option>Кулинарни обучения</option>
-              <option>Chef Experience</option>
-              <option>Премиум кетъринг</option>
-              <option>Видео & медия</option>
-            </select>
-          </div>
-          <div>
-            <label class="font-body text-xs font-medium text-ink-3 tracking-wide block mb-1.5">Съобщение *</label>
-            <textarea rows="4" placeholder="Разкажете ни повече за проекта ви..." class="f-input w-full px-4 py-3 rounded-lg font-body text-sm text-ink placeholder-slate/50 resize-none"></textarea>
-          </div>
-          <button onclick="this.innerHTML='<svg class=\'w-4 h-4 inline mr-2\' fill=\'none\' stroke=\'currentColor\' viewBox=\'0 0 24 24\'><path stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'2\' d=\'M5 13l4 4L19 7\'/></svg>Изпратено успешно!'; this.classList.add('bg-green-600'); this.disabled=true;"
-            class="w-full py-3.5 bg-accent text-white font-body text-sm font-medium rounded-lg hover:bg-blue-700 transition-all flex items-center justify-center gap-2 group">
-            Изпрати запитване
-            <svg class="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
-          </button>
-          <p class="font-body text-xs text-slate text-center">Ще се свържем с вас до 24 часа · Без спам · Без ангажименти</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+            // Инициална селекция
+            selectMonth(currentMonth);
 
-<!-- ─── FOOTER ─────────────────────────────────────────────────────────── -->
-<footer class="bg-ink py-10 border-t border-white/5">
-  <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
-    <div class="flex items-center gap-2.5">
-      <div class="w-7 h-7 bg-accent rounded-sm flex items-center justify-center">
-        <span class="font-display text-white text-xs font-bold italic">G</span>
-      </div>
-      <span class="font-body text-white/70 text-sm">Георги Тонков</span>
-    </div>
-    <div class="font-body text-xs text-white/30">© 2025 Георги Тонков. Всички права запазени.</div>
-    <div class="flex gap-6 font-body text-xs text-white/40">
-      <a href="#about"    class="hover:text-white/70 transition-colors">За мен</a>
-      <a href="#services" class="hover:text-white/70 transition-colors">Услуги</a>
-      <a href="#contact"  class="hover:text-white/70 transition-colors">Контакт</a>
-    </div>
-  </div>
-</footer>
+            // Година статистика
+            const yearStats = getYearStats(currentYear);
+            document.getElementById('yearWorkDays').textContent = yearStats.workDays;
+            document.getElementById('yearHours').textContent = yearStats.hours;
+            document.getElementById('yearSalary').textContent = yearStats.salary.toLocaleString('bg-BG') + '€';
+        }
 
-<script>
-  // Scroll reveal
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-  document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => obs.observe(el));
+        function selectMonth(month) {
+            const year = startDate.getFullYear();
+            const monthNames = ['Януари', 'Февруари', 'Март', 'Април', 'Май', 'Юни', 'Юли', 'Август', 'Септември', 'Октомври', 'Ноември', 'Декември'];
 
-  // Nav shadow on scroll
-  window.addEventListener('scroll', () => {
-    document.getElementById('navbar').classList.toggle('nav-scroll', window.scrollY > 40);
-  });
-</script>
+            // Ъпдейт активния бутон
+            document.querySelectorAll('.month-btn').forEach((btn, index) => {
+                btn.classList.toggle('active', index === month);
+            });
+
+            // Генериране на календар
+            const calendarHtml = generateCalendar(year, month);
+            document.getElementById('calendarContainer').innerHTML = calendarHtml;
+
+            // Обновяване на статистика
+            const stats = getMonthStats(year, month);
+
+            document.getElementById('monthWorkDays').textContent = stats.workDays;
+            document.getElementById('monthRestDays').textContent = stats.restDays;
+            document.getElementById('monthlySalary').textContent = stats.salary;
+
+            document.getElementById('breakdownWorkDays').textContent = stats.workDays;
+            document.getElementById('breakdownRestDays').textContent = stats.restDays;
+            document.getElementById('breakdownOffDays').textContent = '0';
+            document.getElementById('breakdownSalary').textContent = stats.salary + '€';
+
+            // Скрол до календар
+            setTimeout(() => {
+                document.getElementById('calendarContainer').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 100);
+        }
+
+        // Стартиране
+        init();
+    </script>
 </body>
 </html>
